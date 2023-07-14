@@ -16,10 +16,12 @@ struct ContentView: View {
     var event3 = Event(name: "Fisher", date: "11 - 4 AM", locationShortName: "Spotlite", location: "Spotlite", description: "Come have fun")
     
     @State private var selectedDayIndex = 0
+    @State private var categorieIndex = 0
     @State private var isFilterSheetPresented = false
     @State private var isFilterLocationSheetPresented = false
     @State private var isPopoverPresented = false
     @State private var selectedOption = "Detroit"
+    @GestureState private var translation: CGFloat = 0
     let dropdownOptions = ["Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District"]
     
     var body: some View {
@@ -71,9 +73,10 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    Text("Today")
+                    Text("\(Image(systemName: "arrowtriangle.left.fill")) \(getDayName(after: selectedDayIndex)) \(Image(systemName: "arrowtriangle.right.fill"))") // + Text(Image(systemName: "arrowtriangle.right.fill"))
                         .foregroundColor(.gray)
                         .font(.system(size: 16, weight: .bold, design: .monospaced))
+                        .animation(nil)
                 }
             }
             .actionSheet(isPresented: $isFilterSheetPresented) {
@@ -84,6 +87,22 @@ struct ContentView: View {
                     .default(Text("Cost")),
                     .cancel()])
             }
+            .gesture(
+                DragGesture()
+                    .updating($translation) { value, state, _ in
+                        state = value.translation.width
+                    }
+                    .onEnded { value in
+                        let threshold = UIScreen.main.bounds.width / 2
+                        if value.translation.width < -threshold {
+                            // Swiped left
+                            selectedDayIndex = (selectedDayIndex + 1) % days.count
+                        } else if value.translation.width > threshold {
+                            // Swiped right
+                            selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
+                        }
+                    }
+            )
         }
     }
     
@@ -93,14 +112,14 @@ struct ContentView: View {
                 let categories = ["Music", "Shows", "Sports", "Food", "Art", "Festivals"]
                 ForEach(0..<6) { index in
                     Button {
-                        selectedDayIndex = index
+                        categorieIndex = index
                         // reloadData
                     } label: {
                         
                         Text(categories[index])
                             .font(.headline)
                             .padding()
-                            .background(selectedDayIndex == index ? Color.orange : Color.gray)
+                            .background(categorieIndex == index ? Color.orange : Color.gray)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -110,6 +129,9 @@ struct ContentView: View {
     }
     
     func getDayName(after days: Int) -> String {
+        if days == 0 {
+            return "Today"
+        }
         let calendar = Calendar.current
         let today = Date()
         let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
