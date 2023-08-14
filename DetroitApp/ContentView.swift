@@ -11,10 +11,8 @@ struct ContentView: View {
     
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
-    var event1 = Event(name: "Van Gogh in America", date: "Fri. 2 Jun - Sat. 3 Jun\n5:00 - 11:00PM", locationShortName: "DIA", location: "Detroit Institute of Arts\n5200 Woodward Ave\nDetroit, MI, 48202", website: "https://dia.org/events/exhibitions/van-gogh-america", image: Image("VanGogh"), description: "See Van Gogh in Detroit with the exhibition Van Gogh in America, which celebrates the Detroit Institute of Art’s status as the first public museum in the United States to purchase a painting by Vincent van Gogh, his Self-Portrait (1887). On the 100th anniversary of its acquisition, experience 74 authentic Van Gogh works from around the world and discover the fascinating story of America’s introduction to this iconic artist, in an exhibition only at the DIA.\n\nA full-length, illustrated catalogue with essays by the exhibition curator and Van Gogh scholars will accompany the exhibition. The Detroit Institute of Arts is the exclusive venue for this exhibition.\n\nThe exhibition will explore the considerable efforts made by early promoters of modernism in the United States—including dealers, collectors, private art organizations, public institutions, and the artist’s family—to introduce the artist, his biography, and his artistic production into the American consciousness.")
-    var event2 = Event(name: "Detroit Tigers vs. Chicago Cubs", date: "7:00 PM", locationShortName: "Comerica Park", location: "Comerica Park", description: "Let's go Tigers!")
-    var event3 = Event(name: "Fisher", date: "11 - 4 AM", locationShortName: "Spotlite", location: "Spotlite", description: "Come have fun")
-    
+    @StateObject private var viewModel = EventViewModel()
+    @State private var eventData: [Event]?
     @State private var selectedDayIndex = 0
     @State private var categorieIndex = 0
     @State private var isFilterSheetPresented = false
@@ -25,7 +23,7 @@ struct ContentView: View {
     let dropdownOptions = ["Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District"]
     
     var body: some View {
-        let events = [event1, event2, event3]
+        let events = viewModel.events
         
         NavigationView {
             VStack {
@@ -42,7 +40,7 @@ struct ContentView: View {
                                 
                                 Text(events[index].date)
                                 // location.circle
-                                Text(Image(systemName: "location.circle")) + Text(" \(events[index].locationShortName)")
+                                Text(Image(systemName: "location.circle")) + Text(events[index].location)
                                     .font(.system(size: 10))
                             }
                         }
@@ -52,7 +50,7 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: CustomNavigationBar(title: $selectedOption, isPopoverPresented: $isPopoverPresented))
             .popover(isPresented: $isPopoverPresented, arrowEdge: .top) {
-                List {
+                VStack {
                     ForEach(dropdownOptions, id: \.self) { option in
                         Button(action: {
                             self.selectedOption = option
@@ -87,6 +85,12 @@ struct ContentView: View {
                     .default(Text("Cost")),
                     .cancel()])
             }
+            .onAppear {
+                viewModel.listentoRealtimeDatabase()
+            }
+            .onDisappear {
+                viewModel.stopListening()
+            }
             .gesture(
                 DragGesture()
                     .updating($translation) { value, state, _ in
@@ -108,7 +112,7 @@ struct ContentView: View {
     
     var scrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 20) {
+            HStack(spacing: 10) {
                 let categories = ["Music", "Shows", "Sports", "Food", "Art", "Festivals"]
                 ForEach(0..<6) { index in
                     Button {
@@ -118,7 +122,8 @@ struct ContentView: View {
                         
                         Text(categories[index])
                             .font(.headline)
-                            .padding()
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 25)
                             .background(categorieIndex == index ? Color.orange : Color.gray)
                             .foregroundColor(.white)
                             .cornerRadius(10)

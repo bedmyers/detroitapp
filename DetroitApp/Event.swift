@@ -7,14 +7,19 @@
 
 import SwiftUI
 
-struct Event: Identifiable {
-    var id = UUID()
-    var name: String
-    var date: String
-    //var neighborhood: String
-    var locationShortName: String
-    var location: String
-    var website: String?
-    var image: Image?
-    var description: String
+struct Event: Decodable {
+    let name: String
+    let date: String
+    let location: String
+    let locationNarrowed: String?
+    let address: String
+    let neighborhood: String
+    let category: String
+    let website: String?
+    let image: String?
+    let description: String?
+    let price: Double?
+    let timeStart: Int?
+    let timeEnd: Int?
+    let rating: Int
 }

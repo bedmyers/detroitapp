@@ -54,8 +54,8 @@ struct EventView: View {
     }
     
     var imageView: some View {
-        event.image?
-            .resizable()
+        AsyncImage(url: URL(string: event.image ?? ""))
+            //.resizable()
             .frame(width: 500, height: 500)
     }
     
@@ -65,7 +65,7 @@ struct EventView: View {
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(.gray)
             HorizontalDivider()
-            Text(event.description)
+            Text(event.description ?? "")
         }
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -78,8 +78,9 @@ struct EventView: View {
 }
 
 struct EventView_Previews: PreviewProvider {
+    @State static var event = Event(name: "Art Fair", date: "8-25-23", location: "Detroit", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Downtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: 0, timeStart: 700, timeEnd: 1100, rating: 5)
+    
     static var previews: some View {
-        @State var event = Event(name: "Van Gogh in America", date: "Fri. 2 Jun - Sat. 3 Jun\n5:00 - 11:00PM", locationShortName: "DIA", location: "Detroit Institute of Arts\n5200 Woodward Ave\nDetroit, MI, 48202", website: "https://dia.org/events/exhibitions/van-gogh-america", image: Image("VanGogh"), description: "See Van Gogh in Detroit with the exhibition Van Gogh in America, which celebrates the Detroit Institute of Art’s status as the first public museum in the United States to purchase a painting by Vincent van Gogh, his Self-Portrait (1887). On the 100th anniversary of its acquisition, experience 74 authentic Van Gogh works from around the world and discover the fascinating story of America’s introduction to this iconic artist, in an exhibition only at the DIA.\nA full-length, illustrated catalogue with essays by the exhibition curator and Van Gogh scholars will accompany the exhibition. The Detroit Institute of Arts is the exclusive venue for this exhibition.\nThe exhibition will explore the considerable efforts made by early promoters of modernism in the United States—including dealers, collectors, private art organizations, public institutions, and the artist’s family—to introduce the artist, his biography, and his artistic production into the American consciousness.")
         EventView(event: event)
     }
 }
