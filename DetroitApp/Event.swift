@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Event: Decodable {
+struct Event: Decodable, Hashable {
     let name: String
     let date: String
     let location: String
@@ -18,8 +18,23 @@ struct Event: Decodable {
     let website: String?
     let image: String?
     let description: String?
-    let price: Double?
-    let timeStart: Int?
-    let timeEnd: Int?
-    let rating: Int
+    let price: String?
+    let timeStart: String?
+    let timeEnd: String?
+    let rating: String
+    
+    var processedDescription: String {
+        return description?.replacingOccurrences(of: "\\n\\n", with: "\n\n") ?? ""
+    }
+    
+    var dayOfWeek: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
+        guard let eventDate = dateFormatter.date(from: date) else {
+            return ""
+        }
+
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: eventDate)
+    }
 }

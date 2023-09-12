@@ -14,7 +14,7 @@ struct ContentView: View {
     @StateObject private var viewModel = EventViewModel()
     @State private var eventData: [Event]?
     @State private var selectedDayIndex = 0
-    @State private var categorieIndex = 0
+    @State private var categoryIndex = 0
     @State private var isFilterSheetPresented = false
     @State private var isFilterLocationSheetPresented = false
     @State private var isPopoverPresented = false
@@ -30,17 +30,14 @@ struct ContentView: View {
                 scrollView
                     .padding(10)
                 List {
-                    ForEach(events.indices, id: \.self) { index in
+                    ForEach(events.filter { $0.dayOfWeek == getDayName(after: selectedDayIndex) && $0.date ==  getDayDate(after: selectedDayIndex) }, id: \.self) { event in
                         NavigationLink {
-                            EventView(event: events[index])
+                            EventView(event: event)
                         } label: {
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(events[index].name)
+                                Text(event.name)
                                     .font(.system(size: 24, weight: .bold, design: .serif))
-                                
-                                Text(events[index].date)
-                                // location.circle
-                                Text(Image(systemName: "location.circle")) + Text(events[index].location)
+                                Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
                                     .font(.system(size: 10))
                             }
                         }
@@ -57,7 +54,9 @@ struct ContentView: View {
                             self.isPopoverPresented = false
                         }) {
                             Text(option)
+                                .font(.system(size: 30))
                         }
+                        Spacer()
                     }
                 }
                 .listStyle(GroupedListStyle())
@@ -71,10 +70,28 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    Text("\(Image(systemName: "arrowtriangle.left.fill")) \(getDayName(after: selectedDayIndex)) \(Image(systemName: "arrowtriangle.right.fill"))") // + Text(Image(systemName: "arrowtriangle.right.fill"))
-                        .foregroundColor(.gray)
-                        .font(.system(size: 16, weight: .bold, design: .monospaced))
-                        .animation(nil)
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            selectedDayIndex = (selectedDayIndex - 1) % days.count
+                        }) {
+                            Image(systemName: "arrowtriangle.left.fill")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                        }
+                        
+                        Text("\(getDayName(after: selectedDayIndex))")
+                            .foregroundColor(.gray)
+                            .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            .animation(nil)
+                        
+                        Button(action: {
+                            selectedDayIndex = (selectedDayIndex + 1) % days.count
+                        }) {
+                            Image(systemName: "arrowtriangle.right.fill")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                        }
+                    }
                 }
             }
             .actionSheet(isPresented: $isFilterSheetPresented) {
@@ -86,7 +103,9 @@ struct ContentView: View {
                     .cancel()])
             }
             .onAppear {
-                viewModel.listentoRealtimeDatabase()
+                if !viewModel.eventsLoaded {
+                    viewModel.listentoRealtimeDatabase()
+                }
             }
             .onDisappear {
                 viewModel.stopListening()
@@ -113,10 +132,10 @@ struct ContentView: View {
     var scrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
-                let categories = ["Music", "Shows", "Sports", "Food", "Art", "Festivals"]
+                let categories = ["All", "Music", "Shows", "Sports", "Food", "Art", "Festivals"]
                 ForEach(0..<6) { index in
                     Button {
-                        categorieIndex = index
+                        categoryIndex = index
                         // reloadData
                     } label: {
                         
@@ -124,7 +143,7 @@ struct ContentView: View {
                             .font(.headline)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 25)
-                            .background(categorieIndex == index ? Color.orange : Color.gray)
+                            .background(categoryIndex == index ? Color.orange : Color.gray)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -147,6 +166,20 @@ struct ContentView: View {
     
     private func updateNavigationTitle(_ option: String) {
         print("Hello")
+    }
+    
+    func getDayDate(after days: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
+        
+        guard let date = Calendar.current.date(byAdding: .day, value: days, to: Date()) else {
+            return ""
+        }
+        
+        let formattedDate = dateFormatter.string(from: date)
+        print("$$$ \(formattedDate)")
+        return formattedDate
+        
     }
 }
 

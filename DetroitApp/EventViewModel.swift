@@ -16,10 +16,16 @@ final class EventViewModel: ObservableObject {
         return ref
     }()
     
+    var eventsLoaded = false
+    
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
     func listentoRealtimeDatabase() {
+        guard !eventsLoaded else {
+            return // Data already loaded, no need to reload
+        }
+
         guard let databasePath = databasePath else {
             return
         }
@@ -27,7 +33,7 @@ final class EventViewModel: ObservableObject {
             .observe(.childAdded) { [weak self] snapshot in
                 guard
                     let self = self,
-                    let json = snapshot.value as? [String: Any]
+                    var json = snapshot.value as? [String: Any]
                 else {
                     return
                 }
@@ -39,6 +45,8 @@ final class EventViewModel: ObservableObject {
                     print("an error occurred", error)
                 }
             }
+        
+        eventsLoaded = true
     }
     
     func stopListening() {

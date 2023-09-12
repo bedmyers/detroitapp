@@ -35,7 +35,7 @@ struct EventView: View {
     
     var dateView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("DATE")
+            Text("DETAILS")
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(.gray)
             HorizontalDivider()
@@ -50,13 +50,23 @@ struct EventView: View {
                 .foregroundColor(.gray)
             HorizontalDivider()
             Text(event.location)
+            Text("")
+            Text(event.address)
         }
     }
     
     var imageView: some View {
-        AsyncImage(url: URL(string: event.image ?? ""))
-            //.resizable()
-            .frame(width: 500, height: 500)
+        AsyncImage(
+            url: URL(string: event.image ?? ""),
+            content: { image in
+                image.resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .frame(maxWidth: 500, maxHeight: 500)
+            },
+            placeholder: {
+                ProgressView()
+            }
+        )
     }
     
     var descriptionView: some View {
@@ -65,7 +75,8 @@ struct EventView: View {
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(.gray)
             HorizontalDivider()
-            Text(event.description ?? "")
+            
+            Text(event.processedDescription)
         }
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -78,9 +89,15 @@ struct EventView: View {
 }
 
 struct EventView_Previews: PreviewProvider {
-    @State static var event = Event(name: "Art Fair", date: "8-25-23", location: "Detroit", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Downtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: 0, timeStart: 700, timeEnd: 1100, rating: 5)
+    @State static var event = Event(name: "Art Fair", date: "8-25-23", location: "Detroit", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Downtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: "0", timeStart: "700", timeEnd: "1100", rating: "5")
     
     static var previews: some View {
         EventView(event: event)
+    }
+}
+
+extension String {
+    var paragraphs: [String] {
+        return self.components(separatedBy: .newlines).filter { !$0.isEmpty }
     }
 }
