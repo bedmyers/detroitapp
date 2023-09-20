@@ -18,10 +18,10 @@ struct Event: Decodable, Hashable {
     let website: String?
     let image: String?
     let description: String?
-    let price: String?
-    let timeStart: String?
-    let timeEnd: String?
-    let rating: String
+    let price: Int?
+    let timeStart: Int?
+    let timeEnd: Int?
+    let rating: Int
     
     var processedDescription: String {
         return description?.replacingOccurrences(of: "\\n\\n", with: "\n\n") ?? ""

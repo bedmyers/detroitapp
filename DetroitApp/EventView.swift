@@ -89,7 +89,7 @@ struct EventView: View {
 }
 
 struct EventView_Previews: PreviewProvider {
-    @State static var event = Event(name: "Art Fair", date: "8-25-23", location: "Detroit", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Downtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: "0", timeStart: "700", timeEnd: "1100", rating: "5")
+    @State static var event = Event(name: "Art Fair", date: "8-25-23", location: "Detroit", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Downtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: 0, timeStart: 700, timeEnd: 1100, rating: 5)
     
     static var previews: some View {
         EventView(event: event)

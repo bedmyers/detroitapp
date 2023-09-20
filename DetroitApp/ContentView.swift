@@ -14,13 +14,13 @@ struct ContentView: View {
     @StateObject private var viewModel = EventViewModel()
     @State private var eventData: [Event]?
     @State private var selectedDayIndex = 0
-    @State private var categoryIndex = 0
     @State private var isFilterSheetPresented = false
     @State private var isFilterLocationSheetPresented = false
     @State private var isPopoverPresented = false
     @State private var selectedOption = "Detroit"
+    @State private var selectedCategory = "All"
     @GestureState private var translation: CGFloat = 0
-    let dropdownOptions = ["Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District"]
+    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District"]
     
     var body: some View {
         let events = viewModel.events
@@ -30,7 +30,16 @@ struct ContentView: View {
                 scrollView
                     .padding(10)
                 List {
-                    ForEach(events.filter { $0.dayOfWeek == getDayName(after: selectedDayIndex) && $0.date ==  getDayDate(after: selectedDayIndex) }, id: \.self) { event in
+                    ForEach(events.filter { event in
+                        let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
+                        let matchesLocation = selectedOption == "Detroit" ||
+                                             (selectedOption != "Detroit" && event.neighborhood == selectedOption)
+
+                        return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
+                               event.date == getDayDate(after: selectedDayIndex) &&
+                               matchesCategory &&
+                               matchesLocation
+                    }, id: \.self) { event in
                         NavigationLink {
                             EventView(event: event)
                         } label: {
@@ -49,14 +58,16 @@ struct ContentView: View {
             .popover(isPresented: $isPopoverPresented, arrowEdge: .top) {
                 VStack {
                     ForEach(dropdownOptions, id: \.self) { option in
-                        Button(action: {
-                            self.selectedOption = option
-                            self.isPopoverPresented = false
-                        }) {
-                            Text(option)
-                                .font(.system(size: 30))
+                        if option != selectedOption {
+                            Button(action: {
+                                self.selectedOption = option
+                                self.isPopoverPresented = false
+                            }) {
+                                Text(option)
+                                    .font(.system(size: 30))
+                            }
+                            Spacer()
                         }
-                        Spacer()
                     }
                 }
                 .listStyle(GroupedListStyle())
@@ -133,19 +144,30 @@ struct ContentView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
                 let categories = ["All", "Music", "Shows", "Sports", "Food", "Art", "Festivals"]
-                ForEach(0..<6) { index in
+                ForEach(0..<7) { index in
                     Button {
-                        categoryIndex = index
-                        // reloadData
+                        selectedCategory = categories[index]
                     } label: {
-                        
-                        Text(categories[index])
-                            .font(.headline)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 25)
-                            .background(categoryIndex == index ? Color.orange : Color.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        ZStack {
+                            if selectedCategory == categories[index] {
+                                Color.purple
+                                    .cornerRadius(10)
+                            } else {
+                                Color.white
+                                    .cornerRadius(10)
+                            }
+                            Image(categories[index])
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
+                        .frame(width: 45, height: 45)
+                        .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 5))
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 5)
                     }
                 }
             }
@@ -153,9 +175,6 @@ struct ContentView: View {
     }
     
     func getDayName(after days: Int) -> String {
-        if days == 0 {
-            return "Today"
-        }
         let calendar = Calendar.current
         let today = Date()
         let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
@@ -170,14 +189,13 @@ struct ContentView: View {
     
     func getDayDate(after days: Int) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yy"
+        dateFormatter.dateFormat = "M/dd/yy"
         
         guard let date = Calendar.current.date(byAdding: .day, value: days, to: Date()) else {
             return ""
         }
         
         let formattedDate = dateFormatter.string(from: date)
-        print("$$$ \(formattedDate)")
         return formattedDate
         
     }
