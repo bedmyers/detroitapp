@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CustomNavigationBar: View {
+    @Environment(\.colorScheme) var colorScheme
     @Binding var title: String
     @Binding var isPopoverPresented: Bool
     
@@ -21,7 +22,7 @@ struct CustomNavigationBar: View {
                 Image(systemName: "chevron.down")
             }
         }
-        .foregroundColor(.black)
+        .foregroundColor(colorScheme == .dark ? .white : .black)
     }
 }
 

@@ -13,11 +13,16 @@ struct EventView: View {
         ScrollView(.vertical) {
             VStack {
                 imageView
+                titleView
                 dateView
                     .padding(10)
                     .padding(.leading, 50)
                     .padding(.trailing, 50)
                 locationView
+                    .padding(10)
+                    .padding(.leading, 50)
+                    .padding(.trailing, 50)
+                priceView
                     .padding(10)
                     .padding(.leading, 50)
                     .padding(.trailing, 50)
@@ -33,24 +38,46 @@ struct EventView: View {
         }
     }
     
-    var dateView: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("DETAILS")
+    var titleView: some View {
+        VStack {
+            Text(event.name)
+                .font(.system(size: 30, weight: .bold, design: .monospaced))
+        }
+    }
+    
+    var priceView: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text("PRICE")
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(.gray)
             HorizontalDivider()
-            Text(event.date)
+            if event.price == 0 {
+                Text("Free")
+            } else {
+                Text("$" + String(event.price ?? 0))
+            }
+        }
+    }
+    
+    var dateView: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text("TIME")
+                .font(.system(size: 24, weight: .bold, design: .monospaced))
+                .foregroundColor(.gray)
+            HorizontalDivider()
+            Text(event.formattedDate)
+            Text("\(event.formattedTimes.0) - \(event.formattedTimes.1)")
         }
     }
     
     var locationView: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 5) {
             Text("LOCATION")
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(.gray)
             HorizontalDivider()
+            Text(event.neighborhood)
             Text(event.location)
-            Text("")
             Text(event.address)
         }
     }
@@ -70,8 +97,8 @@ struct EventView: View {
     }
     
     var descriptionView: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("DESCRIPTION")
+        VStack(alignment: .leading, spacing: 5) {
+            Text("ABOUT")
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(.gray)
             HorizontalDivider()
@@ -82,14 +109,14 @@ struct EventView: View {
     }
     
     var linkView: some View {
-        Link("TICKETS", destination: URL(string: event.website ?? "")!)
+        Link("WEBSITE", destination: URL(string: event.website ?? "")!)
             .font(.system(size: 30, weight: .bold, design: .monospaced))
             .foregroundColor(.orange)
     }
 }
 
 struct EventView_Previews: PreviewProvider {
-    @State static var event = Event(name: "Art Fair", date: "8-25-23", location: "Detroit", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Downtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: 0, timeStart: 700, timeEnd: 1100, rating: 5)
+    @State static var event = Event(name: "Art Fair", date: "8/25/23", location: "Detroit Institute of Arts", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Midtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: 5, timeStart: 700, timeEnd: 1100, rating: 5)
     
     static var previews: some View {
         EventView(event: event)

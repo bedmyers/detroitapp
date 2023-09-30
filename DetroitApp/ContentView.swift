@@ -11,6 +11,7 @@ struct ContentView: View {
     
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = EventViewModel()
     @State private var eventData: [Event]?
     @State private var selectedDayIndex = 0
@@ -56,30 +57,42 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: CustomNavigationBar(title: $selectedOption, isPopoverPresented: $isPopoverPresented))
             .popover(isPresented: $isPopoverPresented, arrowEdge: .top) {
-                VStack {
-                    ForEach(dropdownOptions, id: \.self) { option in
-                        if option != selectedOption {
-                            Button(action: {
-                                self.selectedOption = option
-                                self.isPopoverPresented = false
-                            }) {
-                                Text(option)
-                                    .font(.system(size: 30))
+                ZStack {
+                    Color(UIColor.systemBackground)
+                        .ignoresSafeArea()
+                    
+                    VStack {
+                        ForEach(dropdownOptions, id: \.self) { option in
+                            if option != selectedOption {
+                                Button(action: {
+                                    self.selectedOption = option
+                                    self.isPopoverPresented = false
+                                }) {
+                                    Text(option)
+                                        .font(.system(size: 24, weight: .semibold))
+                                        .foregroundColor(.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.vertical, 12)
+                                        .padding(.horizontal, 24)
+                                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.accentColor))
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 8)
                             }
-                            Spacer()
                         }
+                        Spacer()
                     }
                 }
-                .listStyle(GroupedListStyle())
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                /*ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isFilterSheetPresented = true
                     } label: {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                     }
-                }
+                }*/
                 ToolbarItem(placement: .bottomBar) {
                     HStack(spacing: 20) {
                         Button(action: {
@@ -165,7 +178,7 @@ struct ContentView: View {
                         }
                         .frame(width: 45, height: 45)
                         .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 5))
+                            .stroke(modeColor(), lineWidth: 5))
                         .padding(.vertical, 5)
                         .padding(.horizontal, 5)
                     }
@@ -198,6 +211,10 @@ struct ContentView: View {
         let formattedDate = dateFormatter.string(from: date)
         return formattedDate
         
+    }
+    
+    func modeColor() -> Color {
+        return colorScheme == .dark ? .white : .black
     }
 }
 
