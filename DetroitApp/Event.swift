@@ -18,7 +18,7 @@ struct Event: Decodable, Hashable {
     let website: String?
     let image: String?
     let description: String?
-    let price: Int?
+    let price: String?
     let timeStart: Int?
     let timeEnd: Int?
     let rating: Int
