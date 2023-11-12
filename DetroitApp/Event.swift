@@ -22,9 +22,21 @@ struct Event: Decodable, Hashable {
     let timeStart: Int?
     let timeEnd: Int?
     let rating: Int
+    let type: String?
     
     var processedDescription: String {
         return description?.replacingOccurrences(of: "\\n\\n", with: "\n\n") ?? ""
+    }
+    
+    var fullDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/d/yy"
+        
+        if let eventDate = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = "MM/dd/yy"
+            return dateFormatter.string(from: eventDate)
+        }
+        return date
     }
     
     var formattedDate: String {

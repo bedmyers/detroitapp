@@ -21,7 +21,7 @@ struct ContentView: View {
     @State private var selectedOption = "Detroit"
     @State private var selectedCategory = "All"
     @GestureState private var translation: CGFloat = 0
-    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District"]
+    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District", "Greektown", "Rivertown"]
     
     var body: some View {
         let events = viewModel.events
@@ -37,7 +37,7 @@ struct ContentView: View {
                                              (selectedOption != "Detroit" && event.neighborhood == selectedOption)
 
                         return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
-                               event.date == getDayDate(after: selectedDayIndex) &&
+                               event.fullDate == getDayDate(after: selectedDayIndex) &&
                                matchesCategory &&
                                matchesLocation
                     }, id: \.self) { event in
@@ -47,6 +47,9 @@ struct ContentView: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(event.name)
                                     .font(.system(size: 24, weight: .bold, design: .serif))
+                                Text(event.type ?? "")
+                                    .font(.system(size: 10))
+                                    .italic()
                                 Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
                                     .font(.system(size: 10))
                             }
@@ -97,6 +100,9 @@ struct ContentView: View {
                     HStack(spacing: 20) {
                         Button(action: {
                             selectedDayIndex = (selectedDayIndex - 1) % days.count
+                            if selectedDayIndex == -1 {
+                                selectedDayIndex = 6
+                            }
                         }) {
                             Image(systemName: "arrowtriangle.left.fill")
                                 .foregroundColor(.gray)
