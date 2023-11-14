@@ -9,6 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     
+    enum SortingCriteria: String, CaseIterable {
+        case price = "Price"
+        case timeStart = "Start Time"
+        case rating = "None"
+    }
+    
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
     @Environment(\.colorScheme) var colorScheme
@@ -20,29 +26,42 @@ struct ContentView: View {
     @State private var isPopoverPresented = false
     @State private var selectedOption = "Detroit"
     @State private var selectedCategory = "All"
+    @State private var sortingCriteria: SortingCriteria = .rating
     @GestureState private var translation: CGFloat = 0
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District", "Greektown", "Rivertown"]
     
     var body: some View {
         let events = viewModel.events
         
+        var sortedEvents: [Event] {
+            let filteredEvents = events.filter { event in
+                let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
+                let matchesLocation = selectedOption == "Detroit" || (selectedOption != "Detroit" && event.neighborhood == selectedOption)
+
+                return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
+                       event.fullDate == getDayDate(after: selectedDayIndex) &&
+                       matchesCategory &&
+                       matchesLocation
+            }
+
+            switch sortingCriteria {
+            case .price:
+                return filteredEvents.sorted { $0.priceInt ?? 0 < $1.priceInt ?? 0 }
+            case .timeStart:
+                return filteredEvents.sorted { $0.timeStart ?? 0 < $1.timeStart ?? 0 }
+            case .rating:
+                return filteredEvents.sorted { $0.rating > $1.rating }
+            }
+        }
+        
         NavigationView {
             VStack {
                 scrollView
                     .padding(10)
                 List {
-                    ForEach(events.filter { event in
-                        let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
-                        let matchesLocation = selectedOption == "Detroit" ||
-                                             (selectedOption != "Detroit" && event.neighborhood == selectedOption)
-
-                        return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
-                               event.fullDate == getDayDate(after: selectedDayIndex) &&
-                               matchesCategory &&
-                               matchesLocation
-                    }, id: \.self) { event in
-                        NavigationLink {
-                            EventView(event: event)
+                    ForEach(sortedEvents, id: \.self) { event in
+                         NavigationLink {
+                             EventView(event: event)
                         } label: {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(event.name)
@@ -64,6 +83,14 @@ struct ContentView: View {
                         .ignoresSafeArea()
                     
                     VStack {
+                        Text("Select a Neighborhood")
+                            .font(.custom("ExoRoman-Bold", size: 30))
+                            .foregroundColor(.purple)
+                            .padding(.top, 20)
+                            .padding(.horizontal, 24)
+
+                        Divider() // Divider under the title
+
                         ForEach(dropdownOptions, id: \.self) { option in
                             if option != selectedOption {
                                 Button(action: {
@@ -72,18 +99,26 @@ struct ContentView: View {
                                 }) {
                                     Text(option)
                                         .font(.custom("ExoRoman-SemiBold", size: 24))
+                                        .foregroundColor(modeColor())
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.vertical, 12)
                                         .padding(.horizontal, 24)
-                                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.accentColor))
+                                        .cornerRadius(5) // Optional for a slight rounded corner effect
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .background(selectedOption == option ? Color.purple : Color.clear) // Moved outside the button
                                 .padding(.horizontal, 16)
                                 .padding(.bottom, 8)
+                                if option != dropdownOptions.last {
+                                    Divider()
+                                        .padding(.horizontal, 16)
+                                }
                             }
                         }
                         Spacer()
                     }
+                    .background(Color(UIColor.systemBackground))
+                    .padding(.horizontal)
                 }
             }
             .toolbar {
@@ -124,11 +159,17 @@ struct ContentView: View {
             }
             .actionSheet(isPresented: $isFilterSheetPresented) {
                 ActionSheet(title: Text("Filter Options"), buttons: [
-                    .default(Text("Time"), action: {
-                        isFilterLocationSheetPresented = true
+                    .default(Text("Sort by Time"), action: {
+                        sortingCriteria = .timeStart
                     }),
-                    .default(Text("Price")),
-                    .cancel()])
+                    .default(Text("Sort by Price"), action: {
+                        sortingCriteria = .price
+                    }),
+                    .default(Text("Sort by Rating"), action: {
+                        sortingCriteria = .rating
+                    }),
+                    .cancel()
+                ])
             }
             .onAppear {
                 if !viewModel.eventsLoaded {

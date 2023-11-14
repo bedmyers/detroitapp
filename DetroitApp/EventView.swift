@@ -120,12 +120,12 @@ struct EventView: View {
     var linkView: some View {
         Link("WEBSITE", destination: URL(string: event.website ?? "")!)
             .font(.custom("ExoRoman-Black", size: 30))
-            .foregroundColor(.orange)
+            .foregroundColor(.purple)
     }
 }
 
 struct EventView_Previews: PreviewProvider {
-    @State static var event = Event(name: "Art Fair", date: "8/25/23", location: "Detroit Institute of Arts", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Midtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: "5", timeStart: 700, timeEnd: 1100, rating: 5, type: "Concert")
+    @State static var event = Event(name: "Art Fair", date: "8/25/23", location: "Detroit Institute of Arts", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Midtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: "5", timeStart: 700, timeEnd: 1100, rating: 5, type: "Concert", priceInt: 0)
     
     static var previews: some View {
         EventView(event: event)
