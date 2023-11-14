@@ -44,14 +44,13 @@ struct ContentView: View {
                         NavigationLink {
                             EventView(event: event)
                         } label: {
-                            VStack(alignment: .leading, spacing: 5) {
+                            VStack(alignment: .leading, spacing: 6) {
                                 Text(event.name)
-                                    .font(.system(size: 24, weight: .bold, design: .serif))
-                                Text(event.type ?? "")
-                                    .font(.system(size: 10))
-                                    .italic()
+                                    .font(.custom("ExoRoman-Bold", size: 24))
+                                Text(Image(systemName: "sparkles")) + Text(event.type ?? "")
+                                    .font(.custom("ExoItalic-Regular", size: 14))
                                 Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
-                                    .font(.system(size: 10))
+                                    .font(.custom("ExoRoman-Regular", size: 14))
                             }
                         }
                     }
@@ -72,8 +71,7 @@ struct ContentView: View {
                                     self.isPopoverPresented = false
                                 }) {
                                     Text(option)
-                                        .font(.system(size: 24, weight: .semibold))
-                                        .foregroundColor(.primary)
+                                        .font(.custom("ExoRoman-SemiBold", size: 24))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.vertical, 12)
                                         .padding(.horizontal, 24)
@@ -89,13 +87,13 @@ struct ContentView: View {
                 }
             }
             .toolbar {
-                /*ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isFilterSheetPresented = true
                     } label: {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                     }
-                }*/
+                }
                 ToolbarItem(placement: .bottomBar) {
                     HStack(spacing: 20) {
                         Button(action: {
@@ -106,12 +104,12 @@ struct ContentView: View {
                         }) {
                             Image(systemName: "arrowtriangle.left.fill")
                                 .foregroundColor(.gray)
-                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                                .font(.custom("ExoRoman-Bold", size: 16))
                         }
                         
                         Text("\(getDayName(after: selectedDayIndex))")
                             .foregroundColor(.gray)
-                            .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            .font(.custom("ExoRoman-Bold", size: 16))
                             .animation(nil)
                         
                         Button(action: {
@@ -119,17 +117,17 @@ struct ContentView: View {
                         }) {
                             Image(systemName: "arrowtriangle.right.fill")
                                 .foregroundColor(.gray)
-                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                                .font(.custom("ExoRoman-Bold", size: 16))
                         }
                     }
                 }
             }
             .actionSheet(isPresented: $isFilterSheetPresented) {
                 ActionSheet(title: Text("Filter Options"), buttons: [
-                    .default(Text("Location"), action: {
+                    .default(Text("Time"), action: {
                         isFilterLocationSheetPresented = true
                     }),
-                    .default(Text("Cost")),
+                    .default(Text("Price")),
                     .cancel()])
             }
             .onAppear {
@@ -222,6 +220,12 @@ struct ContentView: View {
     func modeColor() -> Color {
         return colorScheme == .dark ? .white : .black
     }
+    
+    /*func mapsURL(for address: String) -> URL {
+        let formattedAddress = address + ", Detroit, MI"
+         let encodedAddress = formattedAddress.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+         return URL(string: "http://maps.apple.com/?address=\(encodedAddress)")!
+     }*/
 }
 
 struct ContentView_Previews: PreviewProvider {

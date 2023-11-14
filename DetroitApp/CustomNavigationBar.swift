@@ -18,7 +18,7 @@ struct CustomNavigationBar: View {
         }) {
             HStack {
                 Text(title)
-                    .font(.system(size: 36, weight: .bold, design: .default))
+                    .font(.custom("ExoRoman-Bold", size: 36))
                 Image(systemName: "chevron.down")
             }
         }
