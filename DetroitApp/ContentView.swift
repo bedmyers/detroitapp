@@ -78,49 +78,52 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: CustomNavigationBar(title: $selectedOption, isPopoverPresented: $isPopoverPresented))
             .popover(isPresented: $isPopoverPresented, arrowEdge: .top) {
-                ZStack {
-                    Color(UIColor.systemBackground)
-                        .ignoresSafeArea()
-                    
-                    VStack {
-                        Text("Select a Neighborhood")
-                            .font(.custom("ExoRoman-Bold", size: 30))
-                            .foregroundColor(.purple)
-                            .padding(.top, 20)
-                            .padding(.horizontal, 24)
+                GeometryReader { geometry in
+                    ZStack {
+                        Color(UIColor.systemBackground)
+                            .ignoresSafeArea()
+                        
+                        VStack {
+                            Text("Select a Neighborhood")
+                                .font(.custom("ExoRoman-Bold", size: geometry.size.width * 0.08))
+                                .foregroundColor(.purple)
+                                .padding(.top, geometry.size.height * 0.02) // Dynamic padding
+                                .padding(.horizontal)
 
-                        Divider() // Divider under the title
+                            Divider() // Divider under the title
 
-                        ForEach(dropdownOptions, id: \.self) { option in
-                            if option != selectedOption {
-                                Button(action: {
-                                    self.selectedOption = option
-                                    self.isPopoverPresented = false
-                                }) {
-                                    Text(option)
-                                        .font(.custom("ExoRoman-SemiBold", size: 24))
-                                        .foregroundColor(modeColor())
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.vertical, 12)
-                                        .padding(.horizontal, 24)
-                                        .cornerRadius(5) // Optional for a slight rounded corner effect
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .background(selectedOption == option ? Color.purple : Color.clear) // Moved outside the button
-                                .padding(.horizontal, 16)
-                                .padding(.bottom, 8)
-                                if option != dropdownOptions.last {
-                                    Divider()
-                                        .padding(.horizontal, 16)
+                            ForEach(dropdownOptions, id: \.self) { option in
+                                if option != selectedOption {
+                                    Button(action: {
+                                        self.selectedOption = option
+                                        self.isPopoverPresented = false
+                                    }) {
+                                        Text(option)
+                                            .font(.custom("ExoRoman-Regular", size: geometry.size.width * 0.06))
+                                            .foregroundColor(modeColor())
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.vertical, 12)
+                                            .padding(.horizontal)
+                                            .cornerRadius(5)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .background(selectedOption == option ? Color.purple : Color.clear)
+                                    .padding(.horizontal, geometry.size.width * 0.04) // Dynamic padding
+                                    .padding(.bottom, 8)
+                                    if option != dropdownOptions.last {
+                                        Divider()
+                                            .padding(.horizontal)
+                                    }
                                 }
                             }
+                            Spacer()
                         }
-                        Spacer()
+                        .background(Color(UIColor.systemBackground))
+                        .padding(.horizontal)
                     }
-                    .background(Color(UIColor.systemBackground))
-                    .padding(.horizontal)
                 }
             }
+
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
