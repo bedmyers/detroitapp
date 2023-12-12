@@ -56,8 +56,8 @@ struct ContentView: View {
         
         NavigationView {
             VStack {
-                scrollView
-                    .padding(10)
+                headerView
+                
                 List {
                     ForEach(sortedEvents, id: \.self) { event in
                          NavigationLink {
@@ -66,8 +66,8 @@ struct ContentView: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(event.name)
                                     .font(.custom("ExoRoman-Bold", size: 24))
-                                Text(Image(systemName: "sparkles")) + Text(event.type ?? "")
-                                    .font(.custom("ExoItalic-Regular", size: 14))
+                                Text("      \(event.type ?? "")")
+                                    .font(.custom("ExoItalic-Regular", size: 16))
                                 Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
                                     .font(.custom("ExoRoman-Regular", size: 14))
                             }
@@ -86,7 +86,7 @@ struct ContentView: View {
                         VStack {
                             Text("Select a Neighborhood")
                                 .font(.custom("ExoRoman-Bold", size: geometry.size.width * 0.08))
-                                .foregroundColor(.purple)
+                                .foregroundColor(.gray)
                                 .padding(.top, geometry.size.height * 0.02) // Dynamic padding
                                 .padding(.horizontal)
 
@@ -107,7 +107,7 @@ struct ContentView: View {
                                             .cornerRadius(5)
                                     }
                                     .buttonStyle(PlainButtonStyle())
-                                    .background(selectedOption == option ? Color.purple : Color.clear)
+                                    .background(selectedOption == option ? Color.gray : Color.clear)
                                     .padding(.horizontal, geometry.size.width * 0.04) // Dynamic padding
                                     .padding(.bottom, 8)
                                     if option != dropdownOptions.last {
@@ -132,7 +132,7 @@ struct ContentView: View {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                     }
                 }
-                ToolbarItem(placement: .bottomBar) {
+                /*ToolbarItem(placement: .bottomBar) {
                     HStack(spacing: 20) {
                         Button(action: {
                             selectedDayIndex = (selectedDayIndex - 1) % days.count
@@ -158,7 +158,7 @@ struct ContentView: View {
                                 .font(.custom("ExoRoman-Bold", size: 16))
                         }
                     }
-                }
+                }*/
             }
             .actionSheet(isPresented: $isFilterSheetPresented) {
                 ActionSheet(title: Text("Filter Options"), buttons: [
@@ -188,7 +188,7 @@ struct ContentView: View {
                         state = value.translation.width
                     }
                     .onEnded { value in
-                        let threshold = UIScreen.main.bounds.width / 2
+                        let threshold = UIScreen.main.bounds.width / 6
                         if value.translation.width < -threshold {
                             // Swiped left
                             selectedDayIndex = (selectedDayIndex + 1) % days.count
@@ -201,6 +201,29 @@ struct ContentView: View {
         }
     }
     
+    var titleDateView: some View {
+        VStack {
+            Text(getDateString(after: selectedDayIndex))
+                .font(.custom("ExoRoman-Bold", size: 24))
+                .foregroundColor(.gray)
+        }
+    }
+    
+    var headerView: some View {
+        VStack {
+            scrollView
+                .padding(5)
+                .background(Color(red: 255.0 / 255.0, green: 204.0 / 255.0, blue: 71.0 / 255.0))
+            GeometryReader { geometry in
+                Divider()
+                    .frame(width: geometry.size.width * 4/5, height: 4)
+                    .background(Color.gray)
+            }
+            .frame(height: 4)
+            titleDateView
+        }
+    }  
+    
     var scrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
@@ -211,7 +234,7 @@ struct ContentView: View {
                     } label: {
                         ZStack {
                             if selectedCategory == categories[index] {
-                                Color.purple
+                                Color.gray
                                     .cornerRadius(10)
                             } else {
                                 Color.white
@@ -259,6 +282,16 @@ struct ContentView: View {
         let formattedDate = dateFormatter.string(from: date)
         return formattedDate
         
+    }
+    
+    func getDateString(after days: Int) -> String {
+        let calendar = Calendar.current
+        let today = Date()
+        let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d"
+        return dateFormatter.string(from: nextDay)
     }
     
     func modeColor() -> Color {

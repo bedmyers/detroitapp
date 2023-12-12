@@ -13,6 +13,11 @@ struct EventView: View {
         ScrollView(.vertical) {
             VStack {
                 imageView
+                    .padding(.leading, 25)
+                    .padding(.trailing, 25)
+                titleView
+                    .padding(.leading, 25)
+                    .padding(.trailing, 25)
                 dateView
                     .padding(10)
                     .padding(.leading, 25)
@@ -35,7 +40,6 @@ struct EventView: View {
                 linkView
                     .padding(.bottom, 10)
             }
-            .navigationTitle(event.name)
         }
     }
     
@@ -97,6 +101,9 @@ struct EventView: View {
                 image.resizable()
                      .aspectRatio(contentMode: .fit)
                      .frame(maxWidth: 500, maxHeight: 500)
+                     .border(Color.purple, width: 2)
+                     .cornerRadius(10)
+                     .shadow(color: .gray, radius: 5, x: 10, y: 10)
             },
             placeholder: {
                 ProgressView()
