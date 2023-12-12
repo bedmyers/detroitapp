@@ -9,6 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     
+    enum SortingCriteria: String, CaseIterable {
+        case price = "Price"
+        case timeStart = "Start Time"
+        case rating = "None"
+    }
+    
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
     @Environment(\.colorScheme) var colorScheme
@@ -20,38 +26,50 @@ struct ContentView: View {
     @State private var isPopoverPresented = false
     @State private var selectedOption = "Detroit"
     @State private var selectedCategory = "All"
+    @State private var sortingCriteria: SortingCriteria = .rating
     @GestureState private var translation: CGFloat = 0
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District", "Greektown", "Rivertown"]
     
     var body: some View {
         let events = viewModel.events
         
+        var sortedEvents: [Event] {
+            let filteredEvents = events.filter { event in
+                let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
+                let matchesLocation = selectedOption == "Detroit" || (selectedOption != "Detroit" && event.neighborhood == selectedOption)
+
+                return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
+                       event.fullDate == getDayDate(after: selectedDayIndex) &&
+                       matchesCategory &&
+                       matchesLocation
+            }
+
+            switch sortingCriteria {
+            case .price:
+                return filteredEvents.sorted { $0.priceInt ?? 0 < $1.priceInt ?? 0 }
+            case .timeStart:
+                return filteredEvents.sorted { $0.timeStart ?? 0 < $1.timeStart ?? 0 }
+            case .rating:
+                return filteredEvents.sorted { $0.rating > $1.rating }
+            }
+        }
+        
         NavigationView {
             VStack {
-                scrollView
-                    .padding(10)
+                headerView
+                
                 List {
-                    ForEach(events.filter { event in
-                        let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
-                        let matchesLocation = selectedOption == "Detroit" ||
-                                             (selectedOption != "Detroit" && event.neighborhood == selectedOption)
-
-                        return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
-                               event.fullDate == getDayDate(after: selectedDayIndex) &&
-                               matchesCategory &&
-                               matchesLocation
-                    }, id: \.self) { event in
-                        NavigationLink {
-                            EventView(event: event)
+                    ForEach(sortedEvents, id: \.self) { event in
+                         NavigationLink {
+                             EventView(event: event)
                         } label: {
-                            VStack(alignment: .leading, spacing: 5) {
+                            VStack(alignment: .leading, spacing: 6) {
                                 Text(event.name)
-                                    .font(.system(size: 24, weight: .bold, design: .serif))
-                                Text(event.type ?? "")
-                                    .font(.system(size: 10))
-                                    .italic()
+                                    .font(.custom("ExoRoman-Bold", size: 24))
+                                Text("      \(event.type ?? "")")
+                                    .font(.custom("ExoItalic-Regular", size: 16))
                                 Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
-                                    .font(.system(size: 10))
+                                    .font(.custom("ExoRoman-Regular", size: 14))
                             }
                         }
                     }
@@ -60,43 +78,61 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: CustomNavigationBar(title: $selectedOption, isPopoverPresented: $isPopoverPresented))
             .popover(isPresented: $isPopoverPresented, arrowEdge: .top) {
-                ZStack {
-                    Color(UIColor.systemBackground)
-                        .ignoresSafeArea()
-                    
-                    VStack {
-                        ForEach(dropdownOptions, id: \.self) { option in
-                            if option != selectedOption {
-                                Button(action: {
-                                    self.selectedOption = option
-                                    self.isPopoverPresented = false
-                                }) {
-                                    Text(option)
-                                        .font(.system(size: 24, weight: .semibold))
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.vertical, 12)
-                                        .padding(.horizontal, 24)
-                                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.accentColor))
+                GeometryReader { geometry in
+                    ZStack {
+                        Color(UIColor.systemBackground)
+                            .ignoresSafeArea()
+                        
+                        VStack {
+                            Text("Select a Neighborhood")
+                                .font(.custom("ExoRoman-Bold", size: geometry.size.width * 0.08))
+                                .foregroundColor(.gray)
+                                .padding(.top, geometry.size.height * 0.02) // Dynamic padding
+                                .padding(.horizontal)
+
+                            Divider() // Divider under the title
+
+                            ForEach(dropdownOptions, id: \.self) { option in
+                                if option != selectedOption {
+                                    Button(action: {
+                                        self.selectedOption = option
+                                        self.isPopoverPresented = false
+                                    }) {
+                                        Text(option)
+                                            .font(.custom("ExoRoman-Regular", size: geometry.size.width * 0.06))
+                                            .foregroundColor(modeColor())
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.vertical, 12)
+                                            .padding(.horizontal)
+                                            .cornerRadius(5)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .background(selectedOption == option ? Color.gray : Color.clear)
+                                    .padding(.horizontal, geometry.size.width * 0.04) // Dynamic padding
+                                    .padding(.bottom, 8)
+                                    if option != dropdownOptions.last {
+                                        Divider()
+                                            .padding(.horizontal)
+                                    }
                                 }
-                                .buttonStyle(PlainButtonStyle())
-                                .padding(.horizontal, 16)
-                                .padding(.bottom, 8)
                             }
+                            Spacer()
                         }
-                        Spacer()
+                        .background(Color(UIColor.systemBackground))
+                        .padding(.horizontal)
                     }
                 }
             }
+
             .toolbar {
-                /*ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isFilterSheetPresented = true
                     } label: {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                     }
-                }*/
-                ToolbarItem(placement: .bottomBar) {
+                }
+                /*ToolbarItem(placement: .bottomBar) {
                     HStack(spacing: 20) {
                         Button(action: {
                             selectedDayIndex = (selectedDayIndex - 1) % days.count
@@ -106,12 +142,12 @@ struct ContentView: View {
                         }) {
                             Image(systemName: "arrowtriangle.left.fill")
                                 .foregroundColor(.gray)
-                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                                .font(.custom("ExoRoman-Bold", size: 16))
                         }
                         
                         Text("\(getDayName(after: selectedDayIndex))")
                             .foregroundColor(.gray)
-                            .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            .font(.custom("ExoRoman-Bold", size: 16))
                             .animation(nil)
                         
                         Button(action: {
@@ -119,18 +155,24 @@ struct ContentView: View {
                         }) {
                             Image(systemName: "arrowtriangle.right.fill")
                                 .foregroundColor(.gray)
-                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                                .font(.custom("ExoRoman-Bold", size: 16))
                         }
                     }
-                }
+                }*/
             }
             .actionSheet(isPresented: $isFilterSheetPresented) {
                 ActionSheet(title: Text("Filter Options"), buttons: [
-                    .default(Text("Location"), action: {
-                        isFilterLocationSheetPresented = true
+                    .default(Text("Sort by Time"), action: {
+                        sortingCriteria = .timeStart
                     }),
-                    .default(Text("Cost")),
-                    .cancel()])
+                    .default(Text("Sort by Price"), action: {
+                        sortingCriteria = .price
+                    }),
+                    .default(Text("Sort by Rating"), action: {
+                        sortingCriteria = .rating
+                    }),
+                    .cancel()
+                ])
             }
             .onAppear {
                 if !viewModel.eventsLoaded {
@@ -146,7 +188,7 @@ struct ContentView: View {
                         state = value.translation.width
                     }
                     .onEnded { value in
-                        let threshold = UIScreen.main.bounds.width / 2
+                        let threshold = UIScreen.main.bounds.width / 6
                         if value.translation.width < -threshold {
                             // Swiped left
                             selectedDayIndex = (selectedDayIndex + 1) % days.count
@@ -159,6 +201,29 @@ struct ContentView: View {
         }
     }
     
+    var titleDateView: some View {
+        VStack {
+            Text(getDateString(after: selectedDayIndex))
+                .font(.custom("ExoRoman-Bold", size: 24))
+                .foregroundColor(.gray)
+        }
+    }
+    
+    var headerView: some View {
+        VStack {
+            scrollView
+                .padding(5)
+                .background(Color(red: 255.0 / 255.0, green: 204.0 / 255.0, blue: 71.0 / 255.0))
+            GeometryReader { geometry in
+                Divider()
+                    .frame(width: geometry.size.width * 4/5, height: 4)
+                    .background(Color.gray)
+            }
+            .frame(height: 4)
+            titleDateView
+        }
+    }  
+    
     var scrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
@@ -169,7 +234,7 @@ struct ContentView: View {
                     } label: {
                         ZStack {
                             if selectedCategory == categories[index] {
-                                Color.purple
+                                Color.gray
                                     .cornerRadius(10)
                             } else {
                                 Color.white
@@ -219,9 +284,25 @@ struct ContentView: View {
         
     }
     
+    func getDateString(after days: Int) -> String {
+        let calendar = Calendar.current
+        let today = Date()
+        let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d"
+        return dateFormatter.string(from: nextDay)
+    }
+    
     func modeColor() -> Color {
         return colorScheme == .dark ? .white : .black
     }
+    
+    /*func mapsURL(for address: String) -> URL {
+        let formattedAddress = address + ", Detroit, MI"
+         let encodedAddress = formattedAddress.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+         return URL(string: "http://maps.apple.com/?address=\(encodedAddress)")!
+     }*/
 }
 
 struct ContentView_Previews: PreviewProvider {

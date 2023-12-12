@@ -23,6 +23,7 @@ struct Event: Decodable, Hashable {
     let timeEnd: Int?
     let rating: Int
     let type: String?
+    let priceInt: Int?
     
     var processedDescription: String {
         return description?.replacingOccurrences(of: "\\n\\n", with: "\n\n") ?? ""

@@ -12,7 +12,10 @@
 		5B4347522A60D73F000CB1A6 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 5B4347512A60D73F000CB1A6 /* FirebaseDatabase */; };
 		5B4347542A60D73F000CB1A6 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5B4347532A60D73F000CB1A6 /* FirebaseDatabaseSwift */; };
 		5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4347552A60E251000CB1A6 /* EventViewModel.swift */; };
+		5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B52356C2B184EB40044AC4E /* CustomColors.swift */; };
 		5BEC5BB32A89E4430058FEC8 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */; };
+		5BF67DB92B017C37004CACD5 /* Playfair_Display in Resources */ = {isa = PBXBuildFile; fileRef = 5BF67DB82B017C37004CACD5 /* Playfair_Display */; };
+		5BF67DBD2B0181F7004CACD5 /* Exo in Resources */ = {isa = PBXBuildFile; fileRef = 5BF67DBC2B0181F7004CACD5 /* Exo */; };
 		8B8E66122A2ADF79001E5D25 /* HorizontalDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8E66112A2ADF79001E5D25 /* HorizontalDivider.swift */; };
 		8BC095162A2ADAF8009140C6 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC095152A2ADAF8009140C6 /* Day.swift */; };
 		8BE1F3382A43583C00D1AD6D /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1F3372A43583C00D1AD6D /* CustomNavigationBar.swift */; };
@@ -27,7 +30,11 @@
 /* Begin PBXFileReference section */
 		5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5B4347552A60E251000CB1A6 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		5B52356C2B184EB40044AC4E /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineLabel.swift; sourceTree = "<group>"; };
+		5BF67DB52B0172FE004CACD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5BF67DB82B017C37004CACD5 /* Playfair_Display */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Playfair_Display; sourceTree = "<group>"; };
+		5BF67DBC2B0181F7004CACD5 /* Exo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Exo; sourceTree = "<group>"; };
 		8B8E66112A2ADF79001E5D25 /* HorizontalDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalDivider.swift; sourceTree = "<group>"; };
 		8BC095152A2ADAF8009140C6 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		8BE1F3372A43583C00D1AD6D /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
@@ -73,6 +80,7 @@
 		8BE3F6F22A26E65E00A4DBC2 /* DetroitApp */ = {
 			isa = PBXGroup;
 			children = (
+				5BF67DB52B0172FE004CACD5 /* Info.plist */,
 				8BE3F6F32A26E65E00A4DBC2 /* DetroitAppApp.swift */,
 				8BE3F6F52A26E65E00A4DBC2 /* ContentView.swift */,
 				8BE3F7032A26EB8B00A4DBC2 /* EventView.swift */,
@@ -82,8 +90,11 @@
 				8BC095152A2ADAF8009140C6 /* Day.swift */,
 				8BE1F3372A43583C00D1AD6D /* CustomNavigationBar.swift */,
 				5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */,
+				5B52356C2B184EB40044AC4E /* CustomColors.swift */,
 				8BE3F6F72A26E65F00A4DBC2 /* Assets.xcassets */,
 				5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */,
+				5BF67DBC2B0181F7004CACD5 /* Exo */,
+				5BF67DB82B017C37004CACD5 /* Playfair_Display */,
 				8BE3F6F92A26E65F00A4DBC2 /* Preview Content */,
 			);
 			path = DetroitApp;
@@ -164,8 +175,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BE3F6FB2A26E65F00A4DBC2 /* Preview Assets.xcassets in Resources */,
+				5BF67DB92B017C37004CACD5 /* Playfair_Display in Resources */,
 				8BE3F6F82A26E65F00A4DBC2 /* Assets.xcassets in Resources */,
 				5B43474D2A60D66C000CB1A6 /* GoogleService-Info.plist in Resources */,
+				5BF67DBD2B0181F7004CACD5 /* Exo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +195,7 @@
 				8BC095162A2ADAF8009140C6 /* Day.swift in Sources */,
 				8BE3F7042A26EB8B00A4DBC2 /* EventView.swift in Sources */,
 				5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */,
+				5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */,
 				8B8E66122A2ADF79001E5D25 /* HorizontalDivider.swift in Sources */,
 				8BE1F3382A43583C00D1AD6D /* CustomNavigationBar.swift in Sources */,
 				5BEC5BB32A89E4430058FEC8 /* MultilineLabel.swift in Sources */,
@@ -310,12 +324,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"DetroitApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 24S36Y3GNV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DetroitApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Off Woodward";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,6 +346,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = myers.blair.DetroitApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -340,12 +358,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"DetroitApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 24S36Y3GNV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DetroitApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Off Woodward";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -359,6 +380,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = myers.blair.DetroitApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
