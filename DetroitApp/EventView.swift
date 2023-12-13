@@ -8,37 +8,42 @@
 import SwiftUI
 
 struct EventView: View {
+    @Environment(\.colorScheme) var colorScheme
     let event: Event
     var body: some View {
-        ScrollView(.vertical) {
-            VStack {
-                imageView
-                    .padding(.leading, 25)
-                    .padding(.trailing, 25)
-                titleView
-                    .padding(.leading, 25)
-                    .padding(.trailing, 25)
-                dateView
-                    .padding(10)
-                    .padding(.leading, 25)
-                    .padding(.trailing, 25)
-                locationView
-                    .padding(10)
-                    .padding(.leading, 25)
-                    .padding(.trailing, 25)
-                priceView
-                    .padding(10)
-                    .padding(.leading, 25)
-                    .padding(.trailing, 25)
-                if event.processedDescription != "" {
-                    descriptionView
+        ZStack {
+            Color(.offWhite)
+                .ignoresSafeArea()
+            ScrollView(.vertical) {
+                VStack {
+                    imageView
+                        .padding(.leading, 25)
+                        .padding(.trailing, 25)
+                    titleView
+                        .padding(.leading, 25)
+                        .padding(.trailing, 25)
+                    dateView
                         .padding(10)
                         .padding(.leading, 25)
                         .padding(.trailing, 25)
-                        .padding(.bottom, 25)
+                    locationView
+                        .padding(10)
+                        .padding(.leading, 25)
+                        .padding(.trailing, 25)
+                    priceView
+                        .padding(10)
+                        .padding(.leading, 25)
+                        .padding(.trailing, 25)
+                    if event.processedDescription != "" {
+                        descriptionView
+                            .padding(10)
+                            .padding(.leading, 25)
+                            .padding(.trailing, 25)
+                            .padding(.bottom, 25)
+                    }
+                    linkView
+                        .padding(.bottom, 10)
                 }
-                linkView
-                    .padding(.bottom, 10)
             }
         }
     }
@@ -47,6 +52,7 @@ struct EventView: View {
         VStack {
             Text(event.name)
                 .font(.custom("ExoRoman-Bold", size: 30))
+                .foregroundColor(Color(.mantis))
         }
     }
     
@@ -54,7 +60,7 @@ struct EventView: View {
         VStack(alignment: .leading, spacing: 5) {
             Text("PRICE")
                 .font(.custom("ExoRoman-Black", size: 24))
-                .foregroundColor(.gray)
+                .foregroundColor(Color(.mantis))
             HorizontalDivider()
             if event.price == "Free" {
                 Text("Free")
@@ -64,34 +70,38 @@ struct EventView: View {
                     .font(.custom("ExoRoman-Regular", size: 16))
             }
         }
+        .foregroundColor(Color(.mantis))
     }
     
     var dateView: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("TIME")
                 .font(.custom("ExoRoman-Black", size: 24))
-                .foregroundColor(.gray)
+                .foregroundColor(Color(.mantis))
             HorizontalDivider()
             Text(event.formattedDate)
                 .font(.custom("ExoRoman-Regular", size: 16))
             Text("\(event.formattedTimes.0) - \(event.formattedTimes.1)")
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
+        .foregroundColor(Color(.mantis))
     }
     
     var locationView: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("LOCATION")
                 .font(.custom("ExoRoman-Black", size: 24))
-                .foregroundColor(.gray)
+                .foregroundColor(Color(.mantis))
             HorizontalDivider()
             Text(event.location)
                 .font(.custom("ExoRoman-Regular", size: 16))
-            Text(event.address)
-                .font(.custom("ExoRoman-Regular", size: 16))
+            Link(event.address, destination: URL(string: "http://maps.apple.com/?address=\(event.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")")!)
+                .font(.custom("ExoRoman-Bold", size: 16))
+                .foregroundColor(CustomColors.orange)
             Text(event.neighborhood)
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
+        .foregroundColor(Color(.mantis))
     }
     
     var imageView: some View {
@@ -101,8 +111,7 @@ struct EventView: View {
                 image.resizable()
                      .aspectRatio(contentMode: .fit)
                      .frame(maxWidth: 500, maxHeight: 500)
-                     .border(Color.purple, width: 2)
-                     .cornerRadius(10)
+                     .cornerRadius(5)
                      .shadow(color: .gray, radius: 5, x: 10, y: 10)
             },
             placeholder: {
@@ -115,19 +124,20 @@ struct EventView: View {
         VStack(alignment: .leading, spacing: 5) {
             Text("ABOUT")
                 .font(.custom("ExoRoman-Black", size: 24))
-                .foregroundColor(.gray)
+                .foregroundColor(Color(.mantis))
             HorizontalDivider()
             
             Text(event.processedDescription)
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
+        .foregroundColor(Color(.mantis))
         .fixedSize(horizontal: false, vertical: true)
     }
     
     var linkView: some View {
         Link("WEBSITE", destination: URL(string: event.website ?? "")!)
             .font(.custom("ExoRoman-Black", size: 30))
-            .foregroundColor(.purple)
+            .foregroundColor(CustomColors.orange)
     }
 }
 

@@ -27,6 +27,7 @@ struct ContentView: View {
     @State private var selectedOption = "Detroit"
     @State private var selectedCategory = "All"
     @State private var sortingCriteria: SortingCriteria = .rating
+    @State private var animateCategoryChange = false
     @GestureState private var translation: CGFloat = 0
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "Northend", "Southwest", "University District", "Greektown", "Rivertown"]
     
@@ -67,14 +68,18 @@ struct ContentView: View {
                                 Text(event.name)
                                     .font(.custom("ExoRoman-Bold", size: 24))
                                 Text("      \(event.type ?? "")")
-                                    .font(.custom("ExoItalic-Regular", size: 16))
+                                    .font(.custom("ExoRoman-Regular", size: 16))
                                 Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
                                     .font(.custom("ExoRoman-Regular", size: 14))
                             }
+                            .foregroundStyle(Color(.mantis))
                         }
-                    }
+                    }.listRowBackground(Color(.offWhite))
                 }
+                .id(animateCategoryChange ? UUID() : nil)
             }
+            .background(Color(.limeGreen))
+            .scrollContentBackground(.hidden)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: CustomNavigationBar(title: $selectedOption, isPopoverPresented: $isPopoverPresented))
             .popover(isPresented: $isPopoverPresented, arrowEdge: .top) {
@@ -100,14 +105,14 @@ struct ContentView: View {
                                     }) {
                                         Text(option)
                                             .font(.custom("ExoRoman-Regular", size: geometry.size.width * 0.06))
-                                            .foregroundColor(modeColor())
+                                            .foregroundColor(Color(.mantis))
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.vertical, 12)
                                             .padding(.horizontal)
                                             .cornerRadius(5)
                                     }
                                     .buttonStyle(PlainButtonStyle())
-                                    .background(selectedOption == option ? Color.gray : Color.clear)
+                                    .background(selectedOption == option ? Color(.limeGreen) : Color.clear)
                                     .padding(.horizontal, geometry.size.width * 0.04) // Dynamic padding
                                     .padding(.bottom, 8)
                                     if option != dropdownOptions.last {
@@ -131,35 +136,10 @@ struct ContentView: View {
                     } label: {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                     }
+                    .tint(CustomColors.orange)
                 }
-                /*ToolbarItem(placement: .bottomBar) {
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            selectedDayIndex = (selectedDayIndex - 1) % days.count
-                            if selectedDayIndex == -1 {
-                                selectedDayIndex = 6
-                            }
-                        }) {
-                            Image(systemName: "arrowtriangle.left.fill")
-                                .foregroundColor(.gray)
-                                .font(.custom("ExoRoman-Bold", size: 16))
-                        }
-                        
-                        Text("\(getDayName(after: selectedDayIndex))")
-                            .foregroundColor(.gray)
-                            .font(.custom("ExoRoman-Bold", size: 16))
-                            .animation(nil)
-                        
-                        Button(action: {
-                            selectedDayIndex = (selectedDayIndex + 1) % days.count
-                        }) {
-                            Image(systemName: "arrowtriangle.right.fill")
-                                .foregroundColor(.gray)
-                                .font(.custom("ExoRoman-Bold", size: 16))
-                        }
-                    }
-                }*/
             }
+            .toolbarBackground(.red, for: .bottomBar)
             .actionSheet(isPresented: $isFilterSheetPresented) {
                 ActionSheet(title: Text("Filter Options"), buttons: [
                     .default(Text("Sort by Time"), action: {
@@ -189,15 +169,18 @@ struct ContentView: View {
                     }
                     .onEnded { value in
                         let threshold = UIScreen.main.bounds.width / 6
-                        if value.translation.width < -threshold {
-                            // Swiped left
-                            selectedDayIndex = (selectedDayIndex + 1) % days.count
-                        } else if value.translation.width > threshold {
-                            // Swiped right
-                            selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
+                        withAnimation {
+                            if value.translation.width < -threshold {
+                                // Swiped left
+                                selectedDayIndex = (selectedDayIndex + 1) % days.count
+                            } else if value.translation.width > threshold {
+                                // Swiped right
+                                selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
+                            }
                         }
                     }
             )
+            .transition(.slide) // Apply slide transition
         }
     }
     
@@ -205,7 +188,7 @@ struct ContentView: View {
         VStack {
             Text(getDateString(after: selectedDayIndex))
                 .font(.custom("ExoRoman-Bold", size: 24))
-                .foregroundColor(.gray)
+                .foregroundColor(Color(.mantis))
         }
     }
     
@@ -213,43 +196,43 @@ struct ContentView: View {
         VStack {
             scrollView
                 .padding(5)
-                .background(Color(red: 255.0 / 255.0, green: 204.0 / 255.0, blue: 71.0 / 255.0))
             GeometryReader { geometry in
                 Divider()
                     .frame(width: geometry.size.width * 4/5, height: 4)
-                    .background(Color.gray)
+                    .background(Color(.mantis))
             }
             .frame(height: 4)
             titleDateView
         }
-    }  
+        .background(Color(.limeGreen))
+    }
     
     var scrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
-                let categories = ["All", "Music", "Shows", "Sports", "Food", "Art", "Festivals"]
-                ForEach(0..<7) { index in
+                let categories = ["All", "Music", "Shows", "Sports", "Food", "Art", "Events", "Museum"]
+                ForEach(0..<8) { index in
                     Button {
                         selectedCategory = categories[index]
                     } label: {
                         ZStack {
                             if selectedCategory == categories[index] {
-                                Color.gray
+                                CustomColors.orange
                                     .cornerRadius(10)
                             } else {
-                                Color.white
+                                Color(.limeGreen)
                                     .cornerRadius(10)
                             }
-                            Image(categories[index])
+                            Image(systemName: iconsDict[categories[index]] ?? "hello")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color(.mantis))
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(.white)
                                 .cornerRadius(10)
                         }
                         .frame(width: 45, height: 45)
                         .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(modeColor(), lineWidth: 5))
+                            .stroke(Color(.offWhite), lineWidth: 5))
                         .padding(.vertical, 5)
                         .padding(.horizontal, 5)
                     }

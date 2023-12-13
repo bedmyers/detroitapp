@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HorizontalDivider: View {
-    @State var color: Color = .gray
+    @State var color: Color = Color(.limeGreen)
     @State var height: CGFloat = 1
     @State var horizontalPadding: CGFloat = 1
     

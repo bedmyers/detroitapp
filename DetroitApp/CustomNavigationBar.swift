@@ -19,7 +19,9 @@ struct CustomNavigationBar: View {
             HStack {
                 Text(title)
                     .font(.custom("ExoRoman-Bold", size: 36))
+                    .foregroundColor(Color(.mantis))
                 Image(systemName: "chevron.down")
+                    .foregroundColor(Color(.mantis))
             }
         }
         .foregroundColor(colorScheme == .dark ? .white : .black)
