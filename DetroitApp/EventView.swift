@@ -16,10 +16,11 @@ struct EventView: View {
                 .ignoresSafeArea()
             ScrollView(.vertical) {
                 VStack {
-                    imageView
-                        .padding(.leading, 25)
-                        .padding(.trailing, 25)
                     titleView
+                        .frame(alignment: .leading)
+                        .padding(.leading, 10)
+                        .padding(.trailing, 25)
+                    imageView
                         .padding(.leading, 25)
                         .padding(.trailing, 25)
                     dateView
@@ -49,9 +50,9 @@ struct EventView: View {
     }
     
     var titleView: some View {
-        VStack {
-            Text(event.name)
-                .font(.custom("ExoRoman-Bold", size: 30))
+        VStack(alignment: .leading) {
+            Text(event.name.uppercased())
+                .font(.custom("ExoRoman-Bold", size: 36))
                 .foregroundColor(Color(.mantis))
         }
     }
@@ -111,8 +112,8 @@ struct EventView: View {
                 image.resizable()
                      .aspectRatio(contentMode: .fit)
                      .frame(maxWidth: 500, maxHeight: 500)
-                     .cornerRadius(5)
-                     .shadow(color: .gray, radius: 5, x: 10, y: 10)
+                     .cornerRadius(3)
+                     .shadow(color: .gray, radius: 2, x: 2, y: 2)
             },
             placeholder: {
                 ProgressView()
