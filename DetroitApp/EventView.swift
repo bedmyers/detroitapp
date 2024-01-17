@@ -9,13 +9,27 @@ import SwiftUI
 
 struct EventView: View {
     @Environment(\.colorScheme) var colorScheme
+    @State private var showingShareSheet = false
     let event: Event
+    
     var body: some View {
         ZStack {
             Color(.offWhite)
                 .ignoresSafeArea()
             ScrollView(.vertical) {
                 VStack {
+                    Button(action: {
+                        self.showingShareSheet = true
+                    }) {
+                        Image(systemName: "square.and.arrow.up")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(Color(.orange))
+                    }
+                    .padding()
+                    .sheet(isPresented: $showingShareSheet) {
+                        ShareSheet(items: [URL(string: event.website ?? "") as Any])
+                    }
                     titleView
                         .frame(alignment: .leading)
                         .padding(.leading, 10)
