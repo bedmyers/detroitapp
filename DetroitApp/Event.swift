@@ -73,4 +73,23 @@ struct Event: Decodable, Hashable {
         dateFormatter.dateFormat = "h:mm a"
         return (dateFormatter.string(from: eventStartTime), dateFormatter.string(from: eventEndTime))
     }
+    
+    var eventStart: Date? {
+        combinedDateTime(dateStr: date, time: timeStart ?? 0)
+    }
+
+    var eventEnd: Date? {
+        combinedDateTime(dateStr: date, time: timeEnd ?? 0)
+    }
+    
+    func combinedDateTime(dateStr: String, time: Int) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy HHmm"
+        let dateTimeStr = "\(dateStr) \(String(format: "%04d", time))"
+        return dateFormatter.date(from: dateTimeStr)
+    }
+    
+    var id: String {
+        return "\(name)-\(date)-\(location)".lowercased().replacingOccurrences(of: " ", with: "-")
+    }
 }

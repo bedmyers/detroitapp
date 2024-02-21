@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct EventView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showingShareSheet = false
+    @State private var isOptionSheetPresented = false
+    @State private var eventStore = EKEventStore()
+    @State private var sharedItems: [Any] = []
     let event: Event
     
     var body: some View {
@@ -18,18 +22,9 @@ struct EventView: View {
                 .ignoresSafeArea()
             ScrollView(.vertical) {
                 VStack {
-                    Button(action: {
-                        self.showingShareSheet = true
-                    }) {
-                        Image(systemName: "square.and.arrow.up")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(Color(.orange))
-                    }
-                    .padding()
-                    .sheet(isPresented: $showingShareSheet) {
-                        ShareSheet(items: [URL(string: event.website ?? "") as Any])
-                    }
+                    moreView
+                        .padding(.trailing, 20)
+                        .padding(5)
                     titleView
                         .frame(alignment: .leading)
                         .padding(.leading, 10)
@@ -59,7 +54,33 @@ struct EventView: View {
                     linkView
                         .padding(.bottom, 10)
                 }
+                .actionSheet(isPresented: $isOptionSheetPresented) {
+                    ActionSheet(title: Text("Options"), buttons: [
+                        .default(Text("Share"), action: {
+                            shareEvent()
+                        }),
+                        .default(Text("Add to Calendar"), action: {
+                            requestAccessAndAddEvent()
+                        }),
+                        .cancel()
+                    ])
+                }
+                .sheet(isPresented: $showingShareSheet) {
+                    ShareSheet(items: sharedItems)
+                }
             }
+        }
+    }
+    
+    var moreView: some View {
+        HStack() {
+            Spacer()
+            Button {
+                isOptionSheetPresented = true
+            } label: {
+                Label("", systemImage: "ellipsis.circle")
+            }
+            .foregroundColor(Color(.orange))
         }
     }
     
@@ -153,6 +174,38 @@ struct EventView: View {
         Link("WEBSITE", destination: URL(string: event.website ?? "")!)
             .font(.custom("ExoRoman-Black", size: 30))
             .foregroundColor(CustomColors.orange)
+    }
+    
+    func requestAccessAndAddEvent() {
+        eventStore.requestAccess(to: .event) { (granted, error) in
+            if granted && error == nil {
+                DispatchQueue.main.async {
+                    addEventToCalendar(event: event)
+                }
+            } else {
+                // Handle the error or the case where permission is denied
+                // You might want to show an alert to the user
+            }
+        }
+    }
+    
+    func addEventToCalendar(event: Event) {
+        let ekEvent = EKEvent(eventStore: eventStore)
+        ekEvent.title = event.name
+        ekEvent.startDate = event.eventStart
+        ekEvent.endDate = event.eventEnd
+        ekEvent.location = event.location
+        ekEvent.notes = event.processedDescription
+        ekEvent.calendar = eventStore.defaultCalendarForNewEvents
+
+        do {
+            try eventStore.save(ekEvent, span: .thisEvent)
+        } catch let error as NSError {
+            print("Can't send to iCal: \(error)")
+        }
+    }
+    
+    func shareEvent() {
     }
 }
 

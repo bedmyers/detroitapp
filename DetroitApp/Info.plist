@@ -20,5 +20,7 @@
 		<string>Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf</string>
 		<string>Playfair_Display/PlayfairDisplay-Italic-VariableFont_wght.ttf</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We’d like to access your calendar to add relevant events</string>
 </dict>
 </plist>

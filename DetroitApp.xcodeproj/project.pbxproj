@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		18FEB4A02B293ACB00021DC8 /* IconsDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */; };
 		18FEB4A62B2A9CE700021DC8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */; };
-		18FEB4ED2B379DEB00021DC8 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEB4EC2B379DEB00021DC8 /* ShareSheetView.swift */; };
 		5B43474D2A60D66C000CB1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */; };
 		5B4347502A60D73F000CB1A6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5B43474F2A60D73F000CB1A6 /* FirebaseAnalytics */; };
 		5B4347522A60D73F000CB1A6 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 5B4347512A60D73F000CB1A6 /* FirebaseDatabase */; };
@@ -32,7 +31,6 @@
 /* Begin PBXFileReference section */
 		18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsDictionary.swift; sourceTree = "<group>"; };
 		18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		18FEB4EC2B379DEB00021DC8 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5B4347552A60E251000CB1A6 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 		5B52356C2B184EB40044AC4E /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 				5BF67DBC2B0181F7004CACD5 /* Exo */,
 				5BF67DB82B017C37004CACD5 /* Playfair_Display */,
 				8BE3F6F92A26E65F00A4DBC2 /* Preview Content */,
-				18FEB4EC2B379DEB00021DC8 /* ShareSheetView.swift */,
 			);
 			path = DetroitApp;
 			sourceTree = "<group>";
@@ -202,7 +199,6 @@
 				8BE3F6F42A26E65E00A4DBC2 /* DetroitAppApp.swift in Sources */,
 				8BC095162A2ADAF8009140C6 /* Day.swift in Sources */,
 				8BE3F7042A26EB8B00A4DBC2 /* EventView.swift in Sources */,
-				18FEB4ED2B379DEB00021DC8 /* ShareSheetView.swift in Sources */,
 				5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */,
 				5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */,
 				8B8E66122A2ADF79001E5D25 /* HorizontalDivider.swift in Sources */,
