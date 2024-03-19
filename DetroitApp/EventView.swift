@@ -13,7 +13,6 @@ struct EventView: View {
     @State private var showingShareSheet = false
     @State private var isOptionSheetPresented = false
     @State private var eventStore = EKEventStore()
-    @State private var sharedItems: [Any] = []
     let event: Event
     
     var body: some View {
@@ -66,7 +65,7 @@ struct EventView: View {
                     ])
                 }
                 .sheet(isPresented: $showingShareSheet) {
-                    ShareSheet(items: sharedItems)
+                    ShareSheet(items: [URL(string: event.website ?? "") as Any])
                 }
             }
         }
@@ -79,6 +78,7 @@ struct EventView: View {
                 isOptionSheetPresented = true
             } label: {
                 Label("", systemImage: "ellipsis.circle")
+                    .imageScale(.large)
             }
             .foregroundColor(Color(.orange))
         }

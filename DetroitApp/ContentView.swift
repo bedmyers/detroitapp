@@ -290,7 +290,7 @@ struct ContentView: View {
     
     func getDayDate(after days: Int) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yy"
+        dateFormatter.dateFormat = "M/dd/yy"
         
         guard let date = Calendar.current.date(byAdding: .day, value: days, to: Date()) else {
             return ""

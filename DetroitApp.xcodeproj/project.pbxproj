@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180D895F2B8672000056AD0C /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D895E2B8672000056AD0C /* ShareSheetView.swift */; };
 		18FEB4A02B293ACB00021DC8 /* IconsDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */; };
 		18FEB4A62B2A9CE700021DC8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */; };
 		5B43474D2A60D66C000CB1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */; };
@@ -29,13 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		180D895E2B8672000056AD0C /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsDictionary.swift; sourceTree = "<group>"; };
 		18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5B4347552A60E251000CB1A6 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 		5B52356C2B184EB40044AC4E /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineLabel.swift; sourceTree = "<group>"; };
-		5BF67DB52B0172FE004CACD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5BF67DB82B017C37004CACD5 /* Playfair_Display */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Playfair_Display; sourceTree = "<group>"; };
 		5BF67DBC2B0181F7004CACD5 /* Exo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Exo; sourceTree = "<group>"; };
 		8B8E66112A2ADF79001E5D25 /* HorizontalDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalDivider.swift; sourceTree = "<group>"; };
@@ -82,7 +83,6 @@
 		8BE3F6F22A26E65E00A4DBC2 /* DetroitApp */ = {
 			isa = PBXGroup;
 			children = (
-				5BF67DB52B0172FE004CACD5 /* Info.plist */,
 				8BE3F6F32A26E65E00A4DBC2 /* DetroitAppApp.swift */,
 				8BE3F6F52A26E65E00A4DBC2 /* ContentView.swift */,
 				8BE3F7032A26EB8B00A4DBC2 /* EventView.swift */,
@@ -99,6 +99,7 @@
 				5BF67DBC2B0181F7004CACD5 /* Exo */,
 				5BF67DB82B017C37004CACD5 /* Playfair_Display */,
 				8BE3F6F92A26E65F00A4DBC2 /* Preview Content */,
+				180D895E2B8672000056AD0C /* ShareSheetView.swift */,
 			);
 			path = DetroitApp;
 			sourceTree = "<group>";
@@ -202,6 +203,7 @@
 				5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */,
 				5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */,
 				8B8E66122A2ADF79001E5D25 /* HorizontalDivider.swift in Sources */,
+				180D895F2B8672000056AD0C /* ShareSheetView.swift in Sources */,
 				5BEC5BB32A89E4430058FEC8 /* MultilineLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +340,7 @@
 				INFOPLIST_FILE = DetroitApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Off Woodward";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We’d like to access your calendar to add relevant events";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -376,6 +379,7 @@
 				INFOPLIST_FILE = DetroitApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Off Woodward";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We’d like to access your calendar to add relevant events";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
