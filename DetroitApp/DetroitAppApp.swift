@@ -8,22 +8,51 @@
 import SwiftUI
 import FirebaseCore
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
-}
-
-
 @main
 struct DetroitAppApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    var deepLinkManager = DeepLinkManager()
+    
+    init() {
+        FirebaseApp.configure()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("Notification permissions granted.")
+            } else if let error = error {
+                print("Notification permissions denied with error: \(error.localizedDescription)")
+            }
+        }
+    }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(deepLinkManager)
+                .onOpenURL { url in
+                    print("URL received: \(url)")
+                    let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+                    if urlComponents?.scheme == "offwoodward", let host = urlComponents?.host, host == "event" {
+                        let pathComponents = url.pathComponents
+                        
+                        let eventIdPathComponents = pathComponents.dropFirst(1)
+                        let eventId = eventIdPathComponents.joined(separator: "/").removingPercentEncoding
+                        
+                        print("Deep link to event with ID: \(eventId ?? "")")
+                        deepLinkManager.deepLinkEventId = eventId
+                    }
+                }
+        }
+    }
+
+    func handleDeepLink(_ url: URL) {
+        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        if urlComponents?.scheme == "offwoodward", let host = urlComponents?.host, host == "event" {
+            let pathComponents = url.pathComponents
+            if pathComponents.count >= 3 {
+                let eventId = pathComponents[2].removingPercentEncoding
+                print("Deep link to event with ID: \(eventId ?? "")")
+                deepLinkManager.deepLinkEventId = eventId
+            }
         }
     }
 }

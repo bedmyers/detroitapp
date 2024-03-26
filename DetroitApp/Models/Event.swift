@@ -31,10 +31,10 @@ struct Event: Decodable, Hashable {
     
     var fullDate: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/d/yy"
+        dateFormatter.dateFormat = "M/d/yy"
         
         if let eventDate = dateFormatter.date(from: date) {
-            dateFormatter.dateFormat = "MM/dd/yy"
+            dateFormatter.dateFormat = "M/dd/yy"
             return dateFormatter.string(from: eventDate)
         }
         return date

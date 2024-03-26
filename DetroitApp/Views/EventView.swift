@@ -12,7 +12,9 @@ struct EventView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showingShareSheet = false
     @State private var isOptionSheetPresented = false
+    @State private var showingReminderOptions = false
     @State private var eventStore = EKEventStore()
+    @State private var shareSheetItems: [Any] = []
     let event: Event
     
     var body: some View {
@@ -55,17 +57,15 @@ struct EventView: View {
                 }
                 .actionSheet(isPresented: $isOptionSheetPresented) {
                     ActionSheet(title: Text("Options"), buttons: [
-                        .default(Text("Share"), action: {
-                            shareEvent()
-                        }),
-                        .default(Text("Add to Calendar"), action: {
-                            requestAccessAndAddEvent()
-                        }),
+                        .default(Text("Share"), action: shareEvent),
+                        .default(Text("Add to Calendar"), action: requestAccessAndAddEvent),
+                        .default(Text("Remind Me 1 Hour Before"), action: { scheduleReminder(hoursBefore: 1) }),
+                        .default(Text("Remind Me 24 Hours Before"), action: { scheduleReminder(hoursBefore: 24) }),
                         .cancel()
                     ])
                 }
                 .sheet(isPresented: $showingShareSheet) {
-                    ShareSheet(items: [URL(string: event.website ?? "") as Any])
+                    ShareSheet(items: shareSheetItems)
                 }
             }
         }
@@ -184,7 +184,6 @@ struct EventView: View {
                 }
             } else {
                 // Handle the error or the case where permission is denied
-                // You might want to show an alert to the user
             }
         }
     }
@@ -205,7 +204,39 @@ struct EventView: View {
         }
     }
     
-    func shareEvent() {
+    func shareEvent() { 
+        let eventId = event.id
+        if let url = URL(string: "offwoodward://event/\(eventId)") {
+            self.showingShareSheet = true
+            shareSheetItems = [url]
+        } else {
+            print("Failed to create URL for sharing")
+        }
+    }
+    
+    func scheduleReminder(hoursBefore: Int) {
+        let content = UNMutableNotificationContent()
+        var time = "hours"
+        if hoursBefore == 1 {
+            time = "hour"
+        }
+        content.title = "Event Reminder"
+        content.body = "\(event.name) is starting in \(hoursBefore) \(time)."
+        content.sound = UNNotificationSound.default
+
+        if let eventStart = event.eventStart {
+            let triggerDate = Calendar.current.date(byAdding: .hour, value: -hoursBefore, to: eventStart)!
+            let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: false)
+
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error = error {
+                    print("Error scheduling reminder: \(error)")
+                }
+            }
+        }
     }
 }
 

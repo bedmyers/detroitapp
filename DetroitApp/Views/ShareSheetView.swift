@@ -14,6 +14,8 @@ struct ShareSheet: UIViewControllerRepresentable {
         let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
         return controller
     }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // No update needed
+    }
 }

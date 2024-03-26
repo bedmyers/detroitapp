@@ -18,18 +18,19 @@ struct ContentView: View {
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var deepLinkManager: DeepLinkManager
     @StateObject private var viewModel = EventViewModel()
-    @State private var eventData: [Event]?
     @State private var selectedDayIndex = 0
     @State private var isFilterSheetPresented = false
-    @State private var isFilterLocationSheetPresented = false
     @State private var isPopoverPresented = false
     @State private var selectedOption = "Detroit"
     @State private var selectedCategory = "All"
     @State private var sortingCriteria: SortingCriteria = .rating
     @State private var animateCategoryChange = false
+    @State private var deepLinkEventId: String? = nil
+    @State private var shouldNavigateToEvent = false
     @GestureState private var translation: CGFloat = 0
-    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "New Center", "Southwest", "University District", "Greektown", "Rivertown Warehouse", "East Detroit"]
+    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "New Center/Milwaukee Junction", "Southwest", "University District", "Greektown", "Rivertown Warehouse", "East Detroit"]
     
     var body: some View {
         let events = viewModel.events
@@ -38,7 +39,7 @@ struct ContentView: View {
             let filteredEvents = events.filter { event in
                 let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
                 let matchesLocation = selectedOption == "Detroit" || (selectedOption != "Detroit" && event.neighborhood == selectedOption)
-
+                
                 return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
                        event.fullDate == getDayDate(after: selectedDayIndex) &&
                        matchesCategory &&
@@ -55,8 +56,20 @@ struct ContentView: View {
             }
         }
         
-        NavigationView {
+        let deepLinkedEvent = findEventById(deepLinkEventId)
+        let deepLinkNavigation: some View = Group {
+            if let event = deepLinkedEvent {
+                NavigationLink(destination: EventView(event: event), isActive: $shouldNavigateToEvent) {
+                    EmptyView()
+                }
+            } else {
+                EmptyView()
+            }
+        }.hidden()
+        
+        return NavigationView {
             VStack(spacing: 7) {
+                deepLinkNavigation
                 headerView
                 
                 List {
@@ -113,6 +126,13 @@ struct ContentView: View {
                     viewModel.listentoRealtimeDatabase()
                 }
             }
+            .onChange(of: deepLinkManager.deepLinkEventId) { newEventId in
+                print("Deep link event ID changed: \(String(describing: newEventId))")
+                if let eventId = newEventId {
+                    self.deepLinkEventId = eventId
+                    self.shouldNavigateToEvent = (findEventById(eventId) != nil)
+                }
+            }
             .onDisappear {
                 viewModel.stopListening()
             }
@@ -125,16 +145,14 @@ struct ContentView: View {
                         let threshold = UIScreen.main.bounds.width / 6
                         withAnimation {
                             if value.translation.width < -threshold {
-                                // Swiped left
                                 selectedDayIndex = (selectedDayIndex + 1) % days.count
                             } else if value.translation.width > threshold {
-                                // Swiped right
                                 selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
                             }
                         }
                     }
             )
-            .transition(.slide) // Apply slide transition
+            .transition(.slide)
         }
     }
     
@@ -147,16 +165,16 @@ struct ContentView: View {
     }
     
     var scrollDotView: some View {
-        HStack(spacing: 8) { // Add spacing between dots if needed
+        HStack(spacing: 8) {
             ForEach(0..<7) { index in
                 if index == selectedDayIndex {
                     Image(systemName: "circle.fill")
                         .foregroundColor(Color(.mantis))
-                        .font(.system(size: 8)) // Adjust the size as per your preference
+                        .font(.system(size: 8))
                 } else {
                     Image(systemName: "circle")
                         .foregroundColor(Color(.mantis))
-                        .font(.system(size: 8)) // Adjust the size as per your preference
+                        .font(.system(size: 8))
                 }
             }
         }
@@ -228,10 +246,10 @@ struct ContentView: View {
                         Text("Select a Neighborhood")
                             .font(.custom("ExoRoman-Bold", size: geometry.size.width * 0.08))
                             .foregroundStyle(Color.red)
-                            .padding(.top, geometry.size.height * 0.02) // Dynamic padding
+                            .padding(.top, geometry.size.height * 0.02)
                             .padding(.horizontal)
 
-                        Divider() // Divider under the title
+                        Divider()
 
                         ForEach(dropdownOptions, id: \.self) { option in
                             if option != selectedOption {
@@ -250,7 +268,7 @@ struct ContentView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .background(selectedOption == option ? Color(.limeGreen) : Color.clear)
-                                .padding(.horizontal, geometry.size.width * 0.04) // Dynamic padding
+                                .padding(.horizontal, geometry.size.width * 0.04)
                                 .padding(.bottom, 8)
                                 if option != dropdownOptions.last {
                                     //Divider()
@@ -309,6 +327,11 @@ struct ContentView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d"
         return dateFormatter.string(from: nextDay)
+    }
+    
+    func findEventById(_ id: String?) -> Event? {
+        guard let id = id else { return nil }
+        return viewModel.events.first(where: { $0.id == id })
     }
     
     func modeColor() -> Color {

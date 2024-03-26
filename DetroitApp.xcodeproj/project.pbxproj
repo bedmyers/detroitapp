@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		180D895F2B8672000056AD0C /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D895E2B8672000056AD0C /* ShareSheetView.swift */; };
+		180D897C2BB1012C0056AD0C /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D897B2BB1012C0056AD0C /* DeepLinkManager.swift */; };
+		180D897E2BB11FDD0056AD0C /* ReminderOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */; };
 		18FEB4A02B293ACB00021DC8 /* IconsDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */; };
 		18FEB4A62B2A9CE700021DC8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */; };
 		5B43474D2A60D66C000CB1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		180D895E2B8672000056AD0C /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		180D897B2BB1012C0056AD0C /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
+		180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderOptionsView.swift; sourceTree = "<group>"; };
 		18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsDictionary.swift; sourceTree = "<group>"; };
 		18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -64,6 +68,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180D897F2BB125570056AD0C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8BE3F6F52A26E65E00A4DBC2 /* ContentView.swift */,
+				8BE3F7032A26EB8B00A4DBC2 /* EventView.swift */,
+				180D895E2B8672000056AD0C /* ShareSheetView.swift */,
+				8B8E66112A2ADF79001E5D25 /* HorizontalDivider.swift */,
+				5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */,
+				180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		180D89802BB125AB0056AD0C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5B4347552A60E251000CB1A6 /* EventViewModel.swift */,
+				8BE3F7012A26E8C700A4DBC2 /* Event.swift */,
+				8BC095152A2ADAF8009140C6 /* Day.swift */,
+				180D897B2BB1012C0056AD0C /* DeepLinkManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		180D89812BB125C90056AD0C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5B52356C2B184EB40044AC4E /* CustomColors.swift */,
+				18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		8BE3F6E72A26E65E00A4DBC2 = {
 			isa = PBXGroup;
 			children = (
@@ -84,22 +121,15 @@
 			isa = PBXGroup;
 			children = (
 				8BE3F6F32A26E65E00A4DBC2 /* DetroitAppApp.swift */,
-				8BE3F6F52A26E65E00A4DBC2 /* ContentView.swift */,
-				8BE3F7032A26EB8B00A4DBC2 /* EventView.swift */,
-				5B4347552A60E251000CB1A6 /* EventViewModel.swift */,
-				8BE3F7012A26E8C700A4DBC2 /* Event.swift */,
-				8B8E66112A2ADF79001E5D25 /* HorizontalDivider.swift */,
-				8BC095152A2ADAF8009140C6 /* Day.swift */,
-				5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */,
-				5B52356C2B184EB40044AC4E /* CustomColors.swift */,
-				18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */,
+				180D897F2BB125570056AD0C /* Views */,
+				180D89802BB125AB0056AD0C /* Models */,
+				180D89812BB125C90056AD0C /* UI */,
 				18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */,
 				8BE3F6F72A26E65F00A4DBC2 /* Assets.xcassets */,
 				5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */,
 				5BF67DBC2B0181F7004CACD5 /* Exo */,
 				5BF67DB82B017C37004CACD5 /* Playfair_Display */,
 				8BE3F6F92A26E65F00A4DBC2 /* Preview Content */,
-				180D895E2B8672000056AD0C /* ShareSheetView.swift */,
 			);
 			path = DetroitApp;
 			sourceTree = "<group>";
@@ -203,8 +233,10 @@
 				5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */,
 				5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */,
 				8B8E66122A2ADF79001E5D25 /* HorizontalDivider.swift in Sources */,
+				180D897E2BB11FDD0056AD0C /* ReminderOptionsView.swift in Sources */,
 				180D895F2B8672000056AD0C /* ShareSheetView.swift in Sources */,
 				5BEC5BB32A89E4430058FEC8 /* MultilineLabel.swift in Sources */,
+				180D897C2BB1012C0056AD0C /* DeepLinkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,7 +23,7 @@ final class EventViewModel: ObservableObject {
     
     func listentoRealtimeDatabase() {
         guard !eventsLoaded else {
-            return // Data already loaded, no need to reload
+            return 
         }
 
         guard let databasePath = databasePath else {
