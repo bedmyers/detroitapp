@@ -10,6 +10,123 @@
 		180D895F2B8672000056AD0C /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D895E2B8672000056AD0C /* ShareSheetView.swift */; };
 		180D897C2BB1012C0056AD0C /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D897B2BB1012C0056AD0C /* DeepLinkManager.swift */; };
 		180D897E2BB11FDD0056AD0C /* ReminderOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */; };
+		18938C302BD9851C0031EB2B /* comerica2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C2C2BD9851C0031EB2B /* comerica2.jpeg */; };
+		18938C312BD9851C0031EB2B /* comerica3.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938C2D2BD9851C0031EB2B /* comerica3.webp */; };
+		18938C322BD9851C0031EB2B /* comerica4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C2E2BD9851C0031EB2B /* comerica4.jpeg */; };
+		18938C332BD9851C0031EB2B /* comerica1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C2F2BD9851C0031EB2B /* comerica1.jpeg */; };
+		18938C392BD9853B0031EB2B /* caesars4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C352BD9853B0031EB2B /* caesars4.jpeg */; };
+		18938C3A2BD9853B0031EB2B /* caesars1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C362BD9853B0031EB2B /* caesars1.jpeg */; };
+		18938C3B2BD9853B0031EB2B /* caesars3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C372BD9853B0031EB2B /* caesars3.jpeg */; };
+		18938C3C2BD9853B0031EB2B /* caesars2.avif in Resources */ = {isa = PBXBuildFile; fileRef = 18938C382BD9853B0031EB2B /* caesars2.avif */; };
+		18938C422BD985560031EB2B /* fordfield3.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938C3E2BD985560031EB2B /* fordfield3.webp */; };
+		18938C432BD985560031EB2B /* fordfield1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C3F2BD985560031EB2B /* fordfield1.jpeg */; };
+		18938C442BD985560031EB2B /* fordfield4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C402BD985560031EB2B /* fordfield4.jpeg */; };
+		18938C452BD985560031EB2B /* fordfield2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C412BD985560031EB2B /* fordfield2.jpeg */; };
+		18938C4B2BD985730031EB2B /* detroithistorical4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C472BD985720031EB2B /* detroithistorical4.jpeg */; };
+		18938C4C2BD985730031EB2B /* detroithistorical1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C482BD985720031EB2B /* detroithistorical1.jpeg */; };
+		18938C4D2BD985730031EB2B /* detroithistorical2.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938C492BD985730031EB2B /* detroithistorical2.webp */; };
+		18938C4E2BD985730031EB2B /* detroithistorical3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C4A2BD985730031EB2B /* detroithistorical3.jpeg */; };
+		18938C542BD985870031EB2B /* motown1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C502BD985870031EB2B /* motown1.jpeg */; };
+		18938C552BD985870031EB2B /* motown4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C512BD985870031EB2B /* motown4.jpeg */; };
+		18938C562BD985870031EB2B /* motown2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C522BD985870031EB2B /* motown2.jpeg */; };
+		18938C572BD985870031EB2B /* motown3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C532BD985870031EB2B /* motown3.jpeg */; };
+		18938C5C2BD985940031EB2B /* piquette2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C592BD985940031EB2B /* piquette2.jpeg */; };
+		18938C5D2BD985940031EB2B /* piquette3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C5A2BD985940031EB2B /* piquette3.jpeg */; };
+		18938C5E2BD985940031EB2B /* piquette1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C5B2BD985940031EB2B /* piquette1.jpeg */; };
+		18938C642BD985AA0031EB2B /* dia2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C602BD985A90031EB2B /* dia2.jpeg */; };
+		18938C652BD985AA0031EB2B /* dia3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C612BD985A90031EB2B /* dia3.jpeg */; };
+		18938C662BD985AA0031EB2B /* dia4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C622BD985AA0031EB2B /* dia4.jpeg */; };
+		18938C672BD985AA0031EB2B /* dia1.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938C632BD985AA0031EB2B /* dia1.webp */; };
+		18938C6D2BD985BD0031EB2B /* msci2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C692BD985BD0031EB2B /* msci2.jpeg */; };
+		18938C6E2BD985BD0031EB2B /* msci1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C6A2BD985BD0031EB2B /* msci1.jpeg */; };
+		18938C6F2BD985BD0031EB2B /* msci4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C6B2BD985BD0031EB2B /* msci4.jpeg */; };
+		18938C702BD985BD0031EB2B /* msci3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C6C2BD985BD0031EB2B /* msci3.jpeg */; };
+		18938C762BD985E20031EB2B /* wright1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C722BD985E20031EB2B /* wright1.jpeg */; };
+		18938C772BD985E20031EB2B /* wright3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C732BD985E20031EB2B /* wright3.jpeg */; };
+		18938C782BD985E20031EB2B /* wright2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C742BD985E20031EB2B /* wright2.jpeg */; };
+		18938C792BD985E20031EB2B /* wright4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C752BD985E20031EB2B /* wright4.jpeg */; };
+		18938C7E2BD985F00031EB2B /* dossin1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C7B2BD985F00031EB2B /* dossin1.jpeg */; };
+		18938C7F2BD985F00031EB2B /* dossin2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C7C2BD985F00031EB2B /* dossin2.jpeg */; };
+		18938C802BD985F00031EB2B /* dossin3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C7D2BD985F00031EB2B /* dossin3.jpeg */; };
+		18938C852BD986040031EB2B /* mocad3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C822BD986040031EB2B /* mocad3.jpeg */; };
+		18938C862BD986040031EB2B /* mocad1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C832BD986040031EB2B /* mocad1.jpeg */; };
+		18938C872BD986040031EB2B /* mocad2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C842BD986040031EB2B /* mocad2.jpeg */; };
+		18938C8D2BD986290031EB2B /* fox1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C892BD986290031EB2B /* fox1.jpeg */; };
+		18938C8E2BD986290031EB2B /* fox2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C8A2BD986290031EB2B /* fox2.jpeg */; };
+		18938C8F2BD986290031EB2B /* fox3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C8B2BD986290031EB2B /* fox3.jpeg */; };
+		18938C902BD986290031EB2B /* fox4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C8C2BD986290031EB2B /* fox4.jpeg */; };
+		18938C952BD986340031EB2B /* fillmore1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C922BD986340031EB2B /* fillmore1.jpeg */; };
+		18938C962BD986340031EB2B /* fillmore3.png in Resources */ = {isa = PBXBuildFile; fileRef = 18938C932BD986340031EB2B /* fillmore3.png */; };
+		18938C972BD986340031EB2B /* fillmore2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C942BD986340031EB2B /* fillmore2.jpeg */; };
+		18938C9E2BD9864D0031EB2B /* fisher4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C992BD9864C0031EB2B /* fisher4.jpeg */; };
+		18938C9F2BD9864D0031EB2B /* fisher5.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C9A2BD9864C0031EB2B /* fisher5.jpeg */; };
+		18938CA02BD9864D0031EB2B /* fisher1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C9B2BD9864C0031EB2B /* fisher1.jpeg */; };
+		18938CA12BD9864D0031EB2B /* fisher3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938C9C2BD9864C0031EB2B /* fisher3.jpeg */; };
+		18938CA22BD9864D0031EB2B /* fisher2.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938C9D2BD9864D0031EB2B /* fisher2.webp */; };
+		18938CA82BD986620031EB2B /* dso1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CA42BD986620031EB2B /* dso1.jpeg */; };
+		18938CA92BD986620031EB2B /* dso2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CA52BD986620031EB2B /* dso2.jpeg */; };
+		18938CAA2BD986620031EB2B /* dso4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CA62BD986620031EB2B /* dso4.jpeg */; };
+		18938CAB2BD986620031EB2B /* dso3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CA72BD986620031EB2B /* dso3.jpeg */; };
+		18938CB12BD986710031EB2B /* operahouse1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CAD2BD986700031EB2B /* operahouse1.jpeg */; };
+		18938CB22BD986710031EB2B /* operahouse3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CAE2BD986710031EB2B /* operahouse3.jpeg */; };
+		18938CB32BD986710031EB2B /* operahouse4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CAF2BD986710031EB2B /* operahouse4.jpeg */; };
+		18938CB42BD986710031EB2B /* operahouse2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CB02BD986710031EB2B /* operahouse2.jpeg */; };
+		18938CB92BD986860031EB2B /* majestic3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CB62BD986860031EB2B /* majestic3.jpeg */; };
+		18938CBA2BD986860031EB2B /* majestic2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CB72BD986860031EB2B /* majestic2.jpeg */; };
+		18938CBB2BD986860031EB2B /* majestic1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CB82BD986860031EB2B /* majestic1.jpeg */; };
+		18938CBF2BD986A80031EB2B /* musichall1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CBD2BD986A80031EB2B /* musichall1.jpeg */; };
+		18938CC02BD986A80031EB2B /* musichall2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CBE2BD986A80031EB2B /* musichall2.jpeg */; };
+		18938CC52BD986C00031EB2B /* willis3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CC22BD986C00031EB2B /* willis3.jpeg */; };
+		18938CC62BD986C00031EB2B /* willis1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CC32BD986C00031EB2B /* willis1.jpeg */; };
+		18938CC72BD986C00031EB2B /* willis2.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CC42BD986C00031EB2B /* willis2.webp */; };
+		18938CCD2BD986E50031EB2B /* cliffbells3.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CCA2BD986E50031EB2B /* cliffbells3.webp */; };
+		18938CCE2BD986E50031EB2B /* cliffbells1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CCB2BD986E50031EB2B /* cliffbells1.jpeg */; };
+		18938CCF2BD986E50031EB2B /* cliffbells2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CCC2BD986E50031EB2B /* cliffbells2.jpeg */; };
+		18938CD32BD986EC0031EB2B /* bakers1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CD02BD986EC0031EB2B /* bakers1.jpeg */; };
+		18938CD42BD986EC0031EB2B /* bakers2.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CD12BD986EC0031EB2B /* bakers2.webp */; };
+		18938CD52BD986EC0031EB2B /* bakers3.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CD22BD986EC0031EB2B /* bakers3.webp */; };
+		18938CDA2BD986F80031EB2B /* elclub1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CD72BD986F80031EB2B /* elclub1.jpeg */; };
+		18938CDB2BD986F80031EB2B /* elclub3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CD82BD986F80031EB2B /* elclub3.jpeg */; };
+		18938CDC2BD986F80031EB2B /* elclub2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CD92BD986F80031EB2B /* elclub2.jpeg */; };
+		18938CE12BD9870F0031EB2B /* andrews2.avif in Resources */ = {isa = PBXBuildFile; fileRef = 18938CDE2BD9870F0031EB2B /* andrews2.avif */; };
+		18938CE22BD9870F0031EB2B /* andrews3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CDF2BD9870F0031EB2B /* andrews3.jpeg */; };
+		18938CE32BD9870F0031EB2B /* andrews1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CE02BD9870F0031EB2B /* andrews1.jpeg */; };
+		18938CE82BD9872B0031EB2B /* mcw3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CE52BD9872B0031EB2B /* mcw3.jpeg */; };
+		18938CE92BD9872B0031EB2B /* mcw1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CE62BD9872B0031EB2B /* mcw1.jpeg */; };
+		18938CEA2BD9872B0031EB2B /* mcw2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CE72BD9872B0031EB2B /* mcw2.jpeg */; };
+		18938CEF2BD987440031EB2B /* spotlite3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CEC2BD987440031EB2B /* spotlite3.jpeg */; };
+		18938CF02BD987440031EB2B /* spotlite2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CED2BD987440031EB2B /* spotlite2.jpeg */; };
+		18938CF12BD987440031EB2B /* spotlite1.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CEE2BD987440031EB2B /* spotlite1.webp */; };
+		18938CF62BD987500031EB2B /* marble1.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CF32BD987500031EB2B /* marble1.webp */; };
+		18938CF72BD987500031EB2B /* marble2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CF42BD987500031EB2B /* marble2.jpeg */; };
+		18938CF82BD987500031EB2B /* marble3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CF52BD987500031EB2B /* marble3.jpeg */; };
+		18938CFC2BD9875F0031EB2B /* tangent2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CFA2BD9875F0031EB2B /* tangent2.jpeg */; };
+		18938CFD2BD9875F0031EB2B /* tangent1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938CFB2BD9875F0031EB2B /* tangent1.jpeg */; };
+		18938D022BD9876B0031EB2B /* leland3.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938CFF2BD9876B0031EB2B /* leland3.webp */; };
+		18938D032BD9876B0031EB2B /* leland1.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938D002BD9876B0031EB2B /* leland1.webp */; };
+		18938D042BD9876B0031EB2B /* leland2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D012BD9876B0031EB2B /* leland2.jpeg */; };
+		18938D072BD987760031EB2B /* bigpink1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D062BD987760031EB2B /* bigpink1.jpeg */; };
+		18938D0C2BD987830031EB2B /* dsc3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D092BD987830031EB2B /* dsc3.jpeg */; };
+		18938D0D2BD987830031EB2B /* dsc2.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938D0A2BD987830031EB2B /* dsc2.webp */; };
+		18938D0E2BD987830031EB2B /* dsc1.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938D0B2BD987830031EB2B /* dsc1.webp */; };
+		18938D132BD987900031EB2B /* dcc3.webp in Resources */ = {isa = PBXBuildFile; fileRef = 18938D102BD987900031EB2B /* dcc3.webp */; };
+		18938D142BD987900031EB2B /* dcc2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D112BD987900031EB2B /* dcc2.jpeg */; };
+		18938D152BD987900031EB2B /* dcc1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D122BD987900031EB2B /* dcc1.jpeg */; };
+		18938D1B2BD9879D0031EB2B /* martius1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D172BD9879C0031EB2B /* martius1.jpeg */; };
+		18938D1C2BD9879D0031EB2B /* martius4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D182BD9879C0031EB2B /* martius4.jpeg */; };
+		18938D1D2BD9879D0031EB2B /* martius3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D192BD9879C0031EB2B /* martius3.jpeg */; };
+		18938D1E2BD9879D0031EB2B /* martius2.png in Resources */ = {isa = PBXBuildFile; fileRef = 18938D1A2BD9879D0031EB2B /* martius2.png */; };
+		18938D242BD987A90031EB2B /* valade4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D202BD987A90031EB2B /* valade4.jpeg */; };
+		18938D252BD987A90031EB2B /* valade2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D212BD987A90031EB2B /* valade2.jpeg */; };
+		18938D262BD987A90031EB2B /* valade3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D222BD987A90031EB2B /* valade3.jpeg */; };
+		18938D272BD987A90031EB2B /* valade1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D232BD987A90031EB2B /* valade1.jpeg */; };
+		18938D2E2BD987B60031EB2B /* eastern2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D292BD987B60031EB2B /* eastern2.jpeg */; };
+		18938D2F2BD987B60031EB2B /* eastern1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D2A2BD987B60031EB2B /* eastern1.jpeg */; };
+		18938D302BD987B60031EB2B /* eastern3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D2B2BD987B60031EB2B /* eastern3.jpeg */; };
+		18938D312BD987B60031EB2B /* eastern5.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D2C2BD987B60031EB2B /* eastern5.jpeg */; };
+		18938D322BD987B60031EB2B /* eastern4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18938D2D2BD987B60031EB2B /* eastern4.jpeg */; };
+		18938D5A2BE406110031EB2B /* DetroitVenuesModel 2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 18938D592BE406110031EB2B /* DetroitVenuesModel 2.mlmodel */; };
+		18938D5C2BE407FD0031EB2B /* BuildingRecognitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18938D5B2BE407FD0031EB2B /* BuildingRecognitionView.swift */; };
 		18FEB4A02B293ACB00021DC8 /* IconsDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */; };
 		18FEB4A62B2A9CE700021DC8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */; };
 		5B43474D2A60D66C000CB1A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */; };
@@ -35,6 +152,123 @@
 		180D895E2B8672000056AD0C /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		180D897B2BB1012C0056AD0C /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
 		180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderOptionsView.swift; sourceTree = "<group>"; };
+		18938C2C2BD9851C0031EB2B /* comerica2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = comerica2.jpeg; sourceTree = "<group>"; };
+		18938C2D2BD9851C0031EB2B /* comerica3.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = comerica3.webp; sourceTree = "<group>"; };
+		18938C2E2BD9851C0031EB2B /* comerica4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = comerica4.jpeg; sourceTree = "<group>"; };
+		18938C2F2BD9851C0031EB2B /* comerica1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = comerica1.jpeg; sourceTree = "<group>"; };
+		18938C352BD9853B0031EB2B /* caesars4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = caesars4.jpeg; sourceTree = "<group>"; };
+		18938C362BD9853B0031EB2B /* caesars1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = caesars1.jpeg; sourceTree = "<group>"; };
+		18938C372BD9853B0031EB2B /* caesars3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = caesars3.jpeg; sourceTree = "<group>"; };
+		18938C382BD9853B0031EB2B /* caesars2.avif */ = {isa = PBXFileReference; lastKnownFileType = file; path = caesars2.avif; sourceTree = "<group>"; };
+		18938C3E2BD985560031EB2B /* fordfield3.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = fordfield3.webp; sourceTree = "<group>"; };
+		18938C3F2BD985560031EB2B /* fordfield1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fordfield1.jpeg; sourceTree = "<group>"; };
+		18938C402BD985560031EB2B /* fordfield4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fordfield4.jpeg; sourceTree = "<group>"; };
+		18938C412BD985560031EB2B /* fordfield2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fordfield2.jpeg; sourceTree = "<group>"; };
+		18938C472BD985720031EB2B /* detroithistorical4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detroithistorical4.jpeg; sourceTree = "<group>"; };
+		18938C482BD985720031EB2B /* detroithistorical1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detroithistorical1.jpeg; sourceTree = "<group>"; };
+		18938C492BD985730031EB2B /* detroithistorical2.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = detroithistorical2.webp; sourceTree = "<group>"; };
+		18938C4A2BD985730031EB2B /* detroithistorical3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detroithistorical3.jpeg; sourceTree = "<group>"; };
+		18938C502BD985870031EB2B /* motown1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = motown1.jpeg; sourceTree = "<group>"; };
+		18938C512BD985870031EB2B /* motown4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = motown4.jpeg; sourceTree = "<group>"; };
+		18938C522BD985870031EB2B /* motown2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = motown2.jpeg; sourceTree = "<group>"; };
+		18938C532BD985870031EB2B /* motown3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = motown3.jpeg; sourceTree = "<group>"; };
+		18938C592BD985940031EB2B /* piquette2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = piquette2.jpeg; sourceTree = "<group>"; };
+		18938C5A2BD985940031EB2B /* piquette3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = piquette3.jpeg; sourceTree = "<group>"; };
+		18938C5B2BD985940031EB2B /* piquette1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = piquette1.jpeg; sourceTree = "<group>"; };
+		18938C602BD985A90031EB2B /* dia2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dia2.jpeg; sourceTree = "<group>"; };
+		18938C612BD985A90031EB2B /* dia3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dia3.jpeg; sourceTree = "<group>"; };
+		18938C622BD985AA0031EB2B /* dia4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dia4.jpeg; sourceTree = "<group>"; };
+		18938C632BD985AA0031EB2B /* dia1.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = dia1.webp; sourceTree = "<group>"; };
+		18938C692BD985BD0031EB2B /* msci2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = msci2.jpeg; sourceTree = "<group>"; };
+		18938C6A2BD985BD0031EB2B /* msci1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = msci1.jpeg; sourceTree = "<group>"; };
+		18938C6B2BD985BD0031EB2B /* msci4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = msci4.jpeg; sourceTree = "<group>"; };
+		18938C6C2BD985BD0031EB2B /* msci3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = msci3.jpeg; sourceTree = "<group>"; };
+		18938C722BD985E20031EB2B /* wright1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wright1.jpeg; sourceTree = "<group>"; };
+		18938C732BD985E20031EB2B /* wright3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wright3.jpeg; sourceTree = "<group>"; };
+		18938C742BD985E20031EB2B /* wright2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wright2.jpeg; sourceTree = "<group>"; };
+		18938C752BD985E20031EB2B /* wright4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wright4.jpeg; sourceTree = "<group>"; };
+		18938C7B2BD985F00031EB2B /* dossin1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dossin1.jpeg; sourceTree = "<group>"; };
+		18938C7C2BD985F00031EB2B /* dossin2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dossin2.jpeg; sourceTree = "<group>"; };
+		18938C7D2BD985F00031EB2B /* dossin3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dossin3.jpeg; sourceTree = "<group>"; };
+		18938C822BD986040031EB2B /* mocad3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mocad3.jpeg; sourceTree = "<group>"; };
+		18938C832BD986040031EB2B /* mocad1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mocad1.jpeg; sourceTree = "<group>"; };
+		18938C842BD986040031EB2B /* mocad2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mocad2.jpeg; sourceTree = "<group>"; };
+		18938C892BD986290031EB2B /* fox1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fox1.jpeg; sourceTree = "<group>"; };
+		18938C8A2BD986290031EB2B /* fox2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fox2.jpeg; sourceTree = "<group>"; };
+		18938C8B2BD986290031EB2B /* fox3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fox3.jpeg; sourceTree = "<group>"; };
+		18938C8C2BD986290031EB2B /* fox4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fox4.jpeg; sourceTree = "<group>"; };
+		18938C922BD986340031EB2B /* fillmore1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fillmore1.jpeg; sourceTree = "<group>"; };
+		18938C932BD986340031EB2B /* fillmore3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fillmore3.png; sourceTree = "<group>"; };
+		18938C942BD986340031EB2B /* fillmore2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fillmore2.jpeg; sourceTree = "<group>"; };
+		18938C992BD9864C0031EB2B /* fisher4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fisher4.jpeg; sourceTree = "<group>"; };
+		18938C9A2BD9864C0031EB2B /* fisher5.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fisher5.jpeg; sourceTree = "<group>"; };
+		18938C9B2BD9864C0031EB2B /* fisher1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fisher1.jpeg; sourceTree = "<group>"; };
+		18938C9C2BD9864C0031EB2B /* fisher3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fisher3.jpeg; sourceTree = "<group>"; };
+		18938C9D2BD9864D0031EB2B /* fisher2.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = fisher2.webp; sourceTree = "<group>"; };
+		18938CA42BD986620031EB2B /* dso1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dso1.jpeg; sourceTree = "<group>"; };
+		18938CA52BD986620031EB2B /* dso2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dso2.jpeg; sourceTree = "<group>"; };
+		18938CA62BD986620031EB2B /* dso4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dso4.jpeg; sourceTree = "<group>"; };
+		18938CA72BD986620031EB2B /* dso3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dso3.jpeg; sourceTree = "<group>"; };
+		18938CAD2BD986700031EB2B /* operahouse1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = operahouse1.jpeg; sourceTree = "<group>"; };
+		18938CAE2BD986710031EB2B /* operahouse3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = operahouse3.jpeg; sourceTree = "<group>"; };
+		18938CAF2BD986710031EB2B /* operahouse4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = operahouse4.jpeg; sourceTree = "<group>"; };
+		18938CB02BD986710031EB2B /* operahouse2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = operahouse2.jpeg; sourceTree = "<group>"; };
+		18938CB62BD986860031EB2B /* majestic3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = majestic3.jpeg; sourceTree = "<group>"; };
+		18938CB72BD986860031EB2B /* majestic2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = majestic2.jpeg; sourceTree = "<group>"; };
+		18938CB82BD986860031EB2B /* majestic1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = majestic1.jpeg; sourceTree = "<group>"; };
+		18938CBD2BD986A80031EB2B /* musichall1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = musichall1.jpeg; sourceTree = "<group>"; };
+		18938CBE2BD986A80031EB2B /* musichall2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = musichall2.jpeg; sourceTree = "<group>"; };
+		18938CC22BD986C00031EB2B /* willis3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = willis3.jpeg; sourceTree = "<group>"; };
+		18938CC32BD986C00031EB2B /* willis1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = willis1.jpeg; sourceTree = "<group>"; };
+		18938CC42BD986C00031EB2B /* willis2.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = willis2.webp; sourceTree = "<group>"; };
+		18938CCA2BD986E50031EB2B /* cliffbells3.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = cliffbells3.webp; sourceTree = "<group>"; };
+		18938CCB2BD986E50031EB2B /* cliffbells1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cliffbells1.jpeg; sourceTree = "<group>"; };
+		18938CCC2BD986E50031EB2B /* cliffbells2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cliffbells2.jpeg; sourceTree = "<group>"; };
+		18938CD02BD986EC0031EB2B /* bakers1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bakers1.jpeg; sourceTree = "<group>"; };
+		18938CD12BD986EC0031EB2B /* bakers2.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = bakers2.webp; sourceTree = "<group>"; };
+		18938CD22BD986EC0031EB2B /* bakers3.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = bakers3.webp; sourceTree = "<group>"; };
+		18938CD72BD986F80031EB2B /* elclub1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = elclub1.jpeg; sourceTree = "<group>"; };
+		18938CD82BD986F80031EB2B /* elclub3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = elclub3.jpeg; sourceTree = "<group>"; };
+		18938CD92BD986F80031EB2B /* elclub2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = elclub2.jpeg; sourceTree = "<group>"; };
+		18938CDE2BD9870F0031EB2B /* andrews2.avif */ = {isa = PBXFileReference; lastKnownFileType = file; path = andrews2.avif; sourceTree = "<group>"; };
+		18938CDF2BD9870F0031EB2B /* andrews3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = andrews3.jpeg; sourceTree = "<group>"; };
+		18938CE02BD9870F0031EB2B /* andrews1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = andrews1.jpeg; sourceTree = "<group>"; };
+		18938CE52BD9872B0031EB2B /* mcw3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mcw3.jpeg; sourceTree = "<group>"; };
+		18938CE62BD9872B0031EB2B /* mcw1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mcw1.jpeg; sourceTree = "<group>"; };
+		18938CE72BD9872B0031EB2B /* mcw2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mcw2.jpeg; sourceTree = "<group>"; };
+		18938CEC2BD987440031EB2B /* spotlite3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = spotlite3.jpeg; sourceTree = "<group>"; };
+		18938CED2BD987440031EB2B /* spotlite2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = spotlite2.jpeg; sourceTree = "<group>"; };
+		18938CEE2BD987440031EB2B /* spotlite1.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = spotlite1.webp; sourceTree = "<group>"; };
+		18938CF32BD987500031EB2B /* marble1.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = marble1.webp; sourceTree = "<group>"; };
+		18938CF42BD987500031EB2B /* marble2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marble2.jpeg; sourceTree = "<group>"; };
+		18938CF52BD987500031EB2B /* marble3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marble3.jpeg; sourceTree = "<group>"; };
+		18938CFA2BD9875F0031EB2B /* tangent2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tangent2.jpeg; sourceTree = "<group>"; };
+		18938CFB2BD9875F0031EB2B /* tangent1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tangent1.jpeg; sourceTree = "<group>"; };
+		18938CFF2BD9876B0031EB2B /* leland3.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = leland3.webp; sourceTree = "<group>"; };
+		18938D002BD9876B0031EB2B /* leland1.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = leland1.webp; sourceTree = "<group>"; };
+		18938D012BD9876B0031EB2B /* leland2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = leland2.jpeg; sourceTree = "<group>"; };
+		18938D062BD987760031EB2B /* bigpink1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigpink1.jpeg; sourceTree = "<group>"; };
+		18938D092BD987830031EB2B /* dsc3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dsc3.jpeg; sourceTree = "<group>"; };
+		18938D0A2BD987830031EB2B /* dsc2.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = dsc2.webp; sourceTree = "<group>"; };
+		18938D0B2BD987830031EB2B /* dsc1.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = dsc1.webp; sourceTree = "<group>"; };
+		18938D102BD987900031EB2B /* dcc3.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = dcc3.webp; sourceTree = "<group>"; };
+		18938D112BD987900031EB2B /* dcc2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dcc2.jpeg; sourceTree = "<group>"; };
+		18938D122BD987900031EB2B /* dcc1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dcc1.jpeg; sourceTree = "<group>"; };
+		18938D172BD9879C0031EB2B /* martius1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = martius1.jpeg; sourceTree = "<group>"; };
+		18938D182BD9879C0031EB2B /* martius4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = martius4.jpeg; sourceTree = "<group>"; };
+		18938D192BD9879C0031EB2B /* martius3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = martius3.jpeg; sourceTree = "<group>"; };
+		18938D1A2BD9879D0031EB2B /* martius2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = martius2.png; sourceTree = "<group>"; };
+		18938D202BD987A90031EB2B /* valade4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = valade4.jpeg; sourceTree = "<group>"; };
+		18938D212BD987A90031EB2B /* valade2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = valade2.jpeg; sourceTree = "<group>"; };
+		18938D222BD987A90031EB2B /* valade3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = valade3.jpeg; sourceTree = "<group>"; };
+		18938D232BD987A90031EB2B /* valade1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = valade1.jpeg; sourceTree = "<group>"; };
+		18938D292BD987B60031EB2B /* eastern2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eastern2.jpeg; sourceTree = "<group>"; };
+		18938D2A2BD987B60031EB2B /* eastern1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eastern1.jpeg; sourceTree = "<group>"; };
+		18938D2B2BD987B60031EB2B /* eastern3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eastern3.jpeg; sourceTree = "<group>"; };
+		18938D2C2BD987B60031EB2B /* eastern5.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eastern5.jpeg; sourceTree = "<group>"; };
+		18938D2D2BD987B60031EB2B /* eastern4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eastern4.jpeg; sourceTree = "<group>"; };
+		18938D592BE406110031EB2B /* DetroitVenuesModel 2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "DetroitVenuesModel 2.mlmodel"; sourceTree = "<group>"; };
+		18938D5B2BE407FD0031EB2B /* BuildingRecognitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingRecognitionView.swift; sourceTree = "<group>"; };
 		18FEB49F2B293ACB00021DC8 /* IconsDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsDictionary.swift; sourceTree = "<group>"; };
 		18FEB4A52B2A9CE700021DC8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B43474C2A60D66C000CB1A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -77,6 +311,7 @@
 				8B8E66112A2ADF79001E5D25 /* HorizontalDivider.swift */,
 				5BEC5BB22A89E4430058FEC8 /* MultilineLabel.swift */,
 				180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */,
+				18938D5B2BE407FD0031EB2B /* BuildingRecognitionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -101,10 +336,693 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		18938C2A2BD9726E0031EB2B /* Venues */ = {
+			isa = PBXGroup;
+			children = (
+				18938D332BD9998F0031EB2B /* val */,
+				18938D532BD99C8E0031EB2B /* train */,
+			);
+			path = Venues;
+			sourceTree = "<group>";
+		};
+		18938C2B2BD972F90031EB2B /* Comerica Park */ = {
+			isa = PBXGroup;
+			children = (
+				18938C2F2BD9851C0031EB2B /* comerica1.jpeg */,
+				18938C2C2BD9851C0031EB2B /* comerica2.jpeg */,
+				18938C2E2BD9851C0031EB2B /* comerica4.jpeg */,
+			);
+			path = "Comerica Park";
+			sourceTree = "<group>";
+		};
+		18938C342BD9851F0031EB2B /* Little Caesars Arena */ = {
+			isa = PBXGroup;
+			children = (
+				18938C362BD9853B0031EB2B /* caesars1.jpeg */,
+				18938C382BD9853B0031EB2B /* caesars2.avif */,
+				18938C352BD9853B0031EB2B /* caesars4.jpeg */,
+			);
+			path = "Little Caesars Arena";
+			sourceTree = "<group>";
+		};
+		18938C3D2BD985460031EB2B /* Ford Field */ = {
+			isa = PBXGroup;
+			children = (
+				18938C3F2BD985560031EB2B /* fordfield1.jpeg */,
+				18938C3E2BD985560031EB2B /* fordfield3.webp */,
+				18938C402BD985560031EB2B /* fordfield4.jpeg */,
+			);
+			path = "Ford Field";
+			sourceTree = "<group>";
+		};
+		18938C462BD985640031EB2B /* Detroit Historical Museum */ = {
+			isa = PBXGroup;
+			children = (
+				18938C482BD985720031EB2B /* detroithistorical1.jpeg */,
+				18938C4A2BD985730031EB2B /* detroithistorical3.jpeg */,
+				18938C472BD985720031EB2B /* detroithistorical4.jpeg */,
+			);
+			path = "Detroit Historical Museum";
+			sourceTree = "<group>";
+		};
+		18938C4F2BD9857B0031EB2B /* Motown Museum */ = {
+			isa = PBXGroup;
+			children = (
+				18938C502BD985870031EB2B /* motown1.jpeg */,
+				18938C522BD985870031EB2B /* motown2.jpeg */,
+				18938C512BD985870031EB2B /* motown4.jpeg */,
+			);
+			path = "Motown Museum";
+			sourceTree = "<group>";
+		};
+		18938C582BD9858A0031EB2B /* Ford Piquette Plant */ = {
+			isa = PBXGroup;
+			children = (
+				18938C592BD985940031EB2B /* piquette2.jpeg */,
+				18938C5A2BD985940031EB2B /* piquette3.jpeg */,
+			);
+			path = "Ford Piquette Plant";
+			sourceTree = "<group>";
+		};
+		18938C5F2BD9859E0031EB2B /* Detroit Institute of Arts */ = {
+			isa = PBXGroup;
+			children = (
+				18938C602BD985A90031EB2B /* dia2.jpeg */,
+				18938C612BD985A90031EB2B /* dia3.jpeg */,
+				18938C622BD985AA0031EB2B /* dia4.jpeg */,
+			);
+			path = "Detroit Institute of Arts";
+			sourceTree = "<group>";
+		};
+		18938C682BD985B00031EB2B /* Michigan Science Center */ = {
+			isa = PBXGroup;
+			children = (
+				18938C6A2BD985BD0031EB2B /* msci1.jpeg */,
+				18938C6C2BD985BD0031EB2B /* msci3.jpeg */,
+				18938C6B2BD985BD0031EB2B /* msci4.jpeg */,
+			);
+			path = "Michigan Science Center";
+			sourceTree = "<group>";
+		};
+		18938C712BD985C60031EB2B /* Charles H. Wright Museum of African American History */ = {
+			isa = PBXGroup;
+			children = (
+				18938C742BD985E20031EB2B /* wright2.jpeg */,
+				18938C732BD985E20031EB2B /* wright3.jpeg */,
+				18938C752BD985E20031EB2B /* wright4.jpeg */,
+			);
+			path = "Charles H. Wright Museum of African American History";
+			sourceTree = "<group>";
+		};
+		18938C7A2BD985E50031EB2B /* Dossin Great Lakes Museum */ = {
+			isa = PBXGroup;
+			children = (
+				18938C7B2BD985F00031EB2B /* dossin1.jpeg */,
+				18938C7D2BD985F00031EB2B /* dossin3.jpeg */,
+			);
+			path = "Dossin Great Lakes Museum";
+			sourceTree = "<group>";
+		};
+		18938C812BD985F60031EB2B /* Museum of Contemporary Art Detroit */ = {
+			isa = PBXGroup;
+			children = (
+				18938C832BD986040031EB2B /* mocad1.jpeg */,
+				18938C822BD986040031EB2B /* mocad3.jpeg */,
+			);
+			path = "Museum of Contemporary Art Detroit";
+			sourceTree = "<group>";
+		};
+		18938C882BD9860A0031EB2B /* Fox Theatre */ = {
+			isa = PBXGroup;
+			children = (
+				18938C892BD986290031EB2B /* fox1.jpeg */,
+				18938C8A2BD986290031EB2B /* fox2.jpeg */,
+				18938C8C2BD986290031EB2B /* fox4.jpeg */,
+			);
+			path = "Fox Theatre";
+			sourceTree = "<group>";
+		};
+		18938C912BD9862C0031EB2B /* The Fillmore */ = {
+			isa = PBXGroup;
+			children = (
+				18938C922BD986340031EB2B /* fillmore1.jpeg */,
+				18938C942BD986340031EB2B /* fillmore2.jpeg */,
+			);
+			path = "The Fillmore";
+			sourceTree = "<group>";
+		};
+		18938C982BD9863E0031EB2B /* Fisher Theatre */ = {
+			isa = PBXGroup;
+			children = (
+				18938C9B2BD9864C0031EB2B /* fisher1.jpeg */,
+				18938C9D2BD9864D0031EB2B /* fisher2.webp */,
+				18938C9C2BD9864C0031EB2B /* fisher3.jpeg */,
+				18938C992BD9864C0031EB2B /* fisher4.jpeg */,
+			);
+			path = "Fisher Theatre";
+			sourceTree = "<group>";
+		};
+		18938CA32BD986540031EB2B /* Orchestra Hall */ = {
+			isa = PBXGroup;
+			children = (
+				18938CA42BD986620031EB2B /* dso1.jpeg */,
+				18938CA72BD986620031EB2B /* dso3.jpeg */,
+				18938CA62BD986620031EB2B /* dso4.jpeg */,
+			);
+			path = "Orchestra Hall";
+			sourceTree = "<group>";
+		};
+		18938CAC2BD986670031EB2B /* Detroit Opera House */ = {
+			isa = PBXGroup;
+			children = (
+				18938CAD2BD986700031EB2B /* operahouse1.jpeg */,
+				18938CAE2BD986710031EB2B /* operahouse3.jpeg */,
+				18938CAF2BD986710031EB2B /* operahouse4.jpeg */,
+			);
+			path = "Detroit Opera House";
+			sourceTree = "<group>";
+		};
+		18938CB52BD9867A0031EB2B /* Majestic Theatre */ = {
+			isa = PBXGroup;
+			children = (
+				18938CB72BD986860031EB2B /* majestic2.jpeg */,
+				18938CB62BD986860031EB2B /* majestic3.jpeg */,
+			);
+			path = "Majestic Theatre";
+			sourceTree = "<group>";
+		};
+		18938CBC2BD986980031EB2B /* Detroit Music Hall */ = {
+			isa = PBXGroup;
+			children = (
+				18938CBD2BD986A80031EB2B /* musichall1.jpeg */,
+				18938CBE2BD986A80031EB2B /* musichall2.jpeg */,
+			);
+			path = "Detroit Music Hall";
+			sourceTree = "<group>";
+		};
+		18938CC12BD986AB0031EB2B /* Willis Show Bar */ = {
+			isa = PBXGroup;
+			children = (
+				18938CC42BD986C00031EB2B /* willis2.webp */,
+				18938CC22BD986C00031EB2B /* willis3.jpeg */,
+			);
+			path = "Willis Show Bar";
+			sourceTree = "<group>";
+		};
+		18938CC82BD986CF0031EB2B /* Cliff Bell's */ = {
+			isa = PBXGroup;
+			children = (
+				18938CCB2BD986E50031EB2B /* cliffbells1.jpeg */,
+				18938CCA2BD986E50031EB2B /* cliffbells3.webp */,
+			);
+			path = "Cliff Bell's";
+			sourceTree = "<group>";
+		};
+		18938CC92BD986D50031EB2B /* Baker's Keyboard Lounge */ = {
+			isa = PBXGroup;
+			children = (
+				18938CD02BD986EC0031EB2B /* bakers1.jpeg */,
+				18938CD22BD986EC0031EB2B /* bakers3.webp */,
+			);
+			path = "Baker's Keyboard Lounge";
+			sourceTree = "<group>";
+		};
+		18938CD62BD986EE0031EB2B /* El Club */ = {
+			isa = PBXGroup;
+			children = (
+				18938CD92BD986F80031EB2B /* elclub2.jpeg */,
+				18938CD82BD986F80031EB2B /* elclub3.jpeg */,
+			);
+			path = "El Club";
+			sourceTree = "<group>";
+		};
+		18938CDD2BD987020031EB2B /* Saint Andrew's Hall */ = {
+			isa = PBXGroup;
+			children = (
+				18938CE02BD9870F0031EB2B /* andrews1.jpeg */,
+				18938CDE2BD9870F0031EB2B /* andrews2.avif */,
+			);
+			path = "Saint Andrew's Hall";
+			sourceTree = "<group>";
+		};
+		18938CE42BD987150031EB2B /* MotorCity Wine */ = {
+			isa = PBXGroup;
+			children = (
+				18938CE62BD9872B0031EB2B /* mcw1.jpeg */,
+				18938CE72BD9872B0031EB2B /* mcw2.jpeg */,
+			);
+			path = "MotorCity Wine";
+			sourceTree = "<group>";
+		};
+		18938CEB2BD9873A0031EB2B /* Spot Lite */ = {
+			isa = PBXGroup;
+			children = (
+				18938CED2BD987440031EB2B /* spotlite2.jpeg */,
+				18938CEC2BD987440031EB2B /* spotlite3.jpeg */,
+			);
+			path = "Spot Lite";
+			sourceTree = "<group>";
+		};
+		18938CF22BD987460031EB2B /* Marble Bar */ = {
+			isa = PBXGroup;
+			children = (
+				18938CF32BD987500031EB2B /* marble1.webp */,
+				18938CF52BD987500031EB2B /* marble3.jpeg */,
+			);
+			path = "Marble Bar";
+			sourceTree = "<group>";
+		};
+		18938CF92BD987540031EB2B /* Tangent Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				18938CFB2BD9875F0031EB2B /* tangent1.jpeg */,
+				18938CFA2BD9875F0031EB2B /* tangent2.jpeg */,
+			);
+			path = "Tangent Gallery";
+			sourceTree = "<group>";
+		};
+		18938CFE2BD987620031EB2B /* Leland City Club */ = {
+			isa = PBXGroup;
+			children = (
+				18938D012BD9876B0031EB2B /* leland2.jpeg */,
+				18938CFF2BD9876B0031EB2B /* leland3.webp */,
+			);
+			path = "Leland City Club";
+			sourceTree = "<group>";
+		};
+		18938D052BD9876D0031EB2B /* Big Pink */ = {
+			isa = PBXGroup;
+			children = (
+				18938D062BD987760031EB2B /* bigpink1.jpeg */,
+			);
+			path = "Big Pink";
+			sourceTree = "<group>";
+		};
+		18938D082BD987780031EB2B /* Detroit Shipping Co. */ = {
+			isa = PBXGroup;
+			children = (
+				18938D0A2BD987830031EB2B /* dsc2.webp */,
+				18938D092BD987830031EB2B /* dsc3.jpeg */,
+			);
+			path = "Detroit Shipping Co.";
+			sourceTree = "<group>";
+		};
+		18938D0F2BD987870031EB2B /* Detroit Comedy Club */ = {
+			isa = PBXGroup;
+			children = (
+				18938D122BD987900031EB2B /* dcc1.jpeg */,
+				18938D112BD987900031EB2B /* dcc2.jpeg */,
+			);
+			path = "Detroit Comedy Club";
+			sourceTree = "<group>";
+		};
+		18938D162BD987940031EB2B /* Campus Martius */ = {
+			isa = PBXGroup;
+			children = (
+				18938D172BD9879C0031EB2B /* martius1.jpeg */,
+				18938D1A2BD9879D0031EB2B /* martius2.png */,
+				18938D192BD9879C0031EB2B /* martius3.jpeg */,
+			);
+			path = "Campus Martius";
+			sourceTree = "<group>";
+		};
+		18938D1F2BD987A00031EB2B /* Valade Park */ = {
+			isa = PBXGroup;
+			children = (
+				18938D232BD987A90031EB2B /* valade1.jpeg */,
+				18938D222BD987A90031EB2B /* valade3.jpeg */,
+				18938D202BD987A90031EB2B /* valade4.jpeg */,
+			);
+			path = "Valade Park";
+			sourceTree = "<group>";
+		};
+		18938D282BD987AD0031EB2B /* Eastern Market */ = {
+			isa = PBXGroup;
+			children = (
+				18938D2A2BD987B60031EB2B /* eastern1.jpeg */,
+				18938D292BD987B60031EB2B /* eastern2.jpeg */,
+				18938D2B2BD987B60031EB2B /* eastern3.jpeg */,
+				18938D2C2BD987B60031EB2B /* eastern5.jpeg */,
+			);
+			path = "Eastern Market";
+			sourceTree = "<group>";
+		};
+		18938D332BD9998F0031EB2B /* val */ = {
+			isa = PBXGroup;
+			children = (
+				18938D4C2BD99BB50031EB2B /* Detroit Institute of Arts */,
+				18938D4B2BD99B930031EB2B /* Michigan Science Center */,
+				18938D4A2BD99B780031EB2B /* Charles H. Wright Museum of African American History */,
+				18938D492BD99B610031EB2B /* Dossin Great Lakes Museum */,
+				18938D482BD99B4A0031EB2B /* Museum of Contemporary Art Detroit */,
+				18938D472BD99B330031EB2B /* Fox Theatre */,
+				18938D452BD99AC30031EB2B /* Majestic Theatre */,
+				18938D442BD99ABA0031EB2B /* Detroit Music Hall */,
+				18938D432BD99AA20031EB2B /* Willis Show Bar */,
+				18938D422BD99A930031EB2B /* Cliff Bell's */,
+				18938D412BD99A840031EB2B /* Baker's Keyboard Lounge */,
+				18938D402BD99A740031EB2B /* El Club */,
+				18938D3F2BD99A5F0031EB2B /* Saint Andrew's Hall */,
+				18938D3E2BD99A520031EB2B /* MotorCity Wine */,
+				18938D3D2BD99A420031EB2B /* Marble Bar */,
+				18938D3C2BD99A230031EB2B /* Spot Lite */,
+				18938D3B2BD99A1B0031EB2B /* Tangent Gallery */,
+				18938D3A2BD99A030031EB2B /* Leland City Club */,
+				18938D392BD999FC0031EB2B /* Big Pink */,
+				18938D382BD999E40031EB2B /* Detroit Shipping Co. */,
+				18938D372BD999D30031EB2B /* Detroit Comedy Club */,
+				18938D362BD999C10031EB2B /* Campus Martius */,
+				18938D352BD9999F0031EB2B /* Valade Park */,
+				18938D462BD99ADD0031EB2B /* Detroit Opera House */,
+				18938D342BD999990031EB2B /* Eastern Market */,
+				18938D4E2BD99BF30031EB2B /* Motown Museum */,
+				18938D4F2BD99C0B0031EB2B /* Detroit Historical Museum */,
+				18938D4D2BD99BD30031EB2B /* Ford Piquette Plant */,
+				18938D512BD99C4C0031EB2B /* Little Caesars Arena */,
+				18938D502BD99C300031EB2B /* Ford Field */,
+				18938D542BD99CCB0031EB2B /* Orchestra Hall */,
+				18938D522BD99C680031EB2B /* Comerica Park */,
+				18938D552BD99CF40031EB2B /* Fisher Theatre */,
+				18938D562BD99D0F0031EB2B /* The Fillmore */,
+			);
+			path = val;
+			sourceTree = "<group>";
+		};
+		18938D342BD999990031EB2B /* Eastern Market */ = {
+			isa = PBXGroup;
+			children = (
+				18938D2D2BD987B60031EB2B /* eastern4.jpeg */,
+			);
+			path = "Eastern Market";
+			sourceTree = "<group>";
+		};
+		18938D352BD9999F0031EB2B /* Valade Park */ = {
+			isa = PBXGroup;
+			children = (
+				18938D212BD987A90031EB2B /* valade2.jpeg */,
+			);
+			path = "Valade Park";
+			sourceTree = "<group>";
+		};
+		18938D362BD999C10031EB2B /* Campus Martius */ = {
+			isa = PBXGroup;
+			children = (
+				18938D182BD9879C0031EB2B /* martius4.jpeg */,
+			);
+			path = "Campus Martius";
+			sourceTree = "<group>";
+		};
+		18938D372BD999D30031EB2B /* Detroit Comedy Club */ = {
+			isa = PBXGroup;
+			children = (
+				18938D102BD987900031EB2B /* dcc3.webp */,
+			);
+			path = "Detroit Comedy Club";
+			sourceTree = "<group>";
+		};
+		18938D382BD999E40031EB2B /* Detroit Shipping Co. */ = {
+			isa = PBXGroup;
+			children = (
+				18938D0B2BD987830031EB2B /* dsc1.webp */,
+			);
+			path = "Detroit Shipping Co.";
+			sourceTree = "<group>";
+		};
+		18938D392BD999FC0031EB2B /* Big Pink */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Big Pink";
+			sourceTree = "<group>";
+		};
+		18938D3A2BD99A030031EB2B /* Leland City Club */ = {
+			isa = PBXGroup;
+			children = (
+				18938D002BD9876B0031EB2B /* leland1.webp */,
+			);
+			path = "Leland City Club";
+			sourceTree = "<group>";
+		};
+		18938D3B2BD99A1B0031EB2B /* Tangent Gallery */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Tangent Gallery";
+			sourceTree = "<group>";
+		};
+		18938D3C2BD99A230031EB2B /* Spot Lite */ = {
+			isa = PBXGroup;
+			children = (
+				18938CEE2BD987440031EB2B /* spotlite1.webp */,
+			);
+			path = "Spot Lite";
+			sourceTree = "<group>";
+		};
+		18938D3D2BD99A420031EB2B /* Marble Bar */ = {
+			isa = PBXGroup;
+			children = (
+				18938CF42BD987500031EB2B /* marble2.jpeg */,
+			);
+			path = "Marble Bar";
+			sourceTree = "<group>";
+		};
+		18938D3E2BD99A520031EB2B /* MotorCity Wine */ = {
+			isa = PBXGroup;
+			children = (
+				18938CE52BD9872B0031EB2B /* mcw3.jpeg */,
+			);
+			path = "MotorCity Wine";
+			sourceTree = "<group>";
+		};
+		18938D3F2BD99A5F0031EB2B /* Saint Andrew's Hall */ = {
+			isa = PBXGroup;
+			children = (
+				18938CDF2BD9870F0031EB2B /* andrews3.jpeg */,
+			);
+			path = "Saint Andrew's Hall";
+			sourceTree = "<group>";
+		};
+		18938D402BD99A740031EB2B /* El Club */ = {
+			isa = PBXGroup;
+			children = (
+				18938CD72BD986F80031EB2B /* elclub1.jpeg */,
+			);
+			path = "El Club";
+			sourceTree = "<group>";
+		};
+		18938D412BD99A840031EB2B /* Baker's Keyboard Lounge */ = {
+			isa = PBXGroup;
+			children = (
+				18938CD12BD986EC0031EB2B /* bakers2.webp */,
+			);
+			path = "Baker's Keyboard Lounge";
+			sourceTree = "<group>";
+		};
+		18938D422BD99A930031EB2B /* Cliff Bell's */ = {
+			isa = PBXGroup;
+			children = (
+				18938CCC2BD986E50031EB2B /* cliffbells2.jpeg */,
+			);
+			path = "Cliff Bell's";
+			sourceTree = "<group>";
+		};
+		18938D432BD99AA20031EB2B /* Willis Show Bar */ = {
+			isa = PBXGroup;
+			children = (
+				18938CC32BD986C00031EB2B /* willis1.jpeg */,
+			);
+			path = "Willis Show Bar";
+			sourceTree = "<group>";
+		};
+		18938D442BD99ABA0031EB2B /* Detroit Music Hall */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Detroit Music Hall";
+			sourceTree = "<group>";
+		};
+		18938D452BD99AC30031EB2B /* Majestic Theatre */ = {
+			isa = PBXGroup;
+			children = (
+				18938CB82BD986860031EB2B /* majestic1.jpeg */,
+			);
+			path = "Majestic Theatre";
+			sourceTree = "<group>";
+		};
+		18938D462BD99ADD0031EB2B /* Detroit Opera House */ = {
+			isa = PBXGroup;
+			children = (
+				18938CB02BD986710031EB2B /* operahouse2.jpeg */,
+			);
+			path = "Detroit Opera House";
+			sourceTree = "<group>";
+		};
+		18938D472BD99B330031EB2B /* Fox Theatre */ = {
+			isa = PBXGroup;
+			children = (
+				18938C8B2BD986290031EB2B /* fox3.jpeg */,
+			);
+			path = "Fox Theatre";
+			sourceTree = "<group>";
+		};
+		18938D482BD99B4A0031EB2B /* Museum of Contemporary Art Detroit */ = {
+			isa = PBXGroup;
+			children = (
+				18938C842BD986040031EB2B /* mocad2.jpeg */,
+			);
+			path = "Museum of Contemporary Art Detroit";
+			sourceTree = "<group>";
+		};
+		18938D492BD99B610031EB2B /* Dossin Great Lakes Museum */ = {
+			isa = PBXGroup;
+			children = (
+				18938C7C2BD985F00031EB2B /* dossin2.jpeg */,
+			);
+			path = "Dossin Great Lakes Museum";
+			sourceTree = "<group>";
+		};
+		18938D4A2BD99B780031EB2B /* Charles H. Wright Museum of African American History */ = {
+			isa = PBXGroup;
+			children = (
+				18938C722BD985E20031EB2B /* wright1.jpeg */,
+			);
+			path = "Charles H. Wright Museum of African American History";
+			sourceTree = "<group>";
+		};
+		18938D4B2BD99B930031EB2B /* Michigan Science Center */ = {
+			isa = PBXGroup;
+			children = (
+				18938C692BD985BD0031EB2B /* msci2.jpeg */,
+			);
+			path = "Michigan Science Center";
+			sourceTree = "<group>";
+		};
+		18938D4C2BD99BB50031EB2B /* Detroit Institute of Arts */ = {
+			isa = PBXGroup;
+			children = (
+				18938C632BD985AA0031EB2B /* dia1.webp */,
+			);
+			path = "Detroit Institute of Arts";
+			sourceTree = "<group>";
+		};
+		18938D4D2BD99BD30031EB2B /* Ford Piquette Plant */ = {
+			isa = PBXGroup;
+			children = (
+				18938C5B2BD985940031EB2B /* piquette1.jpeg */,
+			);
+			path = "Ford Piquette Plant";
+			sourceTree = "<group>";
+		};
+		18938D4E2BD99BF30031EB2B /* Motown Museum */ = {
+			isa = PBXGroup;
+			children = (
+				18938C532BD985870031EB2B /* motown3.jpeg */,
+			);
+			path = "Motown Museum";
+			sourceTree = "<group>";
+		};
+		18938D4F2BD99C0B0031EB2B /* Detroit Historical Museum */ = {
+			isa = PBXGroup;
+			children = (
+				18938C492BD985730031EB2B /* detroithistorical2.webp */,
+			);
+			path = "Detroit Historical Museum";
+			sourceTree = "<group>";
+		};
+		18938D502BD99C300031EB2B /* Ford Field */ = {
+			isa = PBXGroup;
+			children = (
+				18938C412BD985560031EB2B /* fordfield2.jpeg */,
+			);
+			path = "Ford Field";
+			sourceTree = "<group>";
+		};
+		18938D512BD99C4C0031EB2B /* Little Caesars Arena */ = {
+			isa = PBXGroup;
+			children = (
+				18938C372BD9853B0031EB2B /* caesars3.jpeg */,
+			);
+			path = "Little Caesars Arena";
+			sourceTree = "<group>";
+		};
+		18938D522BD99C680031EB2B /* Comerica Park */ = {
+			isa = PBXGroup;
+			children = (
+				18938C2D2BD9851C0031EB2B /* comerica3.webp */,
+			);
+			path = "Comerica Park";
+			sourceTree = "<group>";
+		};
+		18938D532BD99C8E0031EB2B /* train */ = {
+			isa = PBXGroup;
+			children = (
+				18938D282BD987AD0031EB2B /* Eastern Market */,
+				18938C882BD9860A0031EB2B /* Fox Theatre */,
+				18938C812BD985F60031EB2B /* Museum of Contemporary Art Detroit */,
+				18938C7A2BD985E50031EB2B /* Dossin Great Lakes Museum */,
+				18938C712BD985C60031EB2B /* Charles H. Wright Museum of African American History */,
+				18938C682BD985B00031EB2B /* Michigan Science Center */,
+				18938C5F2BD9859E0031EB2B /* Detroit Institute of Arts */,
+				18938C582BD9858A0031EB2B /* Ford Piquette Plant */,
+				18938CA32BD986540031EB2B /* Orchestra Hall */,
+				18938C982BD9863E0031EB2B /* Fisher Theatre */,
+				18938C912BD9862C0031EB2B /* The Fillmore */,
+				18938C4F2BD9857B0031EB2B /* Motown Museum */,
+				18938C462BD985640031EB2B /* Detroit Historical Museum */,
+				18938C3D2BD985460031EB2B /* Ford Field */,
+				18938C342BD9851F0031EB2B /* Little Caesars Arena */,
+				18938C2B2BD972F90031EB2B /* Comerica Park */,
+				18938D1F2BD987A00031EB2B /* Valade Park */,
+				18938D162BD987940031EB2B /* Campus Martius */,
+				18938D0F2BD987870031EB2B /* Detroit Comedy Club */,
+				18938D082BD987780031EB2B /* Detroit Shipping Co. */,
+				18938D052BD9876D0031EB2B /* Big Pink */,
+				18938CFE2BD987620031EB2B /* Leland City Club */,
+				18938CF92BD987540031EB2B /* Tangent Gallery */,
+				18938CF22BD987460031EB2B /* Marble Bar */,
+				18938CEB2BD9873A0031EB2B /* Spot Lite */,
+				18938CE42BD987150031EB2B /* MotorCity Wine */,
+				18938CDD2BD987020031EB2B /* Saint Andrew's Hall */,
+				18938CD62BD986EE0031EB2B /* El Club */,
+				18938CC92BD986D50031EB2B /* Baker's Keyboard Lounge */,
+				18938CC82BD986CF0031EB2B /* Cliff Bell's */,
+				18938CC12BD986AB0031EB2B /* Willis Show Bar */,
+				18938CBC2BD986980031EB2B /* Detroit Music Hall */,
+				18938CB52BD9867A0031EB2B /* Majestic Theatre */,
+				18938CAC2BD986670031EB2B /* Detroit Opera House */,
+			);
+			path = train;
+			sourceTree = "<group>";
+		};
+		18938D542BD99CCB0031EB2B /* Orchestra Hall */ = {
+			isa = PBXGroup;
+			children = (
+				18938CA52BD986620031EB2B /* dso2.jpeg */,
+			);
+			path = "Orchestra Hall";
+			sourceTree = "<group>";
+		};
+		18938D552BD99CF40031EB2B /* Fisher Theatre */ = {
+			isa = PBXGroup;
+			children = (
+				18938C9A2BD9864C0031EB2B /* fisher5.jpeg */,
+			);
+			path = "Fisher Theatre";
+			sourceTree = "<group>";
+		};
+		18938D562BD99D0F0031EB2B /* The Fillmore */ = {
+			isa = PBXGroup;
+			children = (
+				18938C932BD986340031EB2B /* fillmore3.png */,
+			);
+			path = "The Fillmore";
+			sourceTree = "<group>";
+		};
 		8BE3F6E72A26E65E00A4DBC2 = {
 			isa = PBXGroup;
 			children = (
 				8BE3F6F22A26E65E00A4DBC2 /* DetroitApp */,
+				18938D592BE406110031EB2B /* DetroitVenuesModel 2.mlmodel */,
 				8BE3F6F12A26E65E00A4DBC2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,6 +1038,7 @@
 		8BE3F6F22A26E65E00A4DBC2 /* DetroitApp */ = {
 			isa = PBXGroup;
 			children = (
+				18938C2A2BD9726E0031EB2B /* Venues */,
 				8BE3F6F32A26E65E00A4DBC2 /* DetroitAppApp.swift */,
 				180D897F2BB125570056AD0C /* Views */,
 				180D89802BB125AB0056AD0C /* Models */,
@@ -208,12 +1127,127 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18938CF02BD987440031EB2B /* spotlite2.jpeg in Resources */,
+				18938D0D2BD987830031EB2B /* dsc2.webp in Resources */,
+				18938C332BD9851C0031EB2B /* comerica1.jpeg in Resources */,
+				18938D2E2BD987B60031EB2B /* eastern2.jpeg in Resources */,
+				18938C7F2BD985F00031EB2B /* dossin2.jpeg in Resources */,
+				18938C642BD985AA0031EB2B /* dia2.jpeg in Resources */,
+				18938C3C2BD9853B0031EB2B /* caesars2.avif in Resources */,
+				18938C442BD985560031EB2B /* fordfield4.jpeg in Resources */,
+				18938CCE2BD986E50031EB2B /* cliffbells1.jpeg in Resources */,
+				18938C702BD985BD0031EB2B /* msci3.jpeg in Resources */,
+				18938CB22BD986710031EB2B /* operahouse3.jpeg in Resources */,
+				18938D272BD987A90031EB2B /* valade1.jpeg in Resources */,
+				18938D1C2BD9879D0031EB2B /* martius4.jpeg in Resources */,
+				18938D032BD9876B0031EB2B /* leland1.webp in Resources */,
+				18938C9F2BD9864D0031EB2B /* fisher5.jpeg in Resources */,
+				18938CD32BD986EC0031EB2B /* bakers1.jpeg in Resources */,
+				18938C962BD986340031EB2B /* fillmore3.png in Resources */,
+				18938CA12BD9864D0031EB2B /* fisher3.jpeg in Resources */,
+				18938C772BD985E20031EB2B /* wright3.jpeg in Resources */,
+				18938D152BD987900031EB2B /* dcc1.jpeg in Resources */,
+				18938C792BD985E20031EB2B /* wright4.jpeg in Resources */,
+				18938C322BD9851C0031EB2B /* comerica4.jpeg in Resources */,
+				18938C782BD985E20031EB2B /* wright2.jpeg in Resources */,
+				18938D252BD987A90031EB2B /* valade2.jpeg in Resources */,
+				18938C852BD986040031EB2B /* mocad3.jpeg in Resources */,
+				18938CCF2BD986E50031EB2B /* cliffbells2.jpeg in Resources */,
+				18938CEA2BD9872B0031EB2B /* mcw2.jpeg in Resources */,
+				18938CD42BD986EC0031EB2B /* bakers2.webp in Resources */,
+				18938D322BD987B60031EB2B /* eastern4.jpeg in Resources */,
+				18938C432BD985560031EB2B /* fordfield1.jpeg in Resources */,
+				18938C802BD985F00031EB2B /* dossin3.jpeg in Resources */,
+				18938CB32BD986710031EB2B /* operahouse4.jpeg in Resources */,
+				18938CD52BD986EC0031EB2B /* bakers3.webp in Resources */,
+				18938CB42BD986710031EB2B /* operahouse2.jpeg in Resources */,
+				18938CB12BD986710031EB2B /* operahouse1.jpeg in Resources */,
+				18938D262BD987A90031EB2B /* valade3.jpeg in Resources */,
+				18938CA82BD986620031EB2B /* dso1.jpeg in Resources */,
+				18938C4D2BD985730031EB2B /* detroithistorical2.webp in Resources */,
+				18938C312BD9851C0031EB2B /* comerica3.webp in Resources */,
+				18938C3B2BD9853B0031EB2B /* caesars3.jpeg in Resources */,
+				18938CDC2BD986F80031EB2B /* elclub2.jpeg in Resources */,
 				18FEB4A62B2A9CE700021DC8 /* Launch Screen.storyboard in Resources */,
+				18938CC62BD986C00031EB2B /* willis1.jpeg in Resources */,
+				18938D1E2BD9879D0031EB2B /* martius2.png in Resources */,
+				18938C6D2BD985BD0031EB2B /* msci2.jpeg in Resources */,
+				18938CE12BD9870F0031EB2B /* andrews2.avif in Resources */,
+				18938C902BD986290031EB2B /* fox4.jpeg in Resources */,
+				18938D042BD9876B0031EB2B /* leland2.jpeg in Resources */,
+				18938D0E2BD987830031EB2B /* dsc1.webp in Resources */,
+				18938CA22BD9864D0031EB2B /* fisher2.webp in Resources */,
+				18938CF82BD987500031EB2B /* marble3.jpeg in Resources */,
+				18938C7E2BD985F00031EB2B /* dossin1.jpeg in Resources */,
+				18938CAB2BD986620031EB2B /* dso3.jpeg in Resources */,
+				18938C672BD985AA0031EB2B /* dia1.webp in Resources */,
+				18938C9E2BD9864D0031EB2B /* fisher4.jpeg in Resources */,
+				18938D142BD987900031EB2B /* dcc2.jpeg in Resources */,
+				18938C3A2BD9853B0031EB2B /* caesars1.jpeg in Resources */,
+				18938C4C2BD985730031EB2B /* detroithistorical1.jpeg in Resources */,
+				18938CC72BD986C00031EB2B /* willis2.webp in Resources */,
+				18938CF72BD987500031EB2B /* marble2.jpeg in Resources */,
+				18938D1D2BD9879D0031EB2B /* martius3.jpeg in Resources */,
 				8BE3F6FB2A26E65F00A4DBC2 /* Preview Assets.xcassets in Resources */,
+				18938CCD2BD986E50031EB2B /* cliffbells3.webp in Resources */,
+				18938C542BD985870031EB2B /* motown1.jpeg in Resources */,
+				18938CE32BD9870F0031EB2B /* andrews1.jpeg in Resources */,
+				18938CE82BD9872B0031EB2B /* mcw3.jpeg in Resources */,
+				18938C872BD986040031EB2B /* mocad2.jpeg in Resources */,
+				18938C5E2BD985940031EB2B /* piquette1.jpeg in Resources */,
+				18938D242BD987A90031EB2B /* valade4.jpeg in Resources */,
+				18938D132BD987900031EB2B /* dcc3.webp in Resources */,
 				5BF67DB92B017C37004CACD5 /* Playfair_Display in Resources */,
+				18938C8D2BD986290031EB2B /* fox1.jpeg in Resources */,
+				18938C6F2BD985BD0031EB2B /* msci4.jpeg in Resources */,
+				18938D312BD987B60031EB2B /* eastern5.jpeg in Resources */,
+				18938D2F2BD987B60031EB2B /* eastern1.jpeg in Resources */,
+				18938D0C2BD987830031EB2B /* dsc3.jpeg in Resources */,
 				8BE3F6F82A26E65F00A4DBC2 /* Assets.xcassets in Resources */,
+				18938C5C2BD985940031EB2B /* piquette2.jpeg in Resources */,
+				18938CFC2BD9875F0031EB2B /* tangent2.jpeg in Resources */,
+				18938CF12BD987440031EB2B /* spotlite1.webp in Resources */,
+				18938C422BD985560031EB2B /* fordfield3.webp in Resources */,
+				18938C952BD986340031EB2B /* fillmore1.jpeg in Resources */,
+				18938CA02BD9864D0031EB2B /* fisher1.jpeg in Resources */,
+				18938D072BD987760031EB2B /* bigpink1.jpeg in Resources */,
+				18938C652BD985AA0031EB2B /* dia3.jpeg in Resources */,
+				18938C8E2BD986290031EB2B /* fox2.jpeg in Resources */,
+				18938CAA2BD986620031EB2B /* dso4.jpeg in Resources */,
+				18938CB92BD986860031EB2B /* majestic3.jpeg in Resources */,
+				18938C552BD985870031EB2B /* motown4.jpeg in Resources */,
+				18938C8F2BD986290031EB2B /* fox3.jpeg in Resources */,
+				18938C5D2BD985940031EB2B /* piquette3.jpeg in Resources */,
+				18938D1B2BD9879D0031EB2B /* martius1.jpeg in Resources */,
 				5B43474D2A60D66C000CB1A6 /* GoogleService-Info.plist in Resources */,
+				18938C302BD9851C0031EB2B /* comerica2.jpeg in Resources */,
+				18938CF62BD987500031EB2B /* marble1.webp in Resources */,
+				18938D022BD9876B0031EB2B /* leland3.webp in Resources */,
+				18938D302BD987B60031EB2B /* eastern3.jpeg in Resources */,
+				18938CC52BD986C00031EB2B /* willis3.jpeg in Resources */,
+				18938CC02BD986A80031EB2B /* musichall2.jpeg in Resources */,
+				18938C562BD985870031EB2B /* motown2.jpeg in Resources */,
+				18938CDA2BD986F80031EB2B /* elclub1.jpeg in Resources */,
+				18938CA92BD986620031EB2B /* dso2.jpeg in Resources */,
+				18938CBB2BD986860031EB2B /* majestic1.jpeg in Resources */,
+				18938C6E2BD985BD0031EB2B /* msci1.jpeg in Resources */,
+				18938C762BD985E20031EB2B /* wright1.jpeg in Resources */,
 				5BF67DBD2B0181F7004CACD5 /* Exo in Resources */,
+				18938C4B2BD985730031EB2B /* detroithistorical4.jpeg in Resources */,
+				18938CEF2BD987440031EB2B /* spotlite3.jpeg in Resources */,
+				18938C862BD986040031EB2B /* mocad1.jpeg in Resources */,
+				18938C972BD986340031EB2B /* fillmore2.jpeg in Resources */,
+				18938CDB2BD986F80031EB2B /* elclub3.jpeg in Resources */,
+				18938C452BD985560031EB2B /* fordfield2.jpeg in Resources */,
+				18938C572BD985870031EB2B /* motown3.jpeg in Resources */,
+				18938CBA2BD986860031EB2B /* majestic2.jpeg in Resources */,
+				18938C392BD9853B0031EB2B /* caesars4.jpeg in Resources */,
+				18938CBF2BD986A80031EB2B /* musichall1.jpeg in Resources */,
+				18938C4E2BD985730031EB2B /* detroithistorical3.jpeg in Resources */,
+				18938CE92BD9872B0031EB2B /* mcw1.jpeg in Resources */,
+				18938CE22BD9870F0031EB2B /* andrews3.jpeg in Resources */,
+				18938C662BD985AA0031EB2B /* dia4.jpeg in Resources */,
+				18938CFD2BD9875F0031EB2B /* tangent1.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,8 +1264,10 @@
 				8BE3F6F42A26E65E00A4DBC2 /* DetroitAppApp.swift in Sources */,
 				8BC095162A2ADAF8009140C6 /* Day.swift in Sources */,
 				8BE3F7042A26EB8B00A4DBC2 /* EventView.swift in Sources */,
+				18938D5A2BE406110031EB2B /* DetroitVenuesModel 2.mlmodel in Sources */,
 				5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */,
 				5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */,
+				18938D5C2BE407FD0031EB2B /* BuildingRecognitionView.swift in Sources */,
 				8B8E66122A2ADF79001E5D25 /* HorizontalDivider.swift in Sources */,
 				180D897E2BB11FDD0056AD0C /* ReminderOptionsView.swift in Sources */,
 				180D895F2B8672000056AD0C /* ShareSheetView.swift in Sources */,
@@ -364,7 +1400,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"DetroitApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 24S36Y3GNV;
 				ENABLE_PREVIEWS = YES;
@@ -403,7 +1439,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"DetroitApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 24S36Y3GNV;
 				ENABLE_PREVIEWS = YES;
