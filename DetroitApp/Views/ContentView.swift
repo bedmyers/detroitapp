@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     enum SortingCriteria: String, CaseIterable {
         case price = "Price"
         case timeStart = "Start Time"
@@ -19,7 +18,8 @@ struct ContentView: View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var deepLinkManager: DeepLinkManager
-    @StateObject private var viewModel = EventViewModel()
+    @EnvironmentObject private var viewModel: EventViewModel
+    @StateObject private var locationManager = LocationManager()
     @State private var selectedDayIndex = 0
     @State private var isFilterSheetPresented = false
     @State private var isPopoverPresented = false
@@ -29,11 +29,14 @@ struct ContentView: View {
     @State private var animateCategoryChange = false
     @State private var deepLinkEventId: String? = nil
     @State private var shouldNavigateToEvent = false
+    @State private var showBuildingRecognitionView = false
+    @State private var showNearbyEventsView = false // Add this line
     @GestureState private var translation: CGFloat = 0
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "New Center/Milwaukee Junction", "Southwest", "University District", "Greektown", "Rivertown Warehouse", "East Detroit"]
     
     var body: some View {
         let events = viewModel.events
+        let _ = print("$$$2 \(events.count)")
         
         var sortedEvents: [Event] {
             let filteredEvents = events.filter { event in
@@ -100,6 +103,22 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        showNearbyEventsView = true
+                    } label: {
+                        Label("Location", systemImage: "location")
+                    }
+                    .tint(CustomColors.orange)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showBuildingRecognitionView = true
+                    } label: {
+                        Label("Camera", systemImage: "camera")
+                    }
+                    .tint(CustomColors.orange)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
                         isFilterSheetPresented = true
                     } label: {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
@@ -120,6 +139,18 @@ struct ContentView: View {
                     }),
                     .cancel()
                 ])
+            }
+            .sheet(isPresented: $showBuildingRecognitionView) {
+                NavigationView {
+                    BuildingRecognitionView()
+                }
+            }
+            .sheet(isPresented: $showNearbyEventsView) {
+                NavigationView {
+                    NearbyEventsView()
+                        .environmentObject(viewModel)
+                        .environmentObject(locationManager)
+                }
             }
             .onAppear {
                 if !viewModel.eventsLoaded {

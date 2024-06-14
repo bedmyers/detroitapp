@@ -24,10 +24,13 @@ struct Event: Decodable, Hashable {
     let rating: Int
     let type: String?
     let priceInt: Int?
+    var latitude: Double?
+    var longitude: Double?
     
     var processedDescription: String {
         return description?.replacingOccurrences(of: "\\n\\n", with: "\n\n") ?? ""
     }
+    
     
     var fullDate: String {
         let dateFormatter = DateFormatter()

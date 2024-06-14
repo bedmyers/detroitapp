@@ -10,22 +10,83 @@ import ARKit
 import Vision
 
 struct BuildingRecognitionView: View {
+    @State private var identifiedVenue: String? = nil
+    @State private var showVenueEvents = false
+    @State private var showConfirmation = false
+
     var body: some View {
-        ARViewContainer().edgesIgnoringSafeArea(.all)
+        NavigationView {
+            ZStack {
+                ARViewContainer(identifiedVenue: $identifiedVenue, showConfirmation: $showConfirmation)
+                    .edgesIgnoringSafeArea(.all)
+                    .navigationBarHidden(true)
+                
+                if showConfirmation, let venue = identifiedVenue {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                self.showVenueEvents = true
+                                ARViewContainer.stopSession = true
+                            }) {
+                                Text("View Events at \(venue)")
+                                    .padding()
+                                    .background(Color.black.opacity(0.7))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                            .padding()
+                        }
+                    }
+                } else if !showConfirmation {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Text("No recognizable venue detected")
+                                .padding()
+                                .background(Color.black.opacity(0.7))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+            }
+            .sheet(isPresented: $showVenueEvents, onDismiss: {
+                identifiedVenue = nil
+                showConfirmation = false
+                ARViewContainer.stopSession = false
+            }) {
+                if let venue = identifiedVenue {
+                    NavigationView {
+                        VenueEventsView(venueName: venue)
+                    }
+                }
+            }
+        }
     }
 }
 
 struct ARViewContainer: UIViewRepresentable {
+    @Binding var identifiedVenue: String?
+    @Binding var showConfirmation: Bool
+    static var stopSession = false
+
     func makeUIView(context: Context) -> ARSCNView {
         let arView = ARSCNView(frame: .zero)
-        arView.delegate = context.coordinator  // Set the delegate to the coordinator
+        arView.delegate = context.coordinator
         let configuration = ARWorldTrackingConfiguration()
         arView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         return arView
     }
 
     func updateUIView(_ uiView: ARSCNView, context: Context) {
-        // Update the view during SwiftUI state changes
+        if ARViewContainer.stopSession {
+            uiView.session.pause()
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -41,7 +102,8 @@ struct ARViewContainer: UIViewRepresentable {
 
         func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
             guard let arView = renderer as? ARSCNView,
-                  let currentFrame = arView.session.currentFrame else { return }
+                  let currentFrame = arView.session.currentFrame,
+                  !ARViewContainer.stopSession else { return }
 
             let pixelBuffer = currentFrame.capturedImage
             parent.performImageRecognition(pixelBuffer)
@@ -51,24 +113,28 @@ struct ARViewContainer: UIViewRepresentable {
             DispatchQueue.main.async {
                 if let planeAnchor = anchor as? ARPlaneAnchor, planeAnchor.alignment == .horizontal {
                     let planeNode = SCNNode()
-                    // Customize your plane node here
                     node.addChildNode(planeNode)
                 }
             }
         }
     }
-    
+
     func performImageRecognition(_ pixelBuffer: CVPixelBuffer) {
-        guard let model = try? VNCoreMLModel(for: DetroitVenuesModel_2().model) else { return }
+        guard let model = try? VNCoreMLModel(for: DetroitVens().model) else { return }
         let request = VNCoreMLRequest(model: model) { (vnRequest, error) in
             DispatchQueue.main.async {
-                if let results = vnRequest.results as? [VNClassificationObservation] {
-                    let topResult = results.first
-                    print("Top classification result: \(topResult?.identifier ?? "unknown")")
+                if let results = vnRequest.results as? [VNClassificationObservation], let topResult = results.first {
+                    if topResult.confidence > 0.80 {
+                        self.identifiedVenue = topResult.identifier
+                        self.showConfirmation = true
+                    } else {
+                        self.identifiedVenue = nil
+                        self.showConfirmation = false
+                    }
                 }
             }
         }
-        request.imageCropAndScaleOption = .centerCrop  // Adjust this according to your model's training
+        request.imageCropAndScaleOption = .centerCrop
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
         do {
             try handler.perform([request])
@@ -83,3 +149,4 @@ struct BuildingRecognitionView_Previews: PreviewProvider {
         BuildingRecognitionView()
     }
 }
+

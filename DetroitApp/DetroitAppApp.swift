@@ -11,7 +11,8 @@ import FirebaseCore
 @main
 struct DetroitAppApp: App {
     var deepLinkManager = DeepLinkManager()
-    
+    @StateObject private var eventViewModel = EventViewModel()
+
     init() {
         FirebaseApp.configure()
         
@@ -28,6 +29,7 @@ struct DetroitAppApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(deepLinkManager)
+                .environmentObject(eventViewModel)
                 .onOpenURL { url in
                     print("URL received: \(url)")
                     let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)

@@ -24,6 +24,7 @@ struct EventView: View {
             ScrollView(.vertical) {
                 VStack {
                     moreView
+                        .tint(CustomColors.orange)
                         .padding(.trailing, 20)
                         .padding(5)
                     titleView
@@ -80,7 +81,7 @@ struct EventView: View {
                 Label("", systemImage: "ellipsis.circle")
                     .imageScale(.large)
             }
-            .foregroundColor(Color(.orange))
+            .tint(CustomColors.orange)
         }
     }
     
@@ -183,7 +184,7 @@ struct EventView: View {
                     addEventToCalendar(event: event)
                 }
             } else {
-                // Handle the error or the case where permission is denied
+                
             }
         }
     }
