@@ -30,13 +30,12 @@ struct ContentView: View {
     @State private var deepLinkEventId: String? = nil
     @State private var shouldNavigateToEvent = false
     @State private var showBuildingRecognitionView = false
-    @State private var showNearbyEventsView = false // Add this line
+    @State private var showNearbyEventsView = false
     @GestureState private var translation: CGFloat = 0
-    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "New Center/Milwaukee Junction", "Southwest", "University District", "Greektown", "Rivertown Warehouse", "East Detroit"]
+    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "North End", "Southwest", "East Side", "Hamtramck"]
     
     var body: some View {
         let events = viewModel.events
-        let _ = print("$$$2 \(events.count)")
         
         var sortedEvents: [Event] {
             let filteredEvents = events.filter { event in
@@ -59,10 +58,10 @@ struct ContentView: View {
             }
         }
         
-        let deepLinkedEvent = findEventById(deepLinkEventId)
+        let deepLinkedEventIndex = sortedEvents.firstIndex(where: { $0.id == deepLinkEventId })
         let deepLinkNavigation: some View = Group {
-            if let event = deepLinkedEvent {
-                NavigationLink(destination: EventView(event: event), isActive: $shouldNavigateToEvent) {
+            if let index = deepLinkedEventIndex {
+                NavigationLink(destination: EventView(events: sortedEvents, currentIndex: index), isActive: $shouldNavigateToEvent) {
                     EmptyView()
                 }
             } else {
@@ -76,16 +75,16 @@ struct ContentView: View {
                 headerView
                 
                 List {
-                    ForEach(sortedEvents, id: \.self) { event in
-                         NavigationLink {
-                             EventView(event: event)
+                    ForEach(sortedEvents.indices, id: \.self) { index in
+                        NavigationLink {
+                            EventView(events: sortedEvents, currentIndex: index)
                         } label: {
                             VStack(alignment: .leading, spacing: 6) {
-                                Text(event.name)
+                                Text(sortedEvents[index].name)
                                     .font(.custom("ExoRoman-Bold", size: 24))
-                                Text("      \(event.type ?? "")")
+                                Text("      \(sortedEvents[index].type ?? "")")
                                     .font(.custom("ExoRoman-Regular", size: 16))
-                                Text(Image(systemName: "location.circle")) + Text( " \(event.location)")
+                                Text(Image(systemName: "location.circle")) + Text(" \(sortedEvents[index].location)")
                                     .font(.custom("ExoRoman-Regular", size: 14))
                             }
                             .foregroundStyle(Color(.mantis))

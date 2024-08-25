@@ -39,14 +39,14 @@ struct VenueEventsView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(events, id: \.self) { event in
-                            NavigationLink(destination: EventView(event: event)) {
+                        ForEach(events.indices, id: \.self) { index in
+                            NavigationLink(destination: EventView(events: events, currentIndex: index)) {
                                 VStack(alignment: .leading, spacing: 6) {
-                                    Text(event.name)
+                                    Text(events[index].name)
                                         .font(.custom("ExoRoman-Bold", size: 24))
-                                    Text("      \(event.type ?? "")")
+                                    Text("      \(events[index].type ?? "")")
                                         .font(.custom("ExoRoman-Regular", size: 16))
-                                    Text(Image(systemName: "location.circle")) + Text(" \(event.location)")
+                                    Text(Image(systemName: "location.circle")) + Text(" \(events[index].location)")
                                         .font(.custom("ExoRoman-Regular", size: 14))
                                 }
                                 .foregroundStyle(Color(.mantis))

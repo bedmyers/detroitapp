@@ -15,7 +15,14 @@ struct EventView: View {
     @State private var showingReminderOptions = false
     @State private var eventStore = EKEventStore()
     @State private var shareSheetItems: [Any] = []
-    let event: Event
+    
+    let events: [Event]
+    @State private var currentIndex: Int
+    
+    init(events: [Event], currentIndex: Int) {
+        self.events = events
+        _currentIndex = State(initialValue: currentIndex)
+    }
     
     var body: some View {
         ZStack {
@@ -46,15 +53,17 @@ struct EventView: View {
                         .padding(10)
                         .padding(.leading, 25)
                         .padding(.trailing, 25)
-                    if event.processedDescription != "" {
+                    if events[currentIndex].processedDescription != "" {
                         descriptionView
                             .padding(10)
                             .padding(.leading, 25)
                             .padding(.trailing, 25)
                             .padding(.bottom, 25)
                     }
-                    linkView
-                        .padding(.bottom, 10)
+                    if events[currentIndex].website?.count ?? 6 > 5 {
+                        linkView
+                            .padding(.bottom, 10)
+                    }
                 }
                 .actionSheet(isPresented: $isOptionSheetPresented) {
                     ActionSheet(title: Text("Options"), buttons: [
@@ -69,6 +78,27 @@ struct EventView: View {
                     ShareSheet(items: shareSheetItems)
                 }
             }
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        let threshold: CGFloat = 50
+                        if value.translation.width < -threshold {
+                            // Swipe left
+                            withAnimation {
+                                if currentIndex < events.count - 1 {
+                                    currentIndex += 1
+                                }
+                            }
+                        } else if value.translation.width > threshold {
+                            // Swipe right
+                            withAnimation {
+                                if currentIndex > 0 {
+                                    currentIndex -= 1
+                                }
+                            }
+                        }
+                    }
+            )
         }
     }
     
@@ -87,7 +117,7 @@ struct EventView: View {
     
     var titleView: some View {
         VStack(alignment: .leading) {
-            Text(event.name.uppercased())
+            Text(events[currentIndex].name.uppercased())
                 .font(.custom("ExoRoman-Bold", size: 36))
                 .foregroundColor(Color(.mantis))
         }
@@ -99,11 +129,11 @@ struct EventView: View {
                 .font(.custom("ExoRoman-Black", size: 24))
                 .foregroundColor(Color(.mantis))
             HorizontalDivider()
-            if event.price == "Free" {
+            if events[currentIndex].price == "Free" {
                 Text("Free")
                     .font(.custom("ExoRoman-Regular", size: 16))
             } else {
-                Text(event.price ?? "")
+                Text(events[currentIndex].price ?? "")
                     .font(.custom("ExoRoman-Regular", size: 16))
             }
         }
@@ -116,9 +146,9 @@ struct EventView: View {
                 .font(.custom("ExoRoman-Black", size: 24))
                 .foregroundColor(Color(.mantis))
             HorizontalDivider()
-            Text(event.formattedDate)
+            Text(events[currentIndex].formattedDate)
                 .font(.custom("ExoRoman-Regular", size: 16))
-            Text("\(event.formattedTimes.0) - \(event.formattedTimes.1)")
+            Text("\(events[currentIndex].formattedTimes.0) - \(events[currentIndex].formattedTimes.1)")
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
         .foregroundColor(Color(.mantis))
@@ -130,12 +160,12 @@ struct EventView: View {
                 .font(.custom("ExoRoman-Black", size: 24))
                 .foregroundColor(Color(.mantis))
             HorizontalDivider()
-            Text(event.location)
+            Text(events[currentIndex].location)
                 .font(.custom("ExoRoman-Regular", size: 16))
-            Link(event.address, destination: URL(string: "http://maps.apple.com/?address=\(event.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")")!)
+            Link(events[currentIndex].address, destination: URL(string: "http://maps.apple.com/?address=\(events[currentIndex].address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")")!)
                 .font(.custom("ExoRoman-Bold", size: 16))
                 .foregroundColor(CustomColors.orange)
-            Text(event.neighborhood)
+            Text(events[currentIndex].neighborhood)
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
         .foregroundColor(Color(.mantis))
@@ -143,7 +173,7 @@ struct EventView: View {
     
     var imageView: some View {
         AsyncImage(
-            url: URL(string: event.image ?? ""),
+            url: URL(string: events[currentIndex].image ?? ""),
             content: { image in
                 image.resizable()
                      .aspectRatio(contentMode: .fit)
@@ -164,7 +194,7 @@ struct EventView: View {
                 .foregroundColor(Color(.mantis))
             HorizontalDivider()
             
-            Text(event.processedDescription)
+            Text(events[currentIndex].processedDescription)
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
         .foregroundColor(Color(.mantis))
@@ -172,7 +202,7 @@ struct EventView: View {
     }
     
     var linkView: some View {
-        Link("WEBSITE", destination: URL(string: event.website ?? "")!)
+        Link("WEBSITE", destination: URL(string: events[currentIndex].website ?? "")!)
             .font(.custom("ExoRoman-Black", size: 30))
             .foregroundColor(CustomColors.orange)
     }
@@ -181,7 +211,7 @@ struct EventView: View {
         eventStore.requestAccess(to: .event) { (granted, error) in
             if granted && error == nil {
                 DispatchQueue.main.async {
-                    addEventToCalendar(event: event)
+                    addEventToCalendar(event: events[currentIndex])
                 }
             } else {
                 
@@ -205,8 +235,8 @@ struct EventView: View {
         }
     }
     
-    func shareEvent() { 
-        let eventId = event.id
+    func shareEvent() {
+        let eventId = events[currentIndex].id
         if let url = URL(string: "offwoodward://event/\(eventId)") {
             self.showingShareSheet = true
             shareSheetItems = [url]
@@ -222,10 +252,10 @@ struct EventView: View {
             time = "hour"
         }
         content.title = "Event Reminder"
-        content.body = "\(event.name) is starting in \(hoursBefore) \(time)."
+        content.body = "\(events[currentIndex].name) is starting in \(hoursBefore) \(time)."
         content.sound = UNNotificationSound.default
 
-        if let eventStart = event.eventStart {
+        if let eventStart = events[currentIndex].eventStart {
             let triggerDate = Calendar.current.date(byAdding: .hour, value: -hoursBefore, to: eventStart)!
             let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: false)
@@ -242,15 +272,13 @@ struct EventView: View {
 }
 
 struct EventView_Previews: PreviewProvider {
-    @State static var event = Event(name: "Art Fair", date: "8/25/23", location: "Detroit Institute of Arts", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Midtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: "5", timeStart: 700, timeEnd: 1100, rating: 5, type: "Concert", priceInt: 0)
+    @State static var events = [
+        Event(name: "Art Fair", date: "8/25/23", location: "Detroit Institute of Arts", locationNarrowed: "DIA", address: "123 Woodward Ave", neighborhood: "Midtown", category: "Art", website: "www.google.com", image: nil, description: "It's gonna be a blast! Come on by", price: "5", timeStart: 700, timeEnd: 1100, rating: 5, type: "Concert", priceInt: 0),
+        Event(name: "Music Concert", date: "8/26/23", location: "Fox Theatre", locationNarrowed: "Fox", address: "2310 Woodward Ave", neighborhood: "Downtown", category: "Music", website: "www.example.com", image: nil, description: "Join us for a night of music!", price: "10", timeStart: 800, timeEnd: 1200, rating: 4, type: "Concert", priceInt: 0)
+    ]
     
     static var previews: some View {
-        EventView(event: event)
+        EventView(events: events, currentIndex: 0)
     }
 }
 
-extension String {
-    var paragraphs: [String] {
-        return self.components(separatedBy: .newlines).filter { !$0.isEmpty }
-    }
-}

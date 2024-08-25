@@ -95,7 +95,6 @@ final class EventViewModel: ObservableObject {
         geocoder.geocodeAddressString(event.address) { [weak self] placemarks, error in
             defer {
                 self?.semaphore.signal()
-                completion()
             }
             
             if let error = error {
@@ -105,6 +104,8 @@ final class EventViewModel: ObservableObject {
                     DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
                         self?.geocodeEvent(event: event, retryCount: retryCount + 1, completion: completion)
                     }
+                } else {
+                    completion()
                 }
             } else if let self = self, let placemark = placemarks?.first, let location = placemark.location {
                 var updatedEvent = event
@@ -114,6 +115,7 @@ final class EventViewModel: ObservableObject {
                     self.events.append(updatedEvent)
                     print("Geocoded event: \(event.name) at latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
                 }
+                completion()
             } else {
                 print("Geocoding failed for address: \(event.address) with no placemarks.")
                 if retryCount < self?.maxRetries ?? 0 {
@@ -121,6 +123,8 @@ final class EventViewModel: ObservableObject {
                     DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
                         self?.geocodeEvent(event: event, retryCount: retryCount + 1, completion: completion)
                     }
+                } else {
+                    completion()
                 }
             }
         }

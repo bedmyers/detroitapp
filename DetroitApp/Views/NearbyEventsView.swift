@@ -31,7 +31,7 @@ struct NearbyEventsView: View {
                     let calendar = Calendar.current
                     let currentDate = Date()
                     
-                    let isWithinDistance = distance <= 3209.34 // 1 mile in meters
+                    let isWithinDistance = distance <= 1609.34
                     let isSameDay = calendar.isDate(eventDate, inSameDayAs: currentDate)
                     let isBeforeEndTime = currentDate <= eventEndTime
                     
@@ -59,14 +59,14 @@ struct NearbyEventsView: View {
                         Spacer()
                     } else {
                         List {
-                            ForEach(nearbyEvents, id: \.self) { event in
-                                NavigationLink(destination: EventView(event: event)) {
+                            ForEach(nearbyEvents.indices, id: \.self) { index in
+                                NavigationLink(destination: EventView(events: nearbyEvents, currentIndex: index)) {
                                     VStack(alignment: .leading, spacing: 6) {
-                                        Text(event.name)
+                                        Text(nearbyEvents[index].name)
                                             .font(.custom("ExoRoman-Bold", size: 24))
-                                        Text("      \(event.type ?? "")")
+                                        Text("      \(nearbyEvents[index].type ?? "")")
                                             .font(.custom("ExoRoman-Regular", size: 16))
-                                        Text(Image(systemName: "location.circle")) + Text(" \(event.location)")
+                                        Text(Image(systemName: "location.circle")) + Text(" \(nearbyEvents[index].location)")
                                             .font(.custom("ExoRoman-Regular", size: 14))
                                     }
                                     .foregroundStyle(Color(.mantis))
@@ -81,7 +81,11 @@ struct NearbyEventsView: View {
                 }
             } else {
                 Text("Fetching location...")
+                    .foregroundColor(.white)
+                    .font(.custom("ExoRoman-Regular", size: 20))
+                    .padding()
             }
         }
     }
 }
+
