@@ -78,7 +78,10 @@ final class EventViewModel: ObservableObject {
             group.enter()
             queue.async { [weak self] in
                 guard let self = self else { return }
-                self.geocodeEvent(event: event, retryCount: 0) {
+                self.geocodeEvent(event: event, retryCount: 0) { geocodedEvent in
+                    DispatchQueue.main.async {
+                        self.events.append(geocodedEvent)
+                    }
                     group.leave()
                 }
             }
@@ -89,7 +92,7 @@ final class EventViewModel: ObservableObject {
         }
     }
     
-    private func geocodeEvent(event: Event, retryCount: Int, completion: @escaping () -> Void) {
+    private func geocodeEvent(event: Event, retryCount: Int, completion: @escaping (Event) -> Void) {
         print("Starting geocoding for event: \(event.name)")
         semaphore.wait()
         geocoder.geocodeAddressString(event.address) { [weak self] placemarks, error in
@@ -105,17 +108,15 @@ final class EventViewModel: ObservableObject {
                         self?.geocodeEvent(event: event, retryCount: retryCount + 1, completion: completion)
                     }
                 } else {
-                    completion()
+                    print("Max retries reached for event: \(event.name). Adding event without geocoded data.")
+                    completion(event)
                 }
-            } else if let self = self, let placemark = placemarks?.first, let location = placemark.location {
+            } else if let placemark = placemarks?.first, let location = placemark.location {
                 var updatedEvent = event
                 updatedEvent.latitude = location.coordinate.latitude
                 updatedEvent.longitude = location.coordinate.longitude
-                DispatchQueue.main.async {
-                    self.events.append(updatedEvent)
-                    print("Geocoded event: \(event.name) at latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
-                }
-                completion()
+                print("Geocoded event: \(event.name) at latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
+                completion(updatedEvent)
             } else {
                 print("Geocoding failed for address: \(event.address) with no placemarks.")
                 if retryCount < self?.maxRetries ?? 0 {
@@ -124,7 +125,8 @@ final class EventViewModel: ObservableObject {
                         self?.geocodeEvent(event: event, retryCount: retryCount + 1, completion: completion)
                     }
                 } else {
-                    completion()
+                    print("Max retries reached for event: \(event.name). Adding event without geocoded data.")
+                    completion(event)
                 }
             }
         }

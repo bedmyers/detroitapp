@@ -8,18 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    // MARK: - Enums
     enum SortingCriteria: String, CaseIterable {
         case price = "Price"
         case timeStart = "Start Time"
         case rating = "None"
     }
     
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    // MARK: - Properties
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "North End", "Southwest", "East Side", "Hamtramck"]
+    let iconsDict = [
+        "All": "star.fill",
+        "Music": "music.note",
+        "Shows": "theatermasks.fill",
+        "Sports": "sportscourt.fill",
+        "Food": "fork.knife",
+        "Art": "paintpalette.fill",
+        "Events": "calendar",
+        "Museum": "building.columns.fill"
+    ]
     
+    // MARK: - Environment and StateObjects
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var deepLinkManager: DeepLinkManager
     @EnvironmentObject private var viewModel: EventViewModel
     @StateObject private var locationManager = LocationManager()
+    
+    // MARK: - State variables
     @State private var selectedDayIndex = 0
     @State private var isFilterSheetPresented = false
     @State private var isPopoverPresented = false
@@ -32,35 +48,62 @@ struct ContentView: View {
     @State private var showBuildingRecognitionView = false
     @State private var showNearbyEventsView = false
     @GestureState private var translation: CGFloat = 0
-    let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "North End", "Southwest", "East Side", "Hamtramck"]
+    @State private var titleSize: CGFloat = 36
     
+    // MARK: - Body
     var body: some View {
-        let events = viewModel.events
-        
-        var sortedEvents: [Event] {
-            let filteredEvents = events.filter { event in
-                let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
-                let matchesLocation = selectedOption == "Detroit" || (selectedOption != "Detroit" && event.neighborhood == selectedOption)
-                
-                return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
-                       event.fullDate == getDayDate(after: selectedDayIndex) &&
-                       matchesCategory &&
-                       matchesLocation
+        NavigationView {
+            VStack(spacing: 7) {
+                deepLinkNavigation
+                headerView
+                eventList
             }
-
-            switch sortingCriteria {
-            case .price:
-                return filteredEvents.sorted { $0.priceInt ?? 0 < $1.priceInt ?? 0 }
-            case .timeStart:
-                return filteredEvents.sorted { $0.timeStart ?? 0 < $1.timeStart ?? 0 }
-            case .rating:
-                return filteredEvents.sorted { $0.rating > $1.rating }
+            .background(Color(.limeGreen))
+            .scrollContentBackground(.hidden)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    navigationTitleButton
+                }
+                toolbarItems
             }
+             .actionSheet(isPresented: $isFilterSheetPresented) { filterActionSheet }
+             .sheet(isPresented: $showBuildingRecognitionView) { buildingRecognitionSheet }
+             .sheet(isPresented: $showNearbyEventsView) { nearbyEventsSheet }
+             .onAppear(perform: onAppear)
+             .onChange(of: deepLinkManager.deepLinkEventId, perform: handleDeepLink)
+             .onDisappear(perform: viewModel.stopListening)
+             .gesture(dragGesture)
+             .transition(.slide)
+         }
+     }
+    
+    // MARK: - Computed Properties
+    private var sortedEvents: [Event] {
+        let filteredEvents = viewModel.events.filter { event in
+            let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
+            let matchesLocation = selectedOption == "Detroit" || (selectedOption != "Detroit" && event.neighborhood == selectedOption)
+            
+            return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
+                   event.fullDate == getDayDate(after: selectedDayIndex) &&
+                   matchesCategory &&
+                   matchesLocation
         }
-        
-        let deepLinkedEventIndex = sortedEvents.firstIndex(where: { $0.id == deepLinkEventId })
-        let deepLinkNavigation: some View = Group {
-            if let index = deepLinkedEventIndex {
+
+        switch sortingCriteria {
+        case .price:
+            return filteredEvents.sorted { $0.priceInt ?? 0 < $1.priceInt ?? 0 }
+        case .timeStart:
+            return filteredEvents.sorted { $0.timeStart ?? 0 < $1.timeStart ?? 0 }
+        case .rating:
+            return filteredEvents.sorted { $0.rating > $1.rating }
+        }
+    }
+    
+    private var deepLinkNavigation: some View {
+        Group {
+            if let index = sortedEvents.firstIndex(where: { $0.id == deepLinkEventId }) {
                 NavigationLink(destination: EventView(events: sortedEvents, currentIndex: index), isActive: $shouldNavigateToEvent) {
                     EmptyView()
                 }
@@ -68,125 +111,65 @@ struct ContentView: View {
                 EmptyView()
             }
         }.hidden()
-        
-        return NavigationView {
-            VStack(spacing: 7) {
-                deepLinkNavigation
-                headerView
-                
-                List {
-                    ForEach(sortedEvents.indices, id: \.self) { index in
-                        NavigationLink {
-                            EventView(events: sortedEvents, currentIndex: index)
-                        } label: {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(sortedEvents[index].name)
-                                    .font(.custom("ExoRoman-Bold", size: 24))
-                                Text("      \(sortedEvents[index].type ?? "")")
-                                    .font(.custom("ExoRoman-Regular", size: 16))
-                                Text(Image(systemName: "location.circle")) + Text(" \(sortedEvents[index].location)")
-                                    .font(.custom("ExoRoman-Regular", size: 14))
+    }
+    
+    // MARK: - View Components
+    private var headerView: some View {
+        VStack {
+            scrollView
+                .padding(5)
+            GeometryReader { geometry in
+                Divider()
+                    .frame(width: geometry.size.width * 4/5, height: 4)
+                    .background(Color(.mantis))
+            }
+            .frame(height: 4)
+            titleDateView
+                .padding(.vertical, 4)
+            scrollDotView
+        }
+        .background(Color(.limeGreen))
+    }
+    
+    private var scrollView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                let categories = ["All", "Music", "Shows", "Sports", "Food", "Art", "Events", "Museum"]
+                ForEach(0..<8) { index in
+                    Button {
+                        selectedCategory = categories[index]
+                    } label: {
+                        VStack(spacing: 0) {
+                            ZStack {
+                                if selectedCategory == categories[index] {
+                                    CustomColors.orange
+                                        .cornerRadius(10)
+                                } else {
+                                    Color(.limeGreen)
+                                        .cornerRadius(10)
+                                }
+                                Image(systemName: iconsDict[categories[index]] ?? "star.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color(.mantis))
+                                    .frame(width: 30, height: 30)
+                                    .cornerRadius(10)
                             }
-                            .foregroundStyle(Color(.mantis))
+                            .frame(width: 45, height: 45)
+                            .overlay(RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(.offWhite), lineWidth: 5))
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 5)
+                            Text(categories[index])
+                                .font(.custom("ExoRoman-Regular", size: 12))
                         }
                     }
-                    .listRowBackground(Color(.offWhite))
-                    .listRowSeparatorTint(colorScheme == .light ? CustomColors.offWhiteDark : CustomColors.offWhite)
-                }
-                .id(animateCategoryChange ? UUID() : nil)
-            }
-            .background(Color(.limeGreen))
-            .scrollContentBackground(.hidden)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: navigationTitleButton)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showNearbyEventsView = true
-                    } label: {
-                        Label("Location", systemImage: "location")
-                    }
-                    .tint(CustomColors.orange)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showBuildingRecognitionView = true
-                    } label: {
-                        Label("Camera", systemImage: "camera")
-                    }
-                    .tint(CustomColors.orange)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isFilterSheetPresented = true
-                    } label: {
-                        Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
-                    }
-                    .tint(CustomColors.orange)
                 }
             }
-            .actionSheet(isPresented: $isFilterSheetPresented) {
-                ActionSheet(title: Text("Filter Options"), buttons: [
-                    .default(Text("Sort by Time"), action: {
-                        sortingCriteria = .timeStart
-                    }),
-                    .default(Text("Sort by Price"), action: {
-                        sortingCriteria = .price
-                    }),
-                    .default(Text("Sort by Rating"), action: {
-                        sortingCriteria = .rating
-                    }),
-                    .cancel()
-                ])
-            }
-            .sheet(isPresented: $showBuildingRecognitionView) {
-                NavigationView {
-                    BuildingRecognitionView()
-                }
-            }
-            .sheet(isPresented: $showNearbyEventsView) {
-                NavigationView {
-                    NearbyEventsView()
-                        .environmentObject(viewModel)
-                        .environmentObject(locationManager)
-                }
-            }
-            .onAppear {
-                if !viewModel.eventsLoaded {
-                    viewModel.listentoRealtimeDatabase()
-                }
-            }
-            .onChange(of: deepLinkManager.deepLinkEventId) { newEventId in
-                print("Deep link event ID changed: \(String(describing: newEventId))")
-                if let eventId = newEventId {
-                    self.deepLinkEventId = eventId
-                    self.shouldNavigateToEvent = (findEventById(eventId) != nil)
-                }
-            }
-            .onDisappear {
-                viewModel.stopListening()
-            }
-            .gesture(
-                DragGesture()
-                    .updating($translation) { value, state, _ in
-                        state = value.translation.width
-                    }
-                    .onEnded { value in
-                        let threshold = UIScreen.main.bounds.width / 6
-                        withAnimation {
-                            if value.translation.width < -threshold {
-                                selectedDayIndex = (selectedDayIndex + 1) % days.count
-                            } else if value.translation.width > threshold {
-                                selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
-                            }
-                        }
-                    }
-            )
-            .transition(.slide)
         }
     }
     
-    var titleDateView: some View {
+    private var titleDateView: some View {
         HStack {
             Text(getDateString(after: selectedDayIndex))
                 .font(.custom("ExoRoman-Bold", size: 24))
@@ -210,120 +193,136 @@ struct ContentView: View {
         }
     }
     
-    var headerView: some View {
-        VStack {
-            scrollView
-                .padding(5)
-            GeometryReader { geometry in
-                Divider()
-                    .frame(width: geometry.size.width * 4/5, height: 4)
-                    .background(Color(.mantis))
-            }
-            .frame(height: 4)
-            titleDateView
-                .padding(.vertical, 4)
-            scrollDotView
-        }
-        .background(Color(.limeGreen))
-    }
-    
-    var scrollView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                let categories = ["All", "Music", "Shows", "Sports", "Food", "Art", "Events", "Museum"]
-                ForEach(0..<8) { index in
-                    Button {
-                        selectedCategory = categories[index]
-                    } label: {
-                        VStack(spacing: 0) {
-                            ZStack {
-                                if selectedCategory == categories[index] {
-                                    CustomColors.orange
-                                        .cornerRadius(10)
-                                } else {
-                                    Color(.limeGreen)
-                                        .cornerRadius(10)
-                                }
-                                Image(systemName: iconsDict[categories[index]] ?? "hello")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color(.mantis))
-                                    .frame(width: 30, height: 30)
-                                    .cornerRadius(10)
-                            }
-                            .frame(width: 45, height: 45)
-                            .overlay(RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color(.offWhite), lineWidth: 5))
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 5)
-                            Text(categories[index])
-                                .font(.custom("ExoRoman-Regular", size: 12))
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    var navigationTitleButton: some View {
+    private var navigationTitleButton: some View {
         Menu {
-            GeometryReader { geometry in
-                ZStack {
-                    Color(.offWhite)
-                        .ignoresSafeArea()
-                    
-                    VStack {
-                        Text("Select a Neighborhood")
-                            .font(.custom("ExoRoman-Bold", size: geometry.size.width * 0.08))
-                            .foregroundStyle(Color.red)
-                            .padding(.top, geometry.size.height * 0.02)
-                            .padding(.horizontal)
-
-                        Divider()
-
-                        ForEach(dropdownOptions, id: \.self) { option in
-                            if option != selectedOption {
-                                Button(action: {
-                                    self.selectedOption = option
-                                    self.isPopoverPresented = false
-                                }) {
-                                    Text(option)
-                                        .font(.custom("ExoRoman-Regular", size: geometry.size.width * 0.06))
-                                        .accentColor(.red)
-                                        .foregroundColor(Color(.mantis))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.vertical, 12)
-                                        .padding(.horizontal)
-                                        .cornerRadius(5)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .background(selectedOption == option ? Color(.limeGreen) : Color.clear)
-                                .padding(.horizontal, geometry.size.width * 0.04)
-                                .padding(.bottom, 8)
-                                if option != dropdownOptions.last {
-                                    //Divider()
-                                      //  .foregroundColor(Color(.limeGreen))
-                                }
-                            }
-                        }
-                    }
-                    .background(Color.red)
-                    .padding(.horizontal)
+            ForEach(dropdownOptions, id: \.self) { option in
+                Button(action: {
+                    self.selectedOption = option
+                }) {
+                    Text(option)
+                        .foregroundColor(Color(.mantis))
                 }
             }
         } label: {
-            HStack {
+            HStack(spacing: 4) {
                 Text(selectedOption)
                     .font(.custom("ExoRoman-Bold", size: 36))
                     .foregroundColor(Color(.mantis))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                 Image(systemName: "chevron.down")
                     .foregroundColor(Color(.mantis))
+                    .font(.system(size: 14))
             }
         }
-        .foregroundColor(Color(.mantis))
+        .frame(width: UIScreen.main.bounds.width * 0.6, alignment: .leading)
+        .padding(.leading, 8)
+    }
+
+    
+    private var eventList: some View {
+        List {
+            ForEach(sortedEvents.indices, id: \.self) { index in
+                NavigationLink {
+                    EventView(events: sortedEvents, currentIndex: index)
+                } label: {
+                    eventRow(for: sortedEvents[index])
+                }
+                .listRowBackground(Color(.offWhite))
+                .listRowSeparatorTint(colorScheme == .light ? CustomColors.offWhiteDark : CustomColors.offWhite)
+            }
+        }
+        .id(animateCategoryChange ? UUID() : nil)
     }
     
-    func getDayName(after days: Int) -> String {
+    private func eventRow(for event: Event) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(event.name)
+                .font(.custom("ExoRoman-Bold", size: 24))
+            Text("      \(event.type ?? "")")
+                .font(.custom("ExoRoman-Regular", size: 14))
+            Text(Image(systemName: "location.circle")) + Text(" \(event.locationNarrowed ?? "") @ \(event.formattedTimes.0)")
+                .font(.custom("ExoRoman-Regular", size: 14))
+        }
+        .foregroundStyle(Color(.mantis))
+    }
+    
+    private var toolbarItems: some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 8) {
+                    Button { showNearbyEventsView = true } label: {
+                        Image(systemName: "location.fill")
+                    }
+                    Button { showBuildingRecognitionView = true } label: {
+                        Image(systemName: "camera.fill")
+                    }
+                    Button { isFilterSheetPresented = true } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                    }
+                }
+                .font(.system(size: 20))
+                .foregroundColor(CustomColors.orange)
+            }
+        }
+    }
+    
+    private var filterActionSheet: ActionSheet {
+        ActionSheet(title: Text("Filter Options"), buttons: [
+            .default(Text("Sort by Time"), action: { sortingCriteria = .timeStart }),
+            .default(Text("Sort by Price"), action: { sortingCriteria = .price }),
+            .default(Text("Sort by Rating"), action: { sortingCriteria = .rating }),
+            .cancel()
+        ])
+    }
+    
+    private var buildingRecognitionSheet: some View {
+        NavigationView {
+            BuildingRecognitionView()
+        }
+    }
+    
+    private var nearbyEventsSheet: some View {
+        NavigationView {
+            NearbyEventsView()
+                .environmentObject(viewModel)
+                .environmentObject(locationManager)
+        }
+    }
+    
+    // MARK: - Methods
+    private func onAppear() {
+        if !viewModel.eventsLoaded {
+            viewModel.listentoRealtimeDatabase()
+        }
+    }
+    
+    private func handleDeepLink(_ newEventId: String?) {
+        print("Deep link event ID changed: \(String(describing: newEventId))")
+        if let eventId = newEventId {
+            self.deepLinkEventId = eventId
+            self.shouldNavigateToEvent = (findEventById(eventId) != nil)
+        }
+    }
+    
+    private var dragGesture: some Gesture {
+        DragGesture()
+            .updating($translation) { value, state, _ in
+                state = value.translation.width
+            }
+            .onEnded { value in
+                let threshold = UIScreen.main.bounds.width / 6
+                withAnimation {
+                    if value.translation.width < -threshold {
+                        selectedDayIndex = (selectedDayIndex + 1) % days.count
+                    } else if value.translation.width > threshold {
+                        selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
+                    }
+                }
+            }
+    }
+    
+    private func getDayName(after days: Int) -> String {
         let calendar = Calendar.current
         let today = Date()
         let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
@@ -332,11 +331,7 @@ struct ContentView: View {
         return dateFormatter.string(from: nextDay)
     }
     
-    private func updateNavigationTitle(_ option: String) {
-        print("Hello")
-    }
-    
-    func getDayDate(after days: Int) -> String {
+    private func getDayDate(after days: Int) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "M/dd/yy"
         
@@ -344,12 +339,10 @@ struct ContentView: View {
             return ""
         }
         
-        let formattedDate = dateFormatter.string(from: date)
-        return formattedDate
-        
+        return dateFormatter.string(from: date)
     }
     
-    func getDateString(after days: Int) -> String {
+    private func getDateString(after days: Int) -> String {
         let calendar = Calendar.current
         let today = Date()
         let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
@@ -359,30 +352,17 @@ struct ContentView: View {
         return dateFormatter.string(from: nextDay)
     }
     
-    func findEventById(_ id: String?) -> Event? {
+    private func findEventById(_ id: String?) -> Event? {
         guard let id = id else { return nil }
         return viewModel.events.first(where: { $0.id == id })
     }
-    
-    func modeColor() -> Color {
-        return colorScheme == .dark ? .white : .black
-    }
-    
-    /*func mapsURL(for address: String) -> URL {
-        let formattedAddress = address + ", Detroit, MI"
-         let encodedAddress = formattedAddress.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-         return URL(string: "http://maps.apple.com/?address=\(encodedAddress)")!
-     }*/
 }
 
+// MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-    }
-}
-
-extension Date {
-    func dayNumberOfWeek() -> Int? {
-        return Calendar.current.dateComponents([.weekday], from: self).weekday
+            .environmentObject(EventViewModel())
+            .environmentObject(DeepLinkManager())
     }
 }
