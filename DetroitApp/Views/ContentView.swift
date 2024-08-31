@@ -14,7 +14,7 @@ struct ContentView: View {
         case timeStart = "Start Time"
         case rating = "None"
     }
-    
+
     // MARK: - Properties
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "North End", "Southwest", "East Side", "Hamtramck"]
@@ -28,13 +28,13 @@ struct ContentView: View {
         "Events": "calendar",
         "Museum": "building.columns.fill"
     ]
-    
+
     // MARK: - Environment and StateObjects
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var deepLinkManager: DeepLinkManager
     @EnvironmentObject private var viewModel: EventViewModel
-    @StateObject private var locationManager = LocationManager()
-    
+    @StateObject private var locationManager = LocationManager.shared
+
     // MARK: - State variables
     @State private var selectedDayIndex = 0
     @State private var isFilterSheetPresented = false
@@ -49,7 +49,7 @@ struct ContentView: View {
     @State private var showNearbyEventsView = false
     @GestureState private var translation: CGFloat = 0
     @State private var titleSize: CGFloat = 36
-    
+
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -68,16 +68,17 @@ struct ContentView: View {
                 }
                 toolbarItems
             }
-             .actionSheet(isPresented: $isFilterSheetPresented) { filterActionSheet }
-             .sheet(isPresented: $showBuildingRecognitionView) { buildingRecognitionSheet }
-             .sheet(isPresented: $showNearbyEventsView) { nearbyEventsSheet }
-             .onAppear(perform: onAppear)
-             .onChange(of: deepLinkManager.deepLinkEventId, perform: handleDeepLink)
-             .onDisappear(perform: viewModel.stopListening)
-             .gesture(dragGesture)
-             .transition(.slide)
-         }
-     }
+            .actionSheet(isPresented: $isFilterSheetPresented) { filterActionSheet }
+            .sheet(isPresented: $showBuildingRecognitionView) { buildingRecognitionSheet }
+            .sheet(isPresented: $showNearbyEventsView) { nearbyEventsSheet }
+            .onAppear(perform: {
+                viewModel.listentoRealtimeDatabase()
+            })
+            .onChange(of: deepLinkManager.deepLinkEventId, perform: handleDeepLink)
+            .gesture(dragGesture)
+            .transition(.slide)
+        }
+    }
     
     // MARK: - Computed Properties
     private var sortedEvents: [Event] {
@@ -287,13 +288,6 @@ struct ContentView: View {
             NearbyEventsView()
                 .environmentObject(viewModel)
                 .environmentObject(locationManager)
-        }
-    }
-    
-    // MARK: - Methods
-    private func onAppear() {
-        if !viewModel.eventsLoaded {
-            viewModel.listentoRealtimeDatabase()
         }
     }
     

@@ -18,28 +18,13 @@ struct NearbyEventsView: View {
             Color(.limeGreen)
                 .edgesIgnoringSafeArea(.all)
             
-            if let location = locationManager.location {
+            if let userNeighborhood = viewModel.userNeighborhood {
                 let nearbyEvents = viewModel.events.filter { event in
-                    guard let eventLatitude = event.latitude,
-                          let eventLongitude = event.longitude,
-                          let eventDate = event.eventStart,
-                          let eventEndTime = event.eventEnd else { return false }
-                    
-                    let eventLocation = CLLocation(latitude: eventLatitude, longitude: eventLongitude)
-                    let distance = location.distance(from: eventLocation)
-                    
-                    let calendar = Calendar.current
-                    let currentDate = Date()
-                    
-                    let isWithinDistance = distance <= 1609.34
-                    let isSameDay = calendar.isDate(eventDate, inSameDayAs: currentDate)
-                    let isBeforeEndTime = currentDate <= eventEndTime
-                    
-                    return isWithinDistance && isSameDay && isBeforeEndTime
+                    event.neighborhood == userNeighborhood && event.isHappeningToday
                 }
                 
                 VStack {
-                    Text("Events happening today near you")
+                    Text("Upcoming events happening today near you")
                         .font(.custom("ExoRoman-Regular", size: 24))
                         .foregroundColor(Color(.mantis))
                         .padding(.top, 20)
@@ -52,7 +37,7 @@ struct NearbyEventsView: View {
                     .frame(height: 4)
                     
                     if nearbyEvents.isEmpty {
-                        Text("No events today within a 1 mile radius")
+                        Text("No events today in \(userNeighborhood)")
                             .font(.custom("ExoRoman-Regular", size: 20))
                             .foregroundColor(.white)
                             .padding()
@@ -85,6 +70,21 @@ struct NearbyEventsView: View {
                     .font(.custom("ExoRoman-Regular", size: 20))
                     .padding()
             }
+        }
+    }
+}
+
+extension Event {
+    var isHappeningToday: Bool {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        if let start = eventStart, let end = eventEnd {
+            
+            return calendar.isDate(start, inSameDayAs: currentDate) &&
+            currentDate <= end
+        } else {
+            return false
         }
     }
 }

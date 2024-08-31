@@ -8,41 +8,43 @@
 import Foundation
 import FirebaseDatabase
 import CoreLocation
+import Combine
 
-final class EventViewModel: ObservableObject {
+final class EventViewModel: NSObject, ObservableObject {
     @Published var events: [Event] = []
-    
+    @Published var userNeighborhood: String?
+
     private lazy var databasePath: DatabaseReference? = {
         let ref = Database.database().reference()
         return ref
     }()
-    
-    var eventsLoaded = false
-    
-    private let encoder = JSONEncoder()
+
     private let decoder = JSONDecoder()
-    private let geocoder = CLGeocoder()
-    
-    private let queue = DispatchQueue(label: "geocodingQueue", attributes: .concurrent)
-    private let semaphore = DispatchSemaphore(value: 1)
-    private let maxRetries = 3
-    
+    private let locationManager = LocationManager.shared
+
+    override init() {
+        super.init()
+        // Observe changes to the location
+        locationManager.$location
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] location in
+                guard let location = location else { return }
+                self?.determineUserNeighborhood(from: location)
+            }
+            .store(in: &cancellables)
+    }
+
+    private var cancellables = Set<AnyCancellable>()
+
     func listentoRealtimeDatabase() {
-        guard !eventsLoaded else {
-            return
-        }
+        guard let databasePath = databasePath else { return }
 
-        guard let databasePath = databasePath else {
-            return
-        }
-
-        // Fetch all events first
         databasePath.observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let self = self, snapshot.exists() else {
                 print("No events found in the database.")
                 return
             }
-            
+
             var fetchedEvents: [Event] = []
             for child in snapshot.children {
                 if let childSnapshot = child as? DataSnapshot,
@@ -56,79 +58,40 @@ final class EventViewModel: ObservableObject {
                     }
                 }
             }
-            
-            // Log the number of events fetched
+
             print("Fetched \(fetchedEvents.count) events.")
-            
-            // Geocode all fetched events
-            self.geocodeEvents(events: fetchedEvents)
-        }
-        
-        eventsLoaded = true
-    }
-    
-    func stopListening() {
-        databasePath?.removeAllObservers()
-    }
-    
-    private func geocodeEvents(events: [Event]) {
-        let group = DispatchGroup()
-        
-        for event in events {
-            group.enter()
-            queue.async { [weak self] in
-                guard let self = self else { return }
-                self.geocodeEvent(event: event, retryCount: 0) { geocodedEvent in
-                    DispatchQueue.main.async {
-                        self.events.append(geocodedEvent)
-                    }
-                    group.leave()
-                }
+            DispatchQueue.main.async {
+                self.events = fetchedEvents
             }
         }
-        
-        group.notify(queue: .main) {
-            print("All geocoding tasks are complete. Total events: \(self.events.count)")
-        }
     }
-    
-    private func geocodeEvent(event: Event, retryCount: Int, completion: @escaping (Event) -> Void) {
-        print("Starting geocoding for event: \(event.name)")
-        semaphore.wait()
-        geocoder.geocodeAddressString(event.address) { [weak self] placemarks, error in
-            defer {
-                self?.semaphore.signal()
+
+    private func determineUserNeighborhood(from location: CLLocation) {
+        let neighborhoodCenters: [String: CLLocation] = [
+            "Downtown": CLLocation(latitude: 42.3314, longitude: -83.0458),
+            "Midtown": CLLocation(latitude: 42.3480, longitude: -83.0580),
+            "Corktown": CLLocation(latitude: 42.3317, longitude: -83.0675),
+            "Eastern Market": CLLocation(latitude: 42.3473, longitude: -83.0405),
+            "North End": CLLocation(latitude: 42.3839, longitude: -83.0821),
+            "Southwest": CLLocation(latitude: 42.3179, longitude: -83.0921),
+            "East Side": CLLocation(latitude: 42.3748, longitude: -82.9645),
+            "Hamtramck": CLLocation(latitude: 42.3926, longitude: -83.0496)
+        ]
+
+        var closestNeighborhood: String?
+        var smallestDistance: CLLocationDistance = Double.greatestFiniteMagnitude
+
+        for (neighborhood, center) in neighborhoodCenters {
+            let distance = location.distance(from: center)
+            if distance < smallestDistance {
+                smallestDistance = distance
+                closestNeighborhood = neighborhood
             }
-            
-            if let error = error {
-                print("Geocoding failed for address: \(event.address) with error: \(error)")
-                if retryCount < self?.maxRetries ?? 0 {
-                    print("Retrying geocoding for event: \(event.name), attempt \(retryCount + 1)")
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-                        self?.geocodeEvent(event: event, retryCount: retryCount + 1, completion: completion)
-                    }
-                } else {
-                    print("Max retries reached for event: \(event.name). Adding event without geocoded data.")
-                    completion(event)
-                }
-            } else if let placemark = placemarks?.first, let location = placemark.location {
-                var updatedEvent = event
-                updatedEvent.latitude = location.coordinate.latitude
-                updatedEvent.longitude = location.coordinate.longitude
-                print("Geocoded event: \(event.name) at latitude: \(location.coordinate.latitude), longitude: \(location.coordinate.longitude)")
-                completion(updatedEvent)
-            } else {
-                print("Geocoding failed for address: \(event.address) with no placemarks.")
-                if retryCount < self?.maxRetries ?? 0 {
-                    print("Retrying geocoding for event: \(event.name), attempt \(retryCount + 1)")
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-                        self?.geocodeEvent(event: event, retryCount: retryCount + 1, completion: completion)
-                    }
-                } else {
-                    print("Max retries reached for event: \(event.name). Adding event without geocoded data.")
-                    completion(event)
-                }
-            }
+        }
+
+        print("Detected neighborhood: \(closestNeighborhood ?? "None")")
+        DispatchQueue.main.async {
+            self.userNeighborhood = closestNeighborhood
         }
     }
 }
