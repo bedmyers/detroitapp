@@ -102,19 +102,33 @@ struct EventView: View {
     }
     
     var scrollDotView: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<events.count, id: \.self) { index in
-                if index == currentIndex {
-                    Image(systemName: "circle.fill")
-                        .foregroundColor(Color(.mantis))
-                        .font(.system(size: 8))
-                } else {
-                    Image(systemName: "circle")
-                        .foregroundColor(Color(.mantis))
-                        .font(.system(size: 8))
-                }
+        HStack(spacing: 4) {
+            // Calculate the start and end index for the visible dots
+            let maxDots = 7
+            let halfMaxDots = maxDots / 2
+            let start = max(currentIndex - halfMaxDots, 0)
+            let end = min(start + maxDots - 1, events.count - 1)
+
+            let adjustedStart = max(min(start, events.count - maxDots), 0)
+            let adjustedEnd = min(adjustedStart + maxDots - 1, events.count - 1)
+            
+            ForEach(adjustedStart...adjustedEnd, id: \.self) { index in
+                Circle()
+                    .fill(index == currentIndex ? Color(.mantis) : Color.gray.opacity(0.3))
+                    .scaleEffect(index == adjustedStart || index == adjustedEnd ? 0.5 : index == currentIndex ? 1.2 : 1.0)
+                    .frame(width: index == currentIndex ? 10 : 4, height: index == currentIndex ? 10 : 4)
+                    .animation(.spring(), value: currentIndex)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal)
+    }
+
+    
+    private var visibleIndices: [Int] {
+        let start = max(0, currentIndex - 2)
+        let end = min(events.count - 1, currentIndex + 2)
+        return Array(start...end)
     }
     
     var titleView: some View {
@@ -136,7 +150,7 @@ struct EventView: View {
                      .aspectRatio(contentMode: .fit)
                      .frame(maxWidth: 500, maxHeight: 500)
                      .cornerRadius(3)
-                     .shadow(color: .gray, radius: 2, x: 2, y: 2)
+                     //.shadow(color: .gray, radius: 2, x: 2, y: 2)
             },
             placeholder: {
                 ProgressView()
@@ -207,10 +221,15 @@ struct EventView: View {
     }
     
     var linkView: some View {
-        Link("LINK", destination: URL(string: events[currentIndex].website ?? "")!)
-            .font(.custom("ExoRoman-Black", size: 30))
-            .foregroundColor(CustomColors.orange)
-            .padding(.bottom, 10)
+        Link(destination: URL(string: events[currentIndex].website ?? "")!) {
+            Text("LINK")
+                .font(.custom("ExoRoman-Black", size: 24))
+                .foregroundColor(.white)
+                .padding()
+                .background(CustomColors.orange)
+                .cornerRadius(10)
+        }
+        .padding(.bottom, 10)
     }
     
     // MARK: - Computed Properties
@@ -231,16 +250,14 @@ struct EventView: View {
     private var swipeGesture: some Gesture {
         DragGesture()
             .onEnded { value in
-                let threshold: CGFloat = 50
+                let threshold: CGFloat = 30
                 if value.translation.width < -threshold {
-                    // Swipe left
                     withAnimation {
                         if currentIndex < events.count - 1 {
                             currentIndex += 1
                         }
                     }
                 } else if value.translation.width > threshold {
-                    // Swipe right
                     withAnimation {
                         if currentIndex > 0 {
                             currentIndex -= 1
@@ -286,12 +303,16 @@ struct EventView: View {
     
     private func shareEvent() {
         let eventId = events[currentIndex].id
-        if let url = URL(string: "offwoodward://event/\(eventId)") {
-            self.showingShareSheet = true
-            shareSheetItems = [url]
-        } else {
-            print("Failed to create URL for sharing")
+        
+        if let screenshot = captureScreenshot() {
+            shareSheetItems = [screenshot]
         }
+        
+        if let url = URL(string: "offwoodward://event/\(eventId)") {
+            shareSheetItems.append(url)
+        }
+        
+        self.showingShareSheet = true
     }
     
     private func scheduleReminder(hoursBefore: Int) {
@@ -314,6 +335,23 @@ struct EventView: View {
                 }
             }
         }
+    }
+    
+    private func captureScreenshot() -> UIImage? {
+        print("Capturing screenshot")
+        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(window!.bounds.size, false, scale)
+
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+
+        window!.layer.render(in: context)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return screenshot
     }
 }
 

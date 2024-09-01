@@ -127,7 +127,7 @@ struct ContentView: View {
             .frame(height: 4)
             titleDateView
                 .padding(.vertical, 4)
-            scrollDotView
+            dayButtonsView
         }
         .background(Color(.limeGreen))
     }
@@ -178,20 +178,26 @@ struct ContentView: View {
         .foregroundColor(Color(.mantis))
     }
     
-    var scrollDotView: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<7) { index in
-                if index == selectedDayIndex {
-                    Image(systemName: "circle.fill")
-                        .foregroundColor(Color(.mantis))
-                        .font(.system(size: 8))
-                } else {
-                    Image(systemName: "circle")
-                        .foregroundColor(Color(.mantis))
-                        .font(.system(size: 8))
+    private var dayButtonsView: some View {
+        HStack(spacing: 4) {
+            ForEach(0..<7, id: \.self) { index in
+                let dayText = index == 0 ? "Today" : getDayAbbreviation(after: index)
+                Button(action: {
+                    selectedDayIndex = index
+                }) {
+                    Text(dayText)
+                        .font(.custom("ExoRoman-Bold", size: 12))
+                        .frame(minWidth: 36)
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 4)
+                        .background(selectedDayIndex == index ? CustomColors.orange : Color(.limeGreen))
+                        .foregroundColor(selectedDayIndex == index ? Color.white : Color(.mantis))
+                        .cornerRadius(6)
                 }
             }
         }
+        .padding(.horizontal, 4)
+        .padding(.bottom, 0)
     }
     
     private var navigationTitleButton: some View {
@@ -305,7 +311,7 @@ struct ContentView: View {
                 state = value.translation.width
             }
             .onEnded { value in
-                let threshold = UIScreen.main.bounds.width / 6
+                let threshold = UIScreen.main.bounds.width / 10
                 withAnimation {
                     if value.translation.width < -threshold {
                         selectedDayIndex = (selectedDayIndex + 1) % days.count
@@ -322,6 +328,15 @@ struct ContentView: View {
         let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: nextDay)
+    }
+    
+    private func getDayAbbreviation(after days: Int) -> String {
+        let calendar = Calendar.current
+        let today = Date()
+        let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E"
         return dateFormatter.string(from: nextDay)
     }
     

@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 class DeepLinkManager: ObservableObject {
     @Published var deepLinkEventId: String?
 }
