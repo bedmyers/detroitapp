@@ -14,7 +14,7 @@ struct ContentView: View {
         case timeStart = "Start Time"
         case rating = "None"
     }
-
+    
     // MARK: - Properties
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "North End", "Southwest", "East Side", "Hamtramck"]
@@ -28,13 +28,13 @@ struct ContentView: View {
         "Events": "calendar",
         "Museum": "building.columns.fill"
     ]
-
+    
     // MARK: - Environment and StateObjects
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var deepLinkManager: DeepLinkManager
     @EnvironmentObject private var viewModel: EventViewModel
     @StateObject private var locationManager = LocationManager.shared
-
+    
     // MARK: - State variables
     @State private var selectedDayIndex = 0
     @State private var isFilterSheetPresented = false
@@ -49,7 +49,7 @@ struct ContentView: View {
     @State private var showNearbyEventsView = false
     @GestureState private var translation: CGFloat = 0
     @State private var titleSize: CGFloat = 36
-
+    
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -68,17 +68,17 @@ struct ContentView: View {
                 }
                 toolbarItems
             }
-            .actionSheet(isPresented: $isFilterSheetPresented) { filterActionSheet }
-            .sheet(isPresented: $showBuildingRecognitionView) { buildingRecognitionSheet }
-            .sheet(isPresented: $showNearbyEventsView) { nearbyEventsSheet }
-            .onAppear(perform: {
-                viewModel.listentoRealtimeDatabase()
-            })
-            .onChange(of: deepLinkManager.deepLinkEventId, perform: handleDeepLink)
-            .gesture(dragGesture)
-            .transition(.slide)
-        }
-    }
+             .actionSheet(isPresented: $isFilterSheetPresented) { filterActionSheet }
+             .sheet(isPresented: $showBuildingRecognitionView) { buildingRecognitionSheet }
+             .sheet(isPresented: $showNearbyEventsView) { nearbyEventsSheet }
+             .onAppear(perform: {
+                 viewModel.listentoRealtimeDatabase()
+             })
+             .onChange(of: deepLinkManager.deepLinkEventId, perform: handleDeepLink)
+             .gesture(dragGesture)
+             .transition(.slide)
+         }
+     }
     
     // MARK: - Computed Properties
     private var sortedEvents: [Event] {
@@ -197,7 +197,15 @@ struct ContentView: View {
             }
         }
         .padding(.horizontal, 4)
-        .padding(.bottom, 0)
+    }
+    
+    private func getDayAbbreviation(after days: Int) -> String {
+        let calendar = Calendar.current
+        let today = Date()
+        let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E" // Abbreviation (e.g., Mon, Tue)
+        return dateFormatter.string(from: nextDay)
     }
     
     private var navigationTitleButton: some View {
@@ -297,8 +305,8 @@ struct ContentView: View {
         }
     }
     
+    // MARK: - Methods
     private func handleDeepLink(_ newEventId: String?) {
-        print("Deep link event ID changed: \(String(describing: newEventId))")
         if let eventId = newEventId {
             self.deepLinkEventId = eventId
             self.shouldNavigateToEvent = (findEventById(eventId) != nil)
@@ -328,15 +336,6 @@ struct ContentView: View {
         let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: nextDay)
-    }
-    
-    private func getDayAbbreviation(after days: Int) -> String {
-        let calendar = Calendar.current
-        let today = Date()
-        let nextDay = calendar.date(byAdding: .day, value: days, to: today)!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E"
         return dateFormatter.string(from: nextDay)
     }
     

@@ -10,7 +10,7 @@ import FirebaseCore
 
 @main
 struct DetroitAppApp: App {
-    var deepLinkManager = DeepLinkManager()
+    @StateObject private var deepLinkManager = DeepLinkManager()
     @StateObject private var eventViewModel = EventViewModel()
 
     init() {
@@ -32,29 +32,8 @@ struct DetroitAppApp: App {
                 .environmentObject(eventViewModel)
                 .onOpenURL { url in
                     print("URL received: \(url)")
-                    let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
-                    if urlComponents?.scheme == "offwoodward", let host = urlComponents?.host, host == "event" {
-                        let pathComponents = url.pathComponents
-                        
-                        let eventIdPathComponents = pathComponents.dropFirst(1)
-                        let eventId = eventIdPathComponents.joined(separator: "/").removingPercentEncoding
-                        
-                        print("Deep link to event with ID: \(eventId ?? "")")
-                        deepLinkManager.deepLinkEventId = eventId
-                    }
+                    deepLinkManager.handleDeepLink(url)
                 }
-        }
-    }
-
-    func handleDeepLink(_ url: URL) {
-        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        if urlComponents?.scheme == "offwoodward", let host = urlComponents?.host, host == "event" {
-            let pathComponents = url.pathComponents
-            if pathComponents.count >= 3 {
-                let eventId = pathComponents[2].removingPercentEncoding
-                print("Deep link to event with ID: \(eventId ?? "")")
-                deepLinkManager.deepLinkEventId = eventId
-            }
         }
     }
 }

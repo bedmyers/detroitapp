@@ -303,17 +303,74 @@ struct EventView: View {
     
     private func shareEvent() {
         let eventId = events[currentIndex].id
+        let eventName = events[currentIndex].name
         
-        if let screenshot = captureScreenshot() {
-            shareSheetItems = [screenshot]
+        let shareText = "Check out this event! \(eventName)"
+        
+        var itemsToShare: [Any] = [shareText]
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if let screenshot = self.captureScreenshot() {
+                print("Screenshot captured successfully. Size: \(screenshot.size)")
+                itemsToShare.append(screenshot)
+            } else {
+                print("Failed to capture screenshot")
+            }
         }
         
         if let url = URL(string: "offwoodward://event/\(eventId)") {
-            shareSheetItems.append(url)
+            itemsToShare.append(url)
         }
         
+        print("Items to share: \(itemsToShare.count)")
+        for (index, item) in itemsToShare.enumerated() {
+            print("Item \(index): \(type(of: item))")
+        }
+        
+        shareSheetItems = itemsToShare
         self.showingShareSheet = true
     }
+
+    private func captureScreenshot() -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(bounds: UIScreen.main.bounds)
+        return renderer.image { ctx in
+            UIApplication.shared.windows.first?.rootViewController?.view.drawHierarchy(in: UIScreen.main.bounds, afterScreenUpdates: true)
+        }
+    }
+    
+    private func addTextToImage(_ image: UIImage, text: String) -> UIImage? {
+            let imageSize = image.size
+            let scale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
+            
+            guard let context = UIGraphicsGetCurrentContext() else {
+                print("Failed to create graphics context")
+                return nil
+            }
+            
+            image.draw(in: CGRect(origin: .zero, size: imageSize))
+            
+            let rect = CGRect(origin: .zero, size: imageSize)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.boldSystemFont(ofSize: 24),
+                .foregroundColor: UIColor.white,
+                .backgroundColor: UIColor.black.withAlphaComponent(0.5)
+            ]
+            
+            let textRect = CGRect(x: 20, y: 20, width: imageSize.width - 40, height: 100)
+            text.draw(in: textRect, withAttributes: attributes)
+            
+            guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
+                print("Failed to get image from graphics context")
+                UIGraphicsEndImageContext()
+                return nil
+            }
+            
+            UIGraphicsEndImageContext()
+            
+            print("Text added to image. New image size: \(newImage.size)")
+            return newImage
+        }
     
     private func scheduleReminder(hoursBefore: Int) {
         let content = UNMutableNotificationContent()
@@ -335,23 +392,6 @@ struct EventView: View {
                 }
             }
         }
-    }
-    
-    private func captureScreenshot() -> UIImage? {
-        print("Capturing screenshot")
-        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-        let scale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(window!.bounds.size, false, scale)
-
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-
-        window!.layer.render(in: context)
-        let screenshot = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return screenshot
     }
 }
 
