@@ -19,27 +19,25 @@ struct NearbyEventsView: View {
                 .edgesIgnoringSafeArea(.all)
             
             if let userNeighborhood = viewModel.userNeighborhood {
-                let nearbyEvents = viewModel.events.filter { event in
-                    event.neighborhood == userNeighborhood && event.isHappeningToday
-                }
+                let nearbyEvents = getNearbyEvents(in: userNeighborhood)
                 
                 VStack {
                     Text("Upcoming events happening today near you")
-                        .font(.custom("ExoRoman-Regular", size: 24))
-                        .foregroundColor(Color(.mantis))
+                        .font(.custom("ExoRoman-Bold", size: 24))
+                        .foregroundColor(Color(.offWhiteReversed))
                         .padding(.top, 20)
+                        .padding(.leading, 8)
+                        .padding(.trailing, 8)
                     
-                    GeometryReader { geometry in
-                        Divider()
-                            .frame(width: geometry.size.width * 4/5, height: 4)
-                            .background(Color(.mantis))
-                    }
-                    .frame(height: 4)
+                    Divider()
+                        .frame(height: 4)
+                        .background(Color(.mantis))
+                        .padding(.horizontal, 20)
                     
                     if nearbyEvents.isEmpty {
                         Text("No events today in \(userNeighborhood)")
                             .font(.custom("ExoRoman-Regular", size: 20))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color(.offWhiteReversed))
                             .padding()
                         Spacer()
                     } else {
@@ -72,6 +70,20 @@ struct NearbyEventsView: View {
             }
         }
     }
+    
+    private func getNearbyEvents(in neighborhood: String) -> [Event] {
+        let today = Calendar.current.startOfDay(for: Date())
+        let todayString = formatDate(today)
+        
+        return viewModel.eventsByDay[todayString, default: []]
+            .filter { $0.neighborhood == neighborhood && $0.isHappeningToday }
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/dd/yy"
+        return formatter.string(from: date)
+    }
 }
 
 extension Event {
@@ -80,9 +92,8 @@ extension Event {
         let currentDate = Date()
         
         if let start = eventStart, let end = eventEnd {
-            
             return calendar.isDate(start, inSameDayAs: currentDate) &&
-            currentDate <= end
+                   currentDate <= end
         } else {
             return false
         }

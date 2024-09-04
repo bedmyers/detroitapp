@@ -22,6 +22,8 @@ struct EventView: View {
     @State private var showingReminderOptions = false
     @State private var eventStore = EKEventStore()
     @State private var shareSheetItems: [Any] = []
+    @State private var loadedImage: UIImage? = nil
+    @State private var isImageLoading = false
     
     // MARK: - Private Properties
     private let dateFormatter: DateFormatter = {
@@ -40,6 +42,7 @@ struct EventView: View {
     var body: some View {
         ZStack {
             Color(.offWhite).ignoresSafeArea()
+            
             ScrollView(.vertical) {
                 VStack(spacing: 10) {
                     headerView
@@ -49,80 +52,117 @@ struct EventView: View {
                 .sheet(isPresented: $showingShareSheet) { ShareSheet(items: shareSheetItems) }
             }
             .gesture(swipeGesture)
+
+            // Loading overlay
+            if isImageLoading {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .overlay(
+                        VStack {
+                            ProgressView("Loading...")
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .padding()
+                                .background(Color.black.opacity(0.7))
+                                .cornerRadius(10)
+                        }
+                    )
+            }
+        }
+        .onAppear {
+            loadImage(for: currentIndex)
+        }
+        .onChange(of: currentIndex) { newIndex in
+            loadImage(for: newIndex)
         }
     }
      
     // MARK: - View Components
     var headerView: some View {
-        VStack(spacing: 10) {
-            HStack {
-                Text(dateString)
-                    .font(.custom("ExoRoman-Bold", size: 20))
-                    .foregroundColor(Color(.orange))
-                Spacer()
-                moreButton
-            }
-            .padding(.horizontal)
-            
-            GeometryReader { geometry in
-                Divider()
-                    .frame(width: geometry.size.width * 4/5, height: 4)
-                    .background(Color(.orange))
-            }
-            .frame(height: 4)
-            
-            scrollDotView
+            VStack(spacing: 10) {
+                HStack {
+                    Text(dateString)
+                        .font(.custom("ExoRoman-Bold", size: 20))
+                        .foregroundColor(Color(.orange))
+                    Spacer()
+                    moreButton
+                }
                 .padding(.horizontal)
+                
+                GeometryReader { geometry in
+                    Divider()
+                        .frame(width: geometry.size.width * 4/5, height: 4)
+                        .background(Color(.orange))
+                }
+                .frame(height: 4)
+                
+                scrollDotView
+                    .padding(.horizontal)
+            }
+            .padding(.top)
         }
-        .padding(.top)
-    }
-     
-     var contentView: some View {
-         VStack {
-             titleView
-             imageView
-             dateView
-             locationView
-             priceView
-             if events[currentIndex].processedDescription != "" {
-                 descriptionView
-             }
-             if events[currentIndex].website?.count ?? 6 > 5 {
-                 linkView
-             }
-         }
-     }
-     
-    var moreButton: some View {
-        Button(action: { isOptionSheetPresented = true }) {
-            Image(systemName: "slider.horizontal.3")
-                .imageScale(.large)
-                .foregroundColor(Color(.orange))
-        }
-    }
-    
-    var scrollDotView: some View {
-        HStack(spacing: 4) {
-            // Calculate the start and end index for the visible dots
-            let maxDots = 7
-            let halfMaxDots = maxDots / 2
-            let start = max(currentIndex - halfMaxDots, 0)
-            let end = min(start + maxDots - 1, events.count - 1)
-
-            let adjustedStart = max(min(start, events.count - maxDots), 0)
-            let adjustedEnd = min(adjustedStart + maxDots - 1, events.count - 1)
-            
-            ForEach(adjustedStart...adjustedEnd, id: \.self) { index in
-                Circle()
-                    .fill(index == currentIndex ? Color(.mantis) : Color.gray.opacity(0.3))
-                    .scaleEffect(index == adjustedStart || index == adjustedEnd ? 0.5 : index == currentIndex ? 1.2 : 1.0)
-                    .frame(width: index == currentIndex ? 10 : 4, height: index == currentIndex ? 10 : 4)
-                    .animation(.spring(), value: currentIndex)
+         
+        var contentView: some View {
+            VStack {
+                titleView
+                imageView
+                dateView
+                locationView
+                priceView
+                if events[currentIndex].processedDescription != "" {
+                    descriptionView
+                }
+                if events[currentIndex].website?.count ?? 6 > 5 {
+                    linkView
+                }
             }
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal)
-    }
+
+        var imageView: some View {
+            VStack {
+                if let image = loadedImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 500, maxHeight: 500)
+                        .cornerRadius(3)
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: 500, maxHeight: 500)
+                }
+            }
+            .padding(.horizontal, 25)
+        }
+
+        var moreButton: some View {
+            Button(action: { isOptionSheetPresented = true }) {
+                Image(systemName: "slider.horizontal.3")
+                    .imageScale(.large)
+                    .foregroundColor(Color(.orange))
+            }
+        }
+        
+        var scrollDotView: some View {
+            HStack(spacing: 4) {
+                let maxDots = 7
+                let halfMaxDots = maxDots / 2
+                let start = max(currentIndex - halfMaxDots, 0)
+                let end = min(start + maxDots - 1, events.count - 1)
+
+                let adjustedStart = max(min(start, events.count - maxDots), 0)
+                let adjustedEnd = min(adjustedStart + maxDots - 1, events.count - 1)
+
+                ForEach(adjustedStart...adjustedEnd, id: \.self) { index in
+                    Circle()
+                        .fill(index == currentIndex ? Color(.mantis) : Color(.offWhiteReversed).opacity(0.3))
+                        .scaleEffect(index == currentIndex ? 1.2 : (index == adjustedStart || index == adjustedEnd ? 0.6 : 1.0))
+                        .frame(width: index == currentIndex ? 10 : 4, height: index == currentIndex ? 10 : 4)
+                        .animation(.spring(), value: currentIndex)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal)
+        }
+
 
     
     private var visibleIndices: [Int] {
@@ -140,23 +180,6 @@ struct EventView: View {
         .frame(alignment: .leading)
         .padding(.leading, 10)
         .padding(.trailing, 25)
-    }
-    
-    var imageView: some View {
-        AsyncImage(
-            url: URL(string: events[currentIndex].image ?? ""),
-            content: { image in
-                image.resizable()
-                     .aspectRatio(contentMode: .fit)
-                     .frame(maxWidth: 500, maxHeight: 500)
-                     .cornerRadius(3)
-                     //.shadow(color: .gray, radius: 2, x: 2, y: 2)
-            },
-            placeholder: {
-                ProgressView()
-            }
-        )
-        .padding(.horizontal, 25)
     }
     
     var dateView: some View {
@@ -252,17 +275,17 @@ struct EventView: View {
             .onEnded { value in
                 let threshold: CGFloat = 30
                 if value.translation.width < -threshold {
-                    withAnimation {
+                    //withAnimation {
                         if currentIndex < events.count - 1 {
                             currentIndex += 1
                         }
-                    }
+                    //}
                 } else if value.translation.width > threshold {
-                    withAnimation {
+                    //withAnimation {
                         if currentIndex > 0 {
                             currentIndex -= 1
                         }
-                    }
+                    //}
                 }
             }
     }
@@ -270,6 +293,32 @@ struct EventView: View {
     private var dateString: String {
         guard let date = events[currentIndex].eventStart else { return "" }
         return dateFormatter.string(from: date)
+    }
+    
+    // MARK: - Methods for Image Loading with Loading Screen
+    private func loadImage(for index: Int) {
+        guard let imageUrlString = events[index].image,
+              let imageUrl = URL(string: imageUrlString) else {
+            loadedImage = nil
+            return
+        }
+
+        isImageLoading = true
+        
+        URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+            guard let imageData = data, let uiImage = UIImage(data: imageData) else {
+                DispatchQueue.main.async {
+                    loadedImage = nil
+                    isImageLoading = false
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                loadedImage = uiImage
+                isImageLoading = false
+            }
+        }.resume()
     }
     
     // MARK: - Methods

@@ -82,16 +82,9 @@ struct ContentView: View {
     
     // MARK: - Computed Properties
     private var sortedEvents: [Event] {
-        let filteredEvents = viewModel.events.filter { event in
-            let matchesCategory = selectedCategory == "All" || event.category == selectedCategory
-            let matchesLocation = selectedOption == "Detroit" || (selectedOption != "Detroit" && event.neighborhood == selectedOption)
-            
-            return event.dayOfWeek == getDayName(after: selectedDayIndex) &&
-                   event.fullDate == getDayDate(after: selectedDayIndex) &&
-                   matchesCategory &&
-                   matchesLocation
-        }
-
+        let currentDate = getDayDate(after: selectedDayIndex)
+        let filteredEvents = viewModel.getEvents(for: currentDate, category: selectedCategory == "All" ? nil : selectedCategory, location: selectedOption == "Detroit" ? nil : selectedOption)
+        
         switch sortingCriteria {
         case .price:
             return filteredEvents.sorted { $0.priceInt ?? 0 < $1.priceInt ?? 0 }
@@ -249,6 +242,7 @@ struct ContentView: View {
         }
         .id(animateCategoryChange ? UUID() : nil)
     }
+
     
     private func eventRow(for event: Event) -> some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -322,13 +316,13 @@ struct ContentView: View {
             }
             .onEnded { value in
                 let threshold = UIScreen.main.bounds.width / 10
-                withAnimation {
+                //withAnimation {
                     if value.translation.width < -threshold {
                         selectedDayIndex = (selectedDayIndex + 1) % days.count
                     } else if value.translation.width > threshold {
                         selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
                     }
-                }
+                //}
             }
     }
     
@@ -364,7 +358,7 @@ struct ContentView: View {
     
     private func findEventById(_ id: String?) -> Event? {
         guard let id = id else { return nil }
-        return viewModel.events.first(where: { $0.id == id })
+        return sortedEvents.first(where: { $0.id == id })
     }
 }
 

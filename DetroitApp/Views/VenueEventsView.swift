@@ -13,8 +13,7 @@ struct VenueEventsView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        let events = viewModel.events.filter { $0.location == venueName }
-        let _ = print("$$$ \(events.count)")
+        let events = getVenueEvents()
         
         ZStack {
             Color(.limeGreen)
@@ -23,7 +22,7 @@ struct VenueEventsView: View {
             VStack {
                 Text("Events happening at \(venueName) this week")
                     .font(.custom("ExoRoman-Bold", size: 24))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(.offWhiteReversed))
                     .padding(.top, 20)
                 
                 Divider()
@@ -34,7 +33,7 @@ struct VenueEventsView: View {
                 if events.isEmpty {
                     Text("Nothing of note is happening here")
                         .font(.custom("ExoRoman-Regular", size: 20))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(.offWhiteReversed))
                         .padding()
                     Spacer()
                 } else {
@@ -59,8 +58,20 @@ struct VenueEventsView: View {
                 }
             }
         }
-        .onAppear {
-            print("viewModel.events: \(viewModel.events)")
-        }
+    }
+    
+    private func getVenueEvents() -> [Event] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let endOfWeek = calendar.date(byAdding: .day, value: 7, to: today)!
+        
+        return viewModel.eventsByDay.values
+            .flatMap { $0 }
+            .filter { event in
+                event.location == venueName &&
+                event.eventStart ?? Date() >= today &&
+                event.eventStart ?? Date() < endOfWeek
+            }
+            .sorted { $0.eventStart ?? Date() < $1.eventStart ?? Date() }
     }
 }

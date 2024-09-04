@@ -11,20 +11,20 @@ import CoreLocation
 import Combine
 
 final class EventViewModel: NSObject, ObservableObject {
-    @Published var events: [Event] = []
+    @Published private(set) var eventsByDay: [String: [Event]] = [:]
     @Published var userNeighborhood: String?
 
-    private lazy var databasePath: DatabaseReference? = {
-        let ref = Database.database().reference()
-        return ref
-    }()
-
+    private let databasePath: DatabaseReference = Database.database().reference()
     private let decoder = JSONDecoder()
     private let locationManager = LocationManager.shared
+    private var cancellables = Set<AnyCancellable>()
 
     override init() {
         super.init()
-        // Observe changes to the location
+        setupLocationObserver()
+    }
+
+    private func setupLocationObserver() {
         locationManager.$location
             .receive(on: DispatchQueue.main)
             .sink { [weak self] location in
@@ -34,11 +34,7 @@ final class EventViewModel: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
 
-    private var cancellables = Set<AnyCancellable>()
-
     func listentoRealtimeDatabase() {
-        guard let databasePath = databasePath else { return }
-
         databasePath.observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let self = self, snapshot.exists() else {
                 print("No events found in the database.")
@@ -59,9 +55,17 @@ final class EventViewModel: NSObject, ObservableObject {
                 }
             }
 
-            print("Fetched \(fetchedEvents.count) events.")
+            self.processAndSortEvents(fetchedEvents)
+        }
+    }
+
+    private func processAndSortEvents(_ events: [Event]) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let sortedEvents = Dictionary(grouping: events) { $0.fullDate }
+                .mapValues { $0.sorted { $0.timeStart ?? 0 < $1.timeStart ?? 0 } }
+            
             DispatchQueue.main.async {
-                self.events = fetchedEvents
+                self.eventsByDay = sortedEvents
             }
         }
     }
@@ -92,6 +96,14 @@ final class EventViewModel: NSObject, ObservableObject {
         print("Detected neighborhood: \(closestNeighborhood ?? "None")")
         DispatchQueue.main.async {
             self.userNeighborhood = closestNeighborhood
+        }
+    }
+    
+    func getEvents(for date: String, category: String? = nil, location: String? = nil) -> [Event] {
+        let events = eventsByDay[date] ?? []
+        return events.filter { event in
+            (category == nil || event.category == category) &&
+            (location == nil || event.neighborhood == location)
         }
     }
 }
