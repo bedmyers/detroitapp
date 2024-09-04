@@ -190,7 +190,7 @@ struct ContentView: View {
                         .frame(minWidth: 36)
                         .padding(.vertical, 2)
                         .padding(.horizontal, 4)
-                        .background(selectedDayIndex == index ? CustomColors.orange : Color(.limeGreen))
+                        .background(selectedDayIndex == index ? Color(.orange) : Color(.limeGreen))
                         .foregroundColor(selectedDayIndex == index ? Color.white : Color(.mantis))
                         .cornerRadius(6)
                 }
@@ -269,15 +269,17 @@ struct ContentView: View {
                     Button { showNearbyEventsView = true } label: {
                         Image(systemName: "location.fill")
                     }
-                    Button { showBuildingRecognitionView = true } label: {
-                        Image(systemName: "camera.fill")
+                    if #available(iOS 17.0, *) {
+                        Button { showBuildingRecognitionView = true } label: {
+                            Image(systemName: "camera.fill")
+                        }
                     }
                     Button { isFilterSheetPresented = true } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle.fill")
                     }
                 }
                 .font(.system(size: 20))
-                .foregroundColor(CustomColors.orange)
+                .foregroundColor(Color(.orange))
             }
         }
     }

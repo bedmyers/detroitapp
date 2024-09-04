@@ -120,26 +120,28 @@ struct ARViewContainer: UIViewRepresentable {
     }
 
     func performImageRecognition(_ pixelBuffer: CVPixelBuffer) {
-        guard let model = try? VNCoreMLModel(for: DetroitVens().model) else { return }
-        let request = VNCoreMLRequest(model: model) { (vnRequest, error) in
-            DispatchQueue.main.async {
-                if let results = vnRequest.results as? [VNClassificationObservation], let topResult = results.first {
-                    if topResult.confidence > 0.80 {
-                        self.identifiedVenue = topResult.identifier
-                        self.showConfirmation = true
-                    } else {
-                        self.identifiedVenue = nil
-                        self.showConfirmation = false
+        if #available(iOS 17.0, *) {
+            guard let model = try? VNCoreMLModel(for: DetroitVens().model) else { return }
+            let request = VNCoreMLRequest(model: model) { (vnRequest, error) in
+                DispatchQueue.main.async {
+                    if let results = vnRequest.results as? [VNClassificationObservation], let topResult = results.first {
+                        if topResult.confidence > 0.80 {
+                            self.identifiedVenue = topResult.identifier
+                            self.showConfirmation = true
+                        } else {
+                            self.identifiedVenue = nil
+                            self.showConfirmation = false
+                        }
                     }
                 }
             }
-        }
-        request.imageCropAndScaleOption = .centerCrop
-        let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
-        do {
-            try handler.perform([request])
-        } catch {
-            print("Failed to perform classification.\n\(error.localizedDescription)")
+            request.imageCropAndScaleOption = .centerCrop
+            let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
+            do {
+                try handler.perform([request])
+            } catch {
+                print("Failed to perform classification.\n\(error.localizedDescription)")
+            }
         }
     }
 }

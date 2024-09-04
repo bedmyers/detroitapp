@@ -58,7 +58,7 @@ struct EventView: View {
             HStack {
                 Text(dateString)
                     .font(.custom("ExoRoman-Bold", size: 20))
-                    .foregroundColor(Color(CustomColors.orange))
+                    .foregroundColor(Color(.orange))
                 Spacer()
                 moreButton
             }
@@ -67,7 +67,7 @@ struct EventView: View {
             GeometryReader { geometry in
                 Divider()
                     .frame(width: geometry.size.width * 4/5, height: 4)
-                    .background(Color(CustomColors.orange))
+                    .background(Color(.orange))
             }
             .frame(height: 4)
             
@@ -97,7 +97,7 @@ struct EventView: View {
         Button(action: { isOptionSheetPresented = true }) {
             Image(systemName: "slider.horizontal.3")
                 .imageScale(.large)
-                .foregroundColor(CustomColors.orange)
+                .foregroundColor(Color(.orange))
         }
     }
     
@@ -183,7 +183,7 @@ struct EventView: View {
                 .font(.custom("ExoRoman-Regular", size: 16))
             Link(events[currentIndex].address, destination: mapsURL)
                 .font(.custom("ExoRoman-Bold", size: 16))
-                .foregroundColor(CustomColors.orange)
+                .foregroundColor(Color(.orange))
             Text(events[currentIndex].neighborhood)
                 .font(.custom("ExoRoman-Regular", size: 16))
         }
@@ -226,7 +226,7 @@ struct EventView: View {
                 .font(.custom("ExoRoman-Black", size: 24))
                 .foregroundColor(.white)
                 .padding()
-                .background(CustomColors.orange)
+                .background(Color(.orange))
                 .cornerRadius(10)
         }
         .padding(.bottom, 10)
