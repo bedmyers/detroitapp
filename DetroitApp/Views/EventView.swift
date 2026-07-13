@@ -243,21 +243,26 @@ struct EventView: View {
         .padding(.bottom, 25)
     }
     
+    @ViewBuilder
     var linkView: some View {
-        Link(destination: URL(string: events[currentIndex].website ?? "")!) {
-            Text("LINK")
-                .font(.custom("ExoRoman-Black", size: 24))
-                .foregroundColor(.white)
-                .padding()
-                .background(Color(.orange))
-                .cornerRadius(10)
+        if let urlString = events[currentIndex].website,
+           let url = URL(string: urlString) {
+            Link(destination: url) {
+                Text("LINK")
+                    .font(.custom("ExoRoman-Black", size: 24))
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color(.orange))
+                    .cornerRadius(10)
+            }
+            .padding(.bottom, 10)
         }
-        .padding(.bottom, 10)
     }
     
     // MARK: - Computed Properties
     private var mapsURL: URL {
-        URL(string: "http://maps.apple.com/?address=\(events[currentIndex].address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")")!
+        let encoded = events[currentIndex].address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return URL(string: "http://maps.apple.com/?address=\(encoded)") ?? URL(string: "http://maps.apple.com")!
     }
     
     private var optionActionSheet: ActionSheet {
@@ -275,17 +280,13 @@ struct EventView: View {
             .onEnded { value in
                 let threshold: CGFloat = 30
                 if value.translation.width < -threshold {
-                    //withAnimation {
-                        if currentIndex < events.count - 1 {
-                            currentIndex += 1
-                        }
-                    //}
+                    if currentIndex < events.count - 1 {
+                        currentIndex += 1
+                    }
                 } else if value.translation.width > threshold {
-                    //withAnimation {
-                        if currentIndex > 0 {
-                            currentIndex -= 1
-                        }
-                    //}
+                    if currentIndex > 0 {
+                        currentIndex -= 1
+                    }
                 }
             }
     }
@@ -345,8 +346,7 @@ struct EventView: View {
 
         do {
             try eventStore.save(ekEvent, span: .thisEvent)
-        } catch let error as NSError {
-            print("Can't send to iCal: \(error)")
+        } catch {
         }
     }
     
@@ -360,20 +360,12 @@ struct EventView: View {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             if let screenshot = self.captureScreenshot() {
-                print("Screenshot captured successfully. Size: \(screenshot.size)")
                 itemsToShare.append(screenshot)
-            } else {
-                print("Failed to capture screenshot")
             }
         }
-        
+
         if let url = URL(string: "offwoodward://event/\(eventId)") {
             itemsToShare.append(url)
-        }
-        
-        print("Items to share: \(itemsToShare.count)")
-        for (index, item) in itemsToShare.enumerated() {
-            print("Item \(index): \(type(of: item))")
         }
         
         shareSheetItems = itemsToShare
@@ -392,8 +384,7 @@ struct EventView: View {
             let scale = UIScreen.main.scale
             UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
             
-            guard let context = UIGraphicsGetCurrentContext() else {
-                print("Failed to create graphics context")
+            guard UIGraphicsGetCurrentContext() != nil else {
                 return nil
             }
             
@@ -410,14 +401,11 @@ struct EventView: View {
             text.draw(in: textRect, withAttributes: attributes)
             
             guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
-                print("Failed to get image from graphics context")
                 UIGraphicsEndImageContext()
                 return nil
             }
-            
+
             UIGraphicsEndImageContext()
-            
-            print("Text added to image. New image size: \(newImage.size)")
             return newImage
         }
     
@@ -435,11 +423,7 @@ struct EventView: View {
 
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Error scheduling reminder: \(error)")
-                }
-            }
+            UNUserNotificationCenter.current().add(request)
         }
     }
 }

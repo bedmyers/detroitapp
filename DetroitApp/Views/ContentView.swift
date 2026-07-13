@@ -18,16 +18,6 @@ struct ContentView: View {
     // MARK: - Properties
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     let dropdownOptions = ["Detroit", "Downtown", "Midtown", "Corktown", "Eastern Market", "North End", "Southwest", "East Side", "Hamtramck"]
-    let iconsDict = [
-        "All": "star.fill",
-        "Music": "music.note",
-        "Shows": "theatermasks.fill",
-        "Sports": "sportscourt.fill",
-        "Food": "fork.knife",
-        "Art": "paintpalette.fill",
-        "Events": "calendar",
-        "Museum": "building.columns.fill"
-    ]
     
     // MARK: - Environment and StateObjects
     @Environment(\.colorScheme) var colorScheme
@@ -72,7 +62,7 @@ struct ContentView: View {
              .sheet(isPresented: $showBuildingRecognitionView) { buildingRecognitionSheet }
              .sheet(isPresented: $showNearbyEventsView) { nearbyEventsSheet }
              .onAppear(perform: {
-                 viewModel.listentoRealtimeDatabase()
+                 viewModel.listenToRealtimeDatabase()
              })
              .onChange(of: deepLinkManager.deepLinkEventId, perform: handleDeepLink)
              .gesture(dragGesture)
@@ -316,13 +306,11 @@ struct ContentView: View {
             }
             .onEnded { value in
                 let threshold = UIScreen.main.bounds.width / 10
-                //withAnimation {
-                    if value.translation.width < -threshold {
-                        selectedDayIndex = (selectedDayIndex + 1) % days.count
-                    } else if value.translation.width > threshold {
-                        selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
-                    }
-                //}
+                if value.translation.width < -threshold {
+                    selectedDayIndex = (selectedDayIndex + 1) % days.count
+                } else if value.translation.width > threshold {
+                    selectedDayIndex = (selectedDayIndex + days.count - 1) % days.count
+                }
             }
     }
     

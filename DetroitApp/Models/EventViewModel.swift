@@ -34,10 +34,9 @@ final class EventViewModel: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
 
-    func listentoRealtimeDatabase() {
+    func listenToRealtimeDatabase() {
         databasePath.observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let self = self, snapshot.exists() else {
-                print("No events found in the database.")
                 return
             }
 
@@ -50,7 +49,6 @@ final class EventViewModel: NSObject, ObservableObject {
                         let event = try self.decoder.decode(Event.self, from: eventData)
                         fetchedEvents.append(event)
                     } catch {
-                        print("An error occurred while decoding event: \(error)")
                     }
                 }
             }
@@ -93,7 +91,6 @@ final class EventViewModel: NSObject, ObservableObject {
             }
         }
 
-        print("Detected neighborhood: \(closestNeighborhood ?? "None")")
         DispatchQueue.main.async {
             self.userNeighborhood = closestNeighborhood
         }

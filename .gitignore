@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Xcode user state (per-user, machine-specific — never commit)
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+
+# Xcode build artifacts
+build/
+DerivedData/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# Firebase configuration (contains project API keys — keep local)
+GoogleService-Info.plist
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace

@@ -7,4 +7,14 @@
 
 import Foundation
 
-let iconsDict = ["All" : "globe.americas.fill", "Music" : "music.note", "Shows" : "theatermasks.fill", "Sports" : "baseball.fill", "Food" : "fork.knife", "Art" : "photo.artframe", "Events" : "party.popper", "Museum" : "building.columns.fill"]
+let iconsDict: [String: String] = [
+    "All": "star.fill",
+    "Music": "music.note",
+    "Shows": "theatermasks.fill",
+    "Sports": "sportscourt.fill",
+    "Food": "fork.knife",
+    "Art": "paintpalette.fill",
+    "Events": "calendar",
+    "Museum": "building.columns.fill",
+    "Workout": "dumbbell.fill"
+]

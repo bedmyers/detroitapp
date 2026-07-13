@@ -16,13 +16,7 @@ struct DetroitAppApp: App {
     init() {
         FirebaseApp.configure()
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                print("Notification permissions granted.")
-            } else if let error = error {
-                print("Notification permissions denied with error: \(error.localizedDescription)")
-            }
-        }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
     }
     
     var body: some Scene {
@@ -31,7 +25,6 @@ struct DetroitAppApp: App {
                 .environmentObject(deepLinkManager)
                 .environmentObject(eventViewModel)
                 .onOpenURL { url in
-                    print("URL received: \(url)")
                     deepLinkManager.handleDeepLink(url)
                 }
         }

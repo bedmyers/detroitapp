@@ -23,7 +23,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
-        print("Location updated: \(location.coordinate.latitude), \(location.coordinate.longitude)")
         self.location = location
         manager.stopUpdatingLocation()
     }

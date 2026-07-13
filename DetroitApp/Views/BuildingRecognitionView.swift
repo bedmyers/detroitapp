@@ -137,11 +137,7 @@ struct ARViewContainer: UIViewRepresentable {
             }
             request.imageCropAndScaleOption = .centerCrop
             let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
-            do {
-                try handler.perform([request])
-            } catch {
-                print("Failed to perform classification.\n\(error.localizedDescription)")
-            }
+            try? handler.perform([request])
         }
     }
 }
