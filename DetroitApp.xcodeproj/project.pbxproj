@@ -11,10 +11,8 @@
 		180D897C2BB1012C0056AD0C /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D897B2BB1012C0056AD0C /* DeepLinkManager.swift */; };
 		180D897E2BB11FDD0056AD0C /* ReminderOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */; };
 		18861E402C153ED600C0788C /* VenueEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18861E3F2C153ED600C0788C /* VenueEventsView.swift */; };
-		18861E422C179F8F00C0788C /* DetroitVenuesProj3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 18861E412C179F8E00C0788C /* DetroitVenuesProj3.mlmodel */; };
 		18861E462C179FE200C0788C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18861E452C179FE200C0788C /* GoogleService-Info.plist */; };
 		18861E4C2C17A19200C0788C /* DetroitVens.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 18861E4B2C17A19200C0788C /* DetroitVens.mlmodel */; };
-		18938D5A2BE406110031EB2B /* DetroitVenuesModel 2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 18938D592BE406110031EB2B /* DetroitVenuesModel 2.mlmodel */; };
 		18938D5C2BE407FD0031EB2B /* BuildingRecognitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18938D5B2BE407FD0031EB2B /* BuildingRecognitionView.swift */; };
 		18C97E1A2C1A4CCF0090F1FE /* Exo-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18C97E022C1A4CCF0090F1FE /* Exo-Black.ttf */; };
 		18C97E1B2C1A4CCF0090F1FE /* Exo-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18C97E032C1A4CCF0090F1FE /* Exo-BlackItalic.ttf */; };
@@ -65,10 +63,8 @@
 		180D897D2BB11FDC0056AD0C /* ReminderOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderOptionsView.swift; sourceTree = "<group>"; };
 		18861E3D2C14C97900C0788C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18861E3F2C153ED600C0788C /* VenueEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueEventsView.swift; sourceTree = "<group>"; };
-		18861E412C179F8E00C0788C /* DetroitVenuesProj3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = DetroitVenuesProj3.mlmodel; path = ../../DetroitVenuesProj3.mlmodel; sourceTree = "<group>"; };
-		18861E452C179FE200C0788C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		18861E4B2C17A19200C0788C /* DetroitVens.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = DetroitVens.mlmodel; path = ../../DetroitVens.mlmodel; sourceTree = "<group>"; };
-		18938D592BE406110031EB2B /* DetroitVenuesModel 2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "DetroitVenuesModel 2.mlmodel"; sourceTree = "<group>"; };
+		18861E452C179FE200C0788C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18861E4B2C17A19200C0788C /* DetroitVens.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DetroitVens.mlmodel; sourceTree = "<group>"; };
 		18938D5B2BE407FD0031EB2B /* BuildingRecognitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingRecognitionView.swift; sourceTree = "<group>"; };
 		18C97E022C1A4CCF0090F1FE /* Exo-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-Black.ttf"; sourceTree = "<group>"; };
 		18C97E032C1A4CCF0090F1FE /* Exo-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -197,15 +193,13 @@
 				18C97E182C1A4CCF0090F1FE /* README.txt */,
 			);
 			name = Exo;
-			path = ../../../../Downloads/Exo;
+			path = Exo;
 			sourceTree = "<group>";
 		};
 		8BE3F6E72A26E65E00A4DBC2 = {
 			isa = PBXGroup;
 			children = (
 				8BE3F6F22A26E65E00A4DBC2 /* DetroitApp */,
-				18938D592BE406110031EB2B /* DetroitVenuesModel 2.mlmodel */,
-				18861E412C179F8E00C0788C /* DetroitVenuesProj3.mlmodel */,
 				18861E4B2C17A19200C0788C /* DetroitVens.mlmodel */,
 				8BE3F6F12A26E65E00A4DBC2 /* Products */,
 			);
@@ -348,7 +342,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18861E422C179F8F00C0788C /* DetroitVenuesProj3.mlmodel in Sources */,
 				8BE3F6F62A26E65E00A4DBC2 /* ContentView.swift in Sources */,
 				18861E4C2C17A19200C0788C /* DetroitVens.mlmodel in Sources */,
 				18FEB4A02B293ACB00021DC8 /* IconsDictionary.swift in Sources */,
@@ -357,7 +350,6 @@
 				8BE3F6F42A26E65E00A4DBC2 /* DetroitAppApp.swift in Sources */,
 				8BC095162A2ADAF8009140C6 /* Day.swift in Sources */,
 				8BE3F7042A26EB8B00A4DBC2 /* EventView.swift in Sources */,
-				18938D5A2BE406110031EB2B /* DetroitVenuesModel 2.mlmodel in Sources */,
 				5B4347562A60E251000CB1A6 /* EventViewModel.swift in Sources */,
 				5B52356D2B184EB40044AC4E /* CustomColors.swift in Sources */,
 				18938D5C2BE407FD0031EB2B /* BuildingRecognitionView.swift in Sources */,

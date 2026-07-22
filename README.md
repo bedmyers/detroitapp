@@ -70,7 +70,7 @@ DetroitAppApp (entry point, Firebase init, deep link routing)
 3. Populate your Realtime Database with event records matching the `Event` model (`name`, `date` in `M/dd/yy` format, `location`, `address`, `neighborhood`, `category`, `rating`, plus optional fields like `timeStart`, `price`, `image`, and `website`).
 4. Build and run. Location, notification, calendar, and camera permissions are requested at runtime as the corresponding features are used.
 
-> **Note:** the AR venue-recognition feature also requires the `DetroitVens` Core ML model in the project. The model was trained on photos of Detroit venues and is not distributed with the repo.
+> **Note:** the AR venue-recognition feature uses the bundled `DetroitVens` Core ML model, a custom image classifier trained on photos of Detroit venues.
 
 ## Testing the Deep Links
 
